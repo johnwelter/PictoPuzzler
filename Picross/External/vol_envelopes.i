@@ -14,6 +14,7 @@ volume_envelopes:
 	.word se_tinyDecy
 	.word se_noDecay
 	.word se_long_tremelo
+	.word se_veryLong_decay
     
 se_ve_1:
     .byte $0F, $0E, $0D, $0C, $09, $05, $00
@@ -94,6 +95,30 @@ se_long_tremelo:
 	.byte $09, $09, $09, $03, $03, $03, $08, $08, $08
     .byte $00
     .byte $FF
+	
+se_veryLong_decay:
+	;attack
+    .byte $08, $09, $0A, $0B, $0C, $0D, $0E
+	;decay
+	.byte $0F, $0F, $0F, $0F, $0F, $0F 
+	.byte $0E, $0E, $0E, $0E, $0E, $0E
+	.byte $0D, $0D, $0D, $0D, $0D, $0D
+	.byte $0C, $0C, $0C, $0C, $0C, $0C 
+	.byte $0B, $0B, $0B, $0B, $0B, $0B 
+	.byte $0A, $0A, $0A, $0A, $0A, $0A
+	.byte $09, $09, $09, $09, $09, $09 
+	.byte $08, $08, $08, $08, $08, $08
+	.byte $07, $07, $07, $07, $07, $07
+	.byte $06, $06, $06, $06, $06, $06
+	.byte $05, $05, $05, $05, $05, $05
+    .byte $04, $04, $04, $04, $04, $04 
+	.byte $03, $03, $03, $03, $03, $03 
+	.byte $02, $02, $02, $02, $02, $02
+	.byte $01, $01, $01, $01, $01, $01
+	.byte $00
+    .byte $FF
+	
+
 
 	
 ve_short_staccato = $00
@@ -111,3 +136,4 @@ ve_long_decay = $0B
 ve_tinyDecy = $0C
 ve_noDecay = $0D
 ve_long_tremelo = $0E
+ve_veryLong_decay = $0F

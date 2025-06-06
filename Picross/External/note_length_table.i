@@ -17,7 +17,23 @@ d_half_d_eight = $8E
 whole_quarter_sixteenth = $8F
 d_half_eighth = $90
 whole_sixteenth = $91
-sixtyfourth = $92
+quarterSwing = $87
+halfSwing = $88
+wholeSwing = $89
+eighthSwing = $86
+swingDown = $81
+swingUp = $80
+five_thirtyseconds = $92
+
+d_halfSwing_p1 = $93
+halfSwing_p1 = $94
+halfSwing_p3 = $95
+halfSwing_m1 = $96
+wholeSwing_p1 = $97
+quarterSwing_p1 = $98
+d_quarterSwing = $99
+d_halfSwing = $9A
+wholeSwing_m1 = $9B
 
 
 note_length_table:
@@ -41,4 +57,13 @@ note_length_table:
 	.byte $2A
 	.byte $1C
 	.byte $22
-	.byte $00
+	.byte $05
+	.byte $13 	;dotted half swing with pick up swing
+	.byte $0D 	;half swing with pick up swig
+	.byte $0F	;half swing with extra d_sixteenth
+	.byte $0B 	;half swing minus one sixteenth
+	.byte $19 	;whole swing with pick up swing
+	.byte $07 	;quarter swing with pick up sixteenth
+	.byte $09 	;dotted quarter swing
+	.byte $12	;dotted half swing
+	.byte $17	;whole swing minus one ts

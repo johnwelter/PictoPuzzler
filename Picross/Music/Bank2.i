@@ -1,21 +1,21 @@
 bank2_header:
-    .byte $04           ;4 streams
+    .byte $05           ;4 streams
     
-    .byte MUSIC_SQ1     ;which stream
-    .byte $01           ;status byte (stream enabled)
-    .byte SQUARE_1      ;which channel
-    .byte $70           ;initial duty (01)
-    .byte ve_long_decay ;volume envelope
-    .word bank2_square1 ;pointer to stream
-    .byte $3A           ;tempo
+    .byte MUSIC_SQ1     	;which stream
+    .byte $01           	;status byte (stream enabled)
+    .byte SQUARE_1      	;which channel
+    .byte $30           	;initial duty (01)
+    .byte ve_veryLong_decay ;volume envelope
+    .word bank2_square1 	;pointer to stream
+    .byte $28           	;tempo
     
-    .byte MUSIC_SQ2     ;which stream
-    .byte $01           ;status byte (stream enabled)
-    .byte SQUARE_2      ;which channel
-    .byte $70           ;initial duty (10)
-    .byte ve_tgl_1      ;volume envelope
-    .word bank2_square2 ;pointer to stream
-    .byte $3A           ;tempo
+    .byte MUSIC_SQ2     	;which stream
+    .byte $01           	;status byte (stream enabled)
+    .byte SQUARE_2      	;which channel
+    .byte $30           	;initial duty (10)
+    .byte ve_veryLong_decay ;volume envelope
+    .word bank2_square2 	;pointer to stream
+    .byte $28           	;tempo
     
     .byte MUSIC_TRI     ;which stream
     .byte $01           ;status byte (stream enabled)
@@ -23,7 +23,7 @@ bank2_header:
     .byte $80           ;initial volume (on)
     .byte ve_tgl_1      ;volume envelope
     .word bank2_tri     ;pointer to stream
-    .byte $3A           ;tempo
+    .byte $28           ;tempo
     
     .byte MUSIC_NOI     ;which stream
     .byte $01           ;enabled
@@ -31,514 +31,374 @@ bank2_header:
     .byte $30           ;initial duty_vol
     .byte ve_hiHat_decay ;volume envelope
     .word bank2_noise   ;pointer to stream
-    .byte $3A           ;tempo
+    .byte $28           ;tempo
+	
+	.byte MUSIC_DPMC
+	.byte $01
+	.byte DPMC
+	.byte $30
+	.byte ve_hiHat_decay
+	.word bank2_dpcm  ;pointer to stream
+    .byte $28           ;tempo
 
+;;this will require funky timing to get it right. base everything on 32nd notes, using them as 24ths
     
-bank2_square1:
-
-	.byte volume_envelope, ve_long_decay 
-    .byte quarter, rest
-	.byte d_eighth, D5
-	.byte d_half_d_eight, C5
-	.byte sixteenth, B4, C5
-	.byte eighth, B4
-	.byte sixteenth, Fs4
-	.byte eighth, G4,  A4
-	.byte sixteenth, B4
-	.byte d_eighth, Fs4
-	.byte whole_quarter_sixteenth, A4
-	.byte sixteenth, rest
-	.byte Fs3, G3, Gs3, A3, Gs3, G3, Fs3
-	
-	.byte quarter, rest
-	.byte d_eighth, D5
-	.byte d_half_d_eight, C5
-	.byte sixteenth, B4, C5
-	.byte eighth, B4
-	.byte sixteenth, Fs4
-	.byte eighth, G4,  E5
-	.byte sixteenth, G5
-	.byte d_whole, Fs5
-	.byte sixteenth, rest
-	.byte Fs3, G3, A3, G3, A3, D4, Fs4
-    
-	.byte quarter, rest
-	.byte d_eighth, G5
-	.byte d_half_d_eight, F5
-	.byte sixteenth, E5, F5
-	.byte eighth, E5
-	.byte sixteenth, B4
-	.byte eighth, C5,  D5
-	.byte sixteenth, E5, D5 
-	.byte eighth, B4, C5, A4, B4, G4 
-	.byte sixteenth, C5, B4, G4, F4, D4
-	.byte eighth, F4
-	.byte sixteenth, A4
-	.byte eighth, G4
-	.byte sixteenth, C5
-	.byte five_eighths, B4
-	
-	.byte quarter, rest
-	.byte d_eighth, D5
-	.byte d_half_d_eight, C5
-	.byte sixteenth, B4, C5
-	.byte eighth, B4
-	.byte sixteenth, Fs4
-	.byte eighth, G4,  A4
-	.byte sixteenth, G4
-	.byte d_whole, Fs4
-	.byte sixteenth, rest
-	.byte Fs3, G3, A3, G3, A3, D4, Fs4
-	
-	;;bridge
-	
-	.byte d_eighth, A4, G4, Fs4
-	.byte thirtysecond, Fs2, A5, G2, G5, Gs2, Fs5, A2
-	.byte D5, Gs2, C5, G2, A4, Fs2, G4
-	.byte d_eighth, F4, E4, D4, A3
-	.byte eighth, C4
-	.byte sixteenth, G3
-	.byte whole_sixteenth, Fs3
-	.byte half, rest
-	.byte sixteenth, rest
-	.byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
-	
-	.byte d_eighth, A4, G4, Fs4
-	.byte thirtysecond, Fs2, A5, G2, G5, Gs2, Fs5, A2
-	.byte D5, Gs2, C5, G2, A4, Fs2, G4
-	.byte d_eighth, F4, E4, D4, A3
-	.byte eighth, C4
-	.byte sixteenth, G4
-	.byte whole_sixteenth, Fs4
-	.byte half, rest
-	.byte sixteenth, rest
-	.byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
-
-	;; reach-around
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, G4, G4
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, A4
-	.byte volume_envelope, ve_tgl_1
-	.byte thirtysecond, rest, F6
-	.byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
-	.byte eighth, G5
-	.byte sixteenth, C5
-	.byte eighth, F5
-	.byte sixteenth, D5
-	.byte eighth, G5
-	.byte sixteenth, Fs5
-	.byte eighth, A5
-	.byte sixteenth, C5, G5, Fs5, C6, A5
-	
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, G4, G4
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, A4
-	.byte volume_envelope, ve_tgl_1
-	.byte thirtysecond, rest, Cs4
-	.byte sixteenth, D4, Fs4, D5, A4, D5, Fs5
-	.byte sixteenth, C6, A5, E5, A4, F5, C5, Fs4
-	.byte sixteenth, G5, D5, A4, D5, A4, E4, G5, Fs5, C6, D6
-	
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, G4, G4
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, A4
-	.byte volume_envelope, ve_tgl_1
-	.byte thirtysecond, rest, F6
-	.byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
-	.byte eighth, G5
-	.byte sixteenth, C5
-	.byte eighth, F5
-	.byte sixteenth, D5
-	.byte eighth, G5
-	.byte sixteenth, Fs5
-	.byte eighth, A5
-	.byte sixteenth, C5, G5, Fs5, C6, A5
-	
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, G4, G4
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, A4
-	.byte volume_envelope, ve_long_decay 
-	.byte d_quarter, rest
-	.byte five_eighths, A4
-	.byte volume_envelope, ve_tgl_1
-	.byte sixteenth, rest
-	.byte eighth, Fs4, G4, Gs4
-	.byte sixteenth, A4
-
-	.byte loop
-    .word bank2_square1
-	
-	
-
 bank2_square2:
 
-	.byte sixteenth, D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte d_quarter, C3
-	.byte sixteenth, G2, A2, C3
-	.byte D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte eighth, C3, Fs2, G2, Gs2
-	.byte sixteenth, A2
-	.byte sixteenth, D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte d_quarter, C3
-	.byte sixteenth, G2, A2, C3
-	.byte D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte eighth, C3 
-	.byte sixteenth, Fs2, G2, Gs2, A2, Gs2, G2, Fs2
+	.byte duty, $30
+	.byte arpeggio, arp_dimTriad
+	.byte quarterSwing, Ds4
+	.byte arpeggio, arp_minInvn1
+	.byte quarterSwing, Fs4
+	.byte arpeggio, arp_dimTriad
+	.byte quarterSwing, Fs4
+	.byte arpeggio, arp_sharp5
+	.byte five_thirtyseconds, E4
 	
-	.byte sixteenth, D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte d_quarter, C3
-	.byte sixteenth, G2, A2, C3
-	.byte D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte eighth, C3, Fs2, G2, Gs2
-	.byte sixteenth, A2
-	.byte D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte d_quarter, C3
-	.byte sixteenth, G2, A2, C3
-	.byte D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte eighth, C3 
-	.byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3 
+	.byte wholeSwing
+	.byte arpeggio, arp_maj7, E4, rest
+	.byte arpeggio, arp_min7, Ds4, rest
+	.byte arpeggio, arp_maj7, E4, rest
+	.byte arpeggio, arp_min7, Ds4, rest
+	.byte arpeggio, arp_maj7, E4, rest
+	.byte arpeggio, arp_min7, Ds4, rest
+	.byte arpeggio, arp_maj7, E4, rest
+	.byte arpeggio, arp_minFlat6, Ds4, swingUp, rest
+	.byte arpeggio, arp_spread5thlowerThird, wholeSwing, B4
 	
-	.byte G2, C3, D3, G2 
-	.byte eighth, G3
-	.byte sixteenth, G2
-	.byte d_quarter, F3
-	.byte sixteenth, C3, D3, F3
-	.byte sixteenth, G2, C3, D3, G2 
-	.byte eighth, G3
-	.byte sixteenth, G2
-	.byte d_quarter, F3
-	.byte sixteenth, F3, E3, D3
-	.byte G2, C3, D3, G2 
-	.byte eighth, G3
-	.byte sixteenth, G2
-	.byte d_quarter, F3
-	.byte sixteenth, C3, D3, F3
-	.byte sixteenth, G2, C3, D3, G2 
-	.byte eighth, G3
-	.byte sixteenth, G2
-	.byte d_quarter, F3
-	.byte sixteenth, F3, E3, D3
+	.byte arpeggio, arp_min7Invn1, A4
+	.byte arpeggio, arp_dom7Invn2, D5
+	.byte arpeggio, arp_min7Invn1, B4
+	.byte arpeggio, arp_dim7, G4
+	
+	.byte arpeggio, arp_min7Invn1, A4
+	.byte arpeggio, arp_dom7Invn2, D5
+	.byte arpeggio, arp_majPlusOct, G4
+	.byte rest
+	
+	.byte arpeggio, arp_min7Invn1, A4
+	.byte arpeggio, arp_dom7Invn2, D5
+	.byte arpeggio, arp_min7Invn1, B4
+	.byte arpeggio, arp_dim7, G4
+	
+	.byte arpeggio, arp_min7Invn1, A4
+	.byte arpeggio, arp_dom7Invn2, D5
+	.byte arpeggio, arp_min7Invn1, C5
+	
+	.byte loop
+    .word bank2_square2
+	
+bank2_square1:
+	
+	.byte duty, $30
+	.byte pitch_envelope, pe_none
+	.byte quarterSwing, Ds5, Cs5, Fs5, five_thirtyseconds, E5
+	.byte wholeSwing, Ds5, swingUp, rest, quarterSwing, rest
+	
+	.byte quarterSwing, Gs4, B4, five_thirtyseconds, Ds5 
+	.byte wholeSwing, Cs5, swingUp, rest, quarterSwing, rest
+	
+	.byte quarterSwing, Fs4, Gs4, five_thirtyseconds, B4
+	.byte wholeSwing, Ds5, swingUp, rest, quarterSwing, rest
+	
+	.byte quarterSwing, B4, Cs6, five_thirtyseconds, As5
+	.byte wholeSwing, Fs5, swingUp, rest
+	.byte wholeSwing_m1, Gs5
+	
+	.byte duty, $70
+	.byte d_halfSwing_p1, Ds5, five_thirtyseconds, Fs5
+	.byte halfSwing_p1, Cs5, halfSwing, Ds5
+	.byte swingDown, As4, swingUp, Fs4, swingDown, B4, halfSwing_p1, As4, quarterSwing, Fs4
+	.byte swingDown, Ds5, swingUp, B4, swingDown, E5, halfSwing_p3, Ds5, swingUp, E4, swingDown, Ds4
+	.byte half, B4, d_sixteenth, Gs4, B4, swingDown, Ds5, halfSwing_p1, As4, halfSwing_m1, Fs4, wholeSwing_p1, B4
+	.byte wholeSwing, rest
+	
+	.byte duty, $B0
+	.byte pitch_envelope, pe_none
+	.byte volume_envelope, ve_blip_echo
+	.byte d_sixteenth, rest, G4, G4, E4, G4, swingDown, E4, quarterSwing, A4, swingUp, D4
+	.byte d_sixteenth, E4, G4, G4, E4, G4, swingDown, E4, quarterSwing, B4, swingUp, As4
+	.byte d_sixteenth, B4, A4, G4, swingDown, Fs4, d_sixteenth, A4, swingUp, A4, d_sixteenth, G4, Fs4, E4
+	.byte G4, Fs4, swingDown, E4, d_sixteenth, D4, d_quarterSwing, B3, swingUp, A3, swingDown, B3
+	.byte eighth, C4, d_sixteenth, C4, swingDown, C4, eighth, A3, d_sixteenth, B3, swingDown, A3, d_sixteenth, G3, eighth, A3
+	.byte d_sixteenth, rest, C4, swingDown, C4, eighth, A3, d_sixteenth, Fs4, swingDown, E4, d_sixteenth, D4, E4, swingUp, B3
+	.byte d_sixteenth, D4, E4, swingDown, G4, d_sixteenth, E4, B4, swingUp, B4, swingDown, G4, swingUp, A4, swingDown, Fs4, swingUp, D4, swingDown, E4, swingUp, Fs4
+	.byte swingDown, G4, swingUp, E4, swingDown, Fs4, swingUp, D4, swingDown, E4, swingUp, A3, swingDown, D4, halfSwing_p1, B3
+	
+	.byte duty, $70
+	.byte pitch_envelope, pe_none
+	.byte volume_envelope, ve_veryLong_decay
+	.byte quarterSwing, rest, E5, d_quarterSwing, G5, d_sixteenth, B5
+	.byte quarterSwing, D5, halfSwing, E5, d_sixteenth, B4, C5
+	.byte d_halfSwing, D5, quarterSwing, Fs5
+	.byte wholeSwing, D5
 
-	.byte sixteenth, D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte d_quarter, C3
-	.byte sixteenth, G2, A2, C3
-	.byte D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte eighth, C3, Fs2, G2, Gs2
-	.byte sixteenth, A2
-	.byte D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte d_quarter, C3
-	.byte sixteenth, G2, A2, C3
-	.byte D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte eighth, C3 
-	.byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3 
-	
-	;;bridge
-	
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, C4, B3, A3
-	.byte sixteenth, Fs2, G2, Gs2, A2, Gs2, G2, Fs2
-	.byte d_eighth, A3, G3, Fs3, D3
-	.byte eighth, F3
-	.byte sixteenth, D3
-	.byte d_half_eighth, C3
-	.byte volume_envelope, ve_tgl_1
-	.byte sixteenth, G2, A2, C3
-	.byte D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte eighth, C3 
-	.byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3
-	
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, C4, B3, A3
-	.byte sixteenth, Fs2, G2, Gs2, A2, Gs2, G2, Fs2
-	.byte d_eighth, A3, G3, Fs3, D3
-	.byte eighth, F3
-	.byte sixteenth, C4
-	.byte d_half_eighth, D4
-	.byte volume_envelope, ve_tgl_1
-	.byte sixteenth, G2, A2, C3
-	.byte D2, G2, A2, D2 
-	.byte eighth, D3
-	.byte sixteenth, D2
-	.byte eighth, C3 
-	.byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3
-	
-	;; reach-around
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, E4, E4
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, Fs4
-	.byte volume_envelope, ve_battlekid_2
-	.byte d_sixteenth, rest
-	.byte thirtysecond, F6
-	.byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
-	.byte eighth, G5
-	.byte sixteenth, C5
-	.byte eighth, F5
-	.byte sixteenth, D5
-	.byte eighth, G5
-	.byte sixteenth, Fs5
-	.byte eighth, A5
-	.byte sixteenth, C5, G5, Fs5, C6 
-	
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, E4, E4
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, Fs4
-	.byte volume_envelope, ve_battlekid_2
-	.byte d_sixteenth, rest
-	.byte thirtysecond, Cs4
-	.byte sixteenth, D4, Fs4, D5, A4, D5, Fs5
-	.byte sixteenth, C6, A5, E5, A4, F5, C5, Fs4
-	.byte sixteenth, G5, D5, A4, D5, A4, E4, G5, Fs5, C6
-	
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, E4, E4
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, Fs4
-	.byte volume_envelope, ve_battlekid_2
-	.byte d_sixteenth, rest
-	.byte thirtysecond, F6
-	.byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
-	.byte eighth, G5
-	.byte sixteenth, C5
-	.byte eighth, F5
-	.byte sixteenth, D5
-	.byte eighth, G5
-	.byte sixteenth, Fs5
-	.byte eighth, A5
-	.byte sixteenth, C5, G5, Fs5, C6 
-	
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, E4, E4
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, Fs4
-	.byte volume_envelope, ve_tgl_1
-	.byte d_quarter, rest
-	.byte thirtysecond, C5, E4, C5, E4, C5, E4, C5, E4, C5, E4
-	.byte C5, E4, C5, E4, C5, E4, C5, E4, C5, E4
-	.byte sixteenth, rest
-	.byte eighth, Fs2, G2, Gs2
-	.byte sixteenth, A2
+	.byte quarterSwing, rest, E5, G5, B5
+	.byte D6, halfSwing, A5, swingDown, E5, swingUp, Fs5, swingDown, E5, swingUp, D5
+	.byte wholeSwing, G5
 	
     .byte loop
-    .word bank2_square2
+    .word bank2_square1
     
 bank2_tri:
 
-	.byte sixteenth, D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte d_quarter, C4
-	.byte sixteenth, G3, A3, C4
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte eighth, C4, Fs3, G3, Gs3
-	.byte sixteenth, A3
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte d_quarter, C4
-	.byte sixteenth, G3, A3, C4
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte eighth, C4
-	.byte sixteenth, Fs3, G3, Gs3, A3, Gs3, G3, Fs3
+	.byte volume_envelope, ve_tgl_1
+	.byte set_loop1_counter, 2
 	
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte d_quarter, C4
-	.byte sixteenth, G3, A3, C4
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte eighth, C4, Fs3, G3, Gs3
-	.byte sixteenth, A3
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte d_quarter, C4
-	.byte sixteenth, G3, A3, C4
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte eighth, C4
-	.byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
 	
-	.byte G3, C4, D4, G3 
-	.byte eighth, G4
-	.byte sixteenth, G3
-	.byte d_quarter, F4
-	.byte sixteenth, C4, D4, F4
-	.byte sixteenth, G3, C4, D4, G3 
-	.byte eighth, G4
-	.byte sixteenth, G3
-	.byte d_quarter, F4
-	.byte sixteenth, F4, E4, D4
-	.byte G3, C4, D4, G3 
-	.byte eighth, G4
-	.byte sixteenth, G3
-	.byte d_quarter, F4
-	.byte sixteenth, C4, D4, F4
-	.byte sixteenth, G3, C4, D4, G3 
-	.byte eighth, G4
-	.byte sixteenth, G3
-	.byte d_quarter, F4
-	.byte sixteenth, F4, E4, D4
+	.byte halfSwing, rest
 
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte d_quarter, C4
-	.byte sixteenth, G3, A3, C4
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte eighth, C4, Fs3, G3, Gs3
-	.byte sixteenth, A3
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte d_quarter, C4
-	.byte sixteenth, G3, A3, C4
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte eighth, C4
-	.byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
 	
-	;;bridge
+bank2_triFirstLoop:
+
+	.byte pitch_envelope, pe_bassKick
+	.byte thirtysecond, B4, B4, B4, F4, F4, F4
+	.byte swingDown, D4, swingUp, B3
+	.byte swingDown, rest
+
+	.byte pitch_envelope, pe_none
+	.byte d_sixteenth, E3
+	.byte swingUp, E3
+	.byte d_sixteenth, E2, E3, E2
+	.byte five_thirtyseconds, E3
+	.byte d_sixteenth, Cs2, Ds2
+	.byte d_sixteenth, E3
+	.byte swingUp, E3
+	.byte d_sixteenth, E2, E3, E2
+	.byte five_thirtyseconds, E3
+	.byte d_sixteenth, E3, Fs3
+
+	.byte d_sixteenth, B2
+	.byte swingUp, B2
+	.byte d_sixteenth, B1, B2, B1
+	.byte five_thirtyseconds, B2
+	.byte d_sixteenth, A1, As1
+	.byte d_sixteenth, B2
+	.byte swingUp, B2
+	.byte d_sixteenth, B1, B2, B1
+	.byte five_thirtyseconds, B2
+	.byte d_sixteenth, A1, As1
 	
-	.byte sixteenth
-	.byte C5, G4, C4, G4, D4, G3, A3, D4, A4
-	.byte A6, G6, Fs6, D6, C6, A5, G5
-	.byte F4, C4, F3, E4, A3, Ds3, D4, A3, D3
-	.byte D3, D4, D3, A3, D3, F3, C3
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte d_quarter, C4
-	.byte sixteenth, G3, A3, C4
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte eighth, C4
-	.byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
-	.byte C5, G4, C4, G4, D4, G3, A3, D4, A4
-	.byte A6, G6, Fs6, D6, C6, A5, G5
-	.byte F4, C4, F3, E4, A3, Ds3, D4, A3, D3
-	.byte D3, D4, D3, A3, D3, F3, C3
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte d_quarter, C4
-	.byte sixteenth, G3, A3, C4
-	.byte D3, G3, A3, D3 
-	.byte eighth, D4
-	.byte sixteenth, D3
-	.byte eighth, C4
-	.byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
+	.byte d_sixteenth, E3
+	.byte swingUp, E3
+	.byte d_sixteenth, E2, E3, E2
+	.byte five_thirtyseconds, E3
+	.byte d_sixteenth, Cs2, Ds2
+	.byte d_sixteenth, E3
+	.byte swingUp, E3
+	.byte d_sixteenth, E2, E3, E2
+	.byte five_thirtyseconds, E3
+	.byte d_sixteenth, E3, Fs3
+
+	.byte d_sixteenth, B2
+	.byte swingUp, B2
+	.byte d_sixteenth, B1, B2, B1
+	.byte five_thirtyseconds, B2
+	.byte d_sixteenth, A1, As1
+	.byte d_sixteenth, B2
+	.byte swingUp, B2
+	.byte d_sixteenth, B1, B2, B1
 	
-	;; reach-around
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, C3, C3
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, D3
-	.byte volume_envelope, ve_tgl_1
-	.byte d_eighth, rest
-	.byte sixteenth, D3, D3, D4
-	.byte five_sixteenths, rest
-	.byte sixteenth, D3, D3, D4
-	.byte five_sixteenths, rest
-	.byte sixteenth, D3, D3, D4
-	.byte eighth, rest
+	.byte loop1
+	.word bank2_triFirstLoop
 	
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, C3, C3
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, D3
-	.byte volume_envelope, ve_tgl_1
-	.byte d_eighth, rest
-	.byte sixteenth, D3, D3, D4
-	.byte five_sixteenths, rest
-	.byte sixteenth, D3, D3, D4
-	.byte five_sixteenths, rest
-	.byte sixteenth, D3, D3, D4
-	.byte eighth, rest
-		
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, C3, C3
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, D3
-	.byte volume_envelope, ve_tgl_1
-	.byte d_eighth, rest
-	.byte sixteenth, D3, D3, D4
-	.byte five_sixteenths, rest
-	.byte sixteenth, D3, D3, D4
-	.byte five_sixteenths, rest
-	.byte sixteenth, D3, D3, D4
-	.byte eighth, rest
+	.byte pitch_envelope, pe_bassKick
+	.byte thirtysecond, B4, B4, B4, F4, F4, F4
+	.byte swingDown, D4, swingUp, B3
+	.byte d_sixteenth, rest
 	
-	.byte volume_envelope, ve_long_decay 
-	.byte d_eighth, C3, C3
-	.byte volume_envelope, ve_tgl_2
-	.byte eighth, D3
-	.byte volume_envelope, ve_long_decay
-	.byte d_quarter, rest
-	.byte five_eighths, A2
-	.byte volume_envelope, ve_tgl_1
-	.byte sixteenth, rest
-	.byte eighth, Fs3, G3, Gs3
-	.byte sixteenth, A3
+	.byte pitch_envelope, pe_none
+	.byte d_sixteenth, C3, C3
+	.byte swingDown, C4
+	.byte eighth, C3
+	.byte swingDown, C3
+	.byte d_sixteenth, rest
+	.byte swingUp, C3
+	.byte swingDown, C4
+	.byte d_sixteenth, C3
+	.byte swingUp, C3
 	
-    .byte loop
+	.byte d_sixteenth, Fs3, Fs3
+	.byte swingDown, Fs4
+	.byte eighth, Fs3
+	.byte swingDown, Fs3
+	.byte d_sixteenth, rest
+	.byte swingUp, Fs3
+	.byte swingDown, Fs4
+	.byte d_sixteenth, Fs3
+	.byte swingUp, Fs3
+	
+	.byte d_sixteenth, B2, B2
+	.byte swingDown, B3
+	.byte eighth, B2
+	.byte swingDown, B2
+	.byte d_sixteenth, rest
+	.byte swingUp, B2
+	.byte swingDown, B3
+	.byte d_sixteenth, B2
+	.byte swingUp, B2
+	
+	.byte d_sixteenth, E3, E3
+	.byte swingDown, E4
+	.byte eighth, E3
+	.byte swingDown, E3
+	.byte d_sixteenth, rest
+	.byte swingUp, E3
+	.byte swingDown, E4
+	.byte d_sixteenth, E3
+	.byte swingUp, E3
+	
+	.byte pitch_envelope, pe_none
+	.byte d_sixteenth, C3, C3
+	.byte swingDown, C4
+	.byte eighth, C3
+	.byte swingDown, C3
+	.byte d_sixteenth, rest
+	.byte swingUp, C3
+	.byte swingDown, C4
+	.byte d_sixteenth, C3
+	.byte swingUp, C3
+	
+	.byte d_sixteenth, Fs3, Fs3
+	.byte swingDown, Fs4
+	.byte eighth, Fs3
+	.byte swingDown, Fs3
+	.byte d_sixteenth, rest
+	.byte swingUp, Fs3
+	.byte swingDown, Fs4
+	.byte d_sixteenth, Fs3
+	.byte swingUp, Fs3
+	
+	.byte d_sixteenth, G3, G3
+	.byte swingDown, G4
+	.byte eighth, G3
+	.byte swingDown, G3
+	.byte d_sixteenth, rest
+	.byte swingUp, G3
+	.byte swingDown, G4
+	.byte d_sixteenth, G3
+	.byte swingUp, G3
+	
+	.byte d_sixteenth, E3, E3
+	.byte swingDown, E4
+	.byte eighth, E3
+	
+	.byte pitch_envelope, pe_bassKick
+	.byte thirtysecond, B4, B4, B4, F4, F4, F4
+	.byte swingDown, D4, swingUp, B3
+	.byte d_sixteenth, rest
+	
+	.byte pitch_envelope, pe_none
+	.byte d_sixteenth, C3, C3
+	.byte swingDown, C4
+	.byte eighth, C3
+	.byte swingDown, C3
+	.byte d_sixteenth, rest
+	.byte swingUp, C3
+	.byte swingDown, C4
+	.byte d_sixteenth, C3
+	.byte swingUp, C3
+	
+	.byte d_sixteenth, Fs3, Fs3
+	.byte swingDown, Fs4
+	.byte eighth, Fs3
+	.byte swingDown, Fs3
+	.byte d_sixteenth, rest
+	.byte swingUp, Fs3
+	.byte swingDown, Fs4
+	.byte d_sixteenth, Fs3
+	.byte swingUp, Fs3
+	
+	.byte d_sixteenth, B2, B2
+	.byte swingDown, B3
+	.byte eighth, B2
+	.byte swingDown, B2
+	.byte d_sixteenth, rest
+	.byte swingUp, B2
+	.byte swingDown, B3
+	.byte d_sixteenth, B2
+	.byte swingUp, B2
+	
+	.byte d_sixteenth, E3, E3
+	.byte swingDown, E4
+	.byte eighth, E3
+	.byte swingDown, E3
+	.byte d_sixteenth, rest
+	.byte swingUp, E3
+	.byte swingDown, E4
+	.byte d_sixteenth, E3
+	.byte swingUp, E3
+	
+	.byte pitch_envelope, pe_none
+	.byte d_sixteenth, C3, C3
+	.byte swingDown, C4
+	.byte eighth, C3
+	.byte swingDown, C3
+	.byte d_sixteenth, rest
+	.byte swingUp, C3
+	.byte swingDown, C4
+	.byte d_sixteenth, C3
+	.byte swingUp, C3
+	
+	.byte d_sixteenth, Fs3, Fs3
+	.byte swingDown, Fs4
+	.byte eighth, Fs3
+	.byte swingDown, Fs3
+	.byte d_sixteenth, rest
+	.byte swingUp, Fs3
+	.byte swingDown, Fs4
+	.byte d_sixteenth, Fs3
+	.byte swingUp, Fs3
+	
+	.byte d_sixteenth, Ds3, Ds3
+	.byte swingDown, Ds4
+	.byte eighth, Ds3
+	.byte swingDown, Ds3
+	.byte d_sixteenth, rest
+	.byte swingUp, Ds3
+	.byte swingDown, Ds4
+	.byte d_sixteenth, Ds3
+	.byte swingUp, Ds3
+	
+	.byte loop
     .word bank2_tri
-    
+   
+   
+	
+bank2_noiseMainLoop:
+
+	
+	.byte volume_envelope, ve_hiHat_decay
+	.byte swingDown, $04, swingUp, $04, swingDown, $04, swingUp, $04	
+	.byte volume_envelope, ve_drum_decay
+	.byte swingDown, $04
+	.byte volume_envelope, ve_hiHat_decay
+	.byte swingUp, $04, swingDown, $04, swingUp, $04
+	
+	.byte loop1                             
+    .word bank2_noiseMainLoop
+   
 bank2_noise:
-    .byte sixteenth, $04, $04, $04, $04
-	.byte volume_envelope, ve_drum_decay 
-    .byte sixteenth, $04
-	.byte volume_envelope, ve_hiHat_decay
-    .byte sixteenth, $04, $04, $04, $04
-    .byte volume_envelope, ve_drum_decay 
-    .byte sixteenth, $04
-	.byte volume_envelope, ve_hiHat_decay
-    .byte sixteenth, $04, $04
-	.byte volume_envelope, ve_drum_decay 
-    .byte sixteenth, $04
-	.byte volume_envelope, ve_hiHat_decay
-	.byte sixteenth, $04, $04, $04
+	
+	.byte volume_envelope, ve_drum_decay
+    .byte quarterSwing, $04, $04, $04, $04
+	 
+	.byte set_loop1_counter, 14             	; repeat 14 times 
     .byte loop
-    .word bank2_noise
+	.word bank2_noiseMainLoop
+
+bank2_dpcmMainLoop:
+	
+	.byte quarterSwing, $0B, $1B, $0B
+	.byte swingDown, $1B, eighthSwing, $0B, swingUp, $01
+	
+	.byte loop1
+	.word bank2_dpcmMainLoop
+
+bank2_dpcm:
+
+	.byte quarterSwing, $0B, $0B, $0B
+	.byte swingDown, $1B, eighthSwing, $0B, swingUp, $01
+	.byte set_loop1_counter, 7  
+	.byte loop
+	.word bank2_dpcmMainLoop

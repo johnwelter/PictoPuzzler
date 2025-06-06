@@ -24,7 +24,7 @@ se_pe_sweep:
 	.byte pe_loopPart, $10
 
 se_pe_bassKick:
-	.byte $90, $C0, $F0, $20, $50, $70
+	.byte $90, $A0, $B0, $C0, $D0, $E0, $F0, $00, $10, $20, $30, $40, $50, $60, $70
 	.byte pe_loopLast
 
 pe_none = $00

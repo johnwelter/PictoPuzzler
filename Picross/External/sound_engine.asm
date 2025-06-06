@@ -447,7 +447,8 @@ se_set_stream_arpeggio:
                                 ;  volume value for the remainder of the note
 .set_arp:
     STA sound_temp2             ;save our new volume value (about to destroy A)
-	LDA stream_note_idx, x
+	LDA stream_note_idx, x		;note indexes are premultiplied, un mult for an easier add
+	LSR A				
 	CLC
 	ADC sound_temp2
 	STA sound_temp2
@@ -455,6 +456,7 @@ se_set_stream_arpeggio:
 	
 	LDY sound_temp1
 	STX sound_temp1
+	ASL A
 	TAX 
 
 	LDA note_table, x

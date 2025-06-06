@@ -28,6 +28,7 @@ ve_long_decay = $0B
 ve_tinyDecy = $0C
 ve_noDecay = $0D
 ve_long_tremelo = $0E
+ve_veryLong_decay = $0F
 
 ;these are aliases to use in the sound data.
 endsound = $A0
@@ -212,10 +213,37 @@ d_half_d_eight = $8E
 whole_quarter_sixteenth = $8F
 d_half_eighth = $90
 whole_sixteenth = $91
-sixtyfourth = $92
+quarterSwing = $87
+halfSwing = $88
+wholeSwing = $89
+eighthSwing = $86
+swingDown = $81
+swingUp = $80
+five_thirtyseconds = $92
+
+d_halfSwing_p1 = $93
+halfSwing_p1 = $94
+halfSwing_p3 = $95
+halfSwing_m1 = $96
+wholeSwing_p1 = $97
+quarterSwing_p1 = $98
+d_quarterSwing = $99
+d_halfSwing = $9A
+wholeSwing_m1 = $9B
 
 arp_none = $00
 arp_lowerThird = $01
+arp_dimTriad = $02
+arp_minInvn1 = $03
+arp_sharp5 = $04
+arp_maj7 = $05
+arp_min7 = $06
+arp_minFlat6 = $07
+arp_spread5thlowerThird = $08
+arp_min7Invn1 = $09
+arp_dom7Invn2 = $0A
+arp_dim7 = $0B
+arp_majPlusOct = $0C
 
 
 sound_disable_flag  .rs 1   ;a flag variable that keeps track of whether the sound engine is disabled or not. 
