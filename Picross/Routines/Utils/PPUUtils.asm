@@ -78,6 +78,11 @@ LoadFullBackgroundFromTable:
 	BNE .outerloop
 	RTS
 	
+ClearBackground:
+
+	
+
+	RTS
 
 DATA_LEN = temp1
 WRITE_SETTINGS = temp2

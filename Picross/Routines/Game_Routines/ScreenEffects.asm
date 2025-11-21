@@ -495,6 +495,7 @@ ApplyGameTimeToPPUString:
   JSR WriteToPPUString
   
   RTS
+  
 
 ClearLineDefs:
 

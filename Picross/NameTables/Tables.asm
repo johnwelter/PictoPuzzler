@@ -63,7 +63,22 @@ Blank_Screen:
 
   .incbin "NameTables/Blank_NT.nam"
 
-Pause_Menu:
+WindowTopRow:
+  .db $28, $2a, $29
+
+WindowRow:
+  .db $2b, $24, $3b
+  
+WindowBottomRow:
+  .db $38, $3a, $39 
+  
+GameInfoText:
+
+  .db $0B, $0A, $17, $14, $00, $60, $00
+  .db $24, $24, $24, $24, $24, $24, $24
+  .db $24, $24, $24, $61, $24, $24, $24 
+
+Pause_Menu:	;since we're drawing it while rendering, we can just pack in the whole thing
   .db $28,$2a,$2a,$2a,$2a,$2a,$2a,$2a,$2a,$2a,$2a,$2a,$29
   .db $2b,$24,$1c,$0a,$1f,$0e,$62,$0e,$21,$12,$1d,$24,$3b
   .db $2b,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$3b
@@ -98,6 +113,7 @@ SelectDefaultTime:
   .db $8F, $26 
 DefaultTimeString:
   .db $05, $60,$60,$61,$60,$60
+  
 
 
  

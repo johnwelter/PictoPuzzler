@@ -1,0 +1,68 @@
+need to rework the drawing system. 
+
+when loading a game mode, we'll do the initial draw:
+
+- fill both screens with black
+- draw objects to screen 1, then 2
+
+there should be a couple things:
+- draw object:
+	draws a specific object, defined in memeory
+- draw line:
+	draws a line of a given tile
+- draw table:
+	draws the menu table
+- draw window:
+	draws a window box of given dimensions
+- draw game field:
+	draws grid window
+
+
+title/menu screen:
+	- draw title object to screen 1
+	- draw line to screen 1
+	- draw menu options to screen 1
+	- draw menu table to screen 2
+
+game screen:
+	- draw time/level window
+	- draw window text
+	- draw grid window
+
+game over screen:
+	- draw window
+	- draw window text
+	- draw warning
+
+credits:
+	- draw whatever, we don't need it yet
+
+
+hoepfully, there's space afterwards to move the sound engine over. should be a lot of extra space left over... fingers crossed!
+
+let's find out what our space usage is.
+the tables and sprite data altogether take up E000 - FD54, which is a good couple KB that doesn't need to be taken up
+4, 8, C, 0, 4, 8, C.. about 7 I think. way too much
+
+how much does the sound engine take:
+from A0dB to A944
+4, 8... a little more than 2KB
+we should absolutely be able to make the space. 
+
+would also free up the dumb precomp I've been doing
+
+
+states should include tables for their drawbjects
+
+object types:
+	- raw object (table pointer, screen position of top left, nametableidx)
+	- line (tile idx, length, screen position of left, nametableidx)
+	- game table (width, screen position of top left, nametableidx) 
+	- window (width, height, screen position top left, nametableidx)
+	- level table (level count, screen position of top left, nametableidx)
+
+
+
+
+
+
