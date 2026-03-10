@@ -9,7 +9,7 @@ A planned music editor is in the works at https://github.com/johnwelter/Catfort-
 
 ## Compiling a build
  
- You can easily make a build with Make.bat in the head folder. 
+ You can easily make a build with `Make.bat` in the head folder. 
  
 ## Compiling a build with sound engine or DMC changes
  
@@ -63,6 +63,6 @@ lables.
 
  6. once `Source/SoundEnginePreComp.nes` is trimmed, go back into `Source/Defines/Defines.asm` and swap the FNS files again, where `.include "Source/SoundEnginePreComp.fns"` should be uncommented and `.include "Source/PictoPuzzler.fns"` should be commented out. 
 
- 7. rebuild the game with Make.bat
+ 7. rebuild the game with `Make.bat`
 
 This should all be fixed up in a future update once I automate screen draws to remove the need for storing full screens of data.
