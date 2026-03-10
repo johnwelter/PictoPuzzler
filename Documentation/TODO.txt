@@ -1,0 +1,16 @@
+things left to do
+
+- songs
+  - title
+  - bank 1
+  - bank 2
+  - puzzle solved fanfare
+-sfx
+  - place marker
+  - erase marker
+  - place x
+  - image draw
+
+EXPANDED:
+
+- toggle for mouse input (need mouse/ console)
