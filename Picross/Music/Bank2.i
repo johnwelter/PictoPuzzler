@@ -364,10 +364,16 @@ bank2_triFirstLoop:
     .word bank2_tri
    
    
+   
+bank2_noise:
+	
+	.byte volume_envelope, ve_drum_decay
+    .byte quarterSwing, $04, $04, $04, $04
+	 
+	.byte set_loop1_counter, 14             	; repeat 14 times 
 	
 bank2_noiseMainLoop:
 
-	
 	.byte volume_envelope, ve_hiHat_decay
 	.byte swingDown, $04, swingUp, $04, swingDown, $04, swingUp, $04	
 	.byte volume_envelope, ve_drum_decay
@@ -377,15 +383,14 @@ bank2_noiseMainLoop:
 	
 	.byte loop1                             
     .word bank2_noiseMainLoop
-   
-bank2_noise:
-	
-	.byte volume_envelope, ve_drum_decay
-    .byte quarterSwing, $04, $04, $04, $04
-	 
-	.byte set_loop1_counter, 14             	; repeat 14 times 
-    .byte loop
-	.word bank2_noiseMainLoop
+	.byte loop
+	.word bank2_noise
+
+bank2_dpcm:
+
+	.byte quarterSwing, $0B, $0B, $0B
+	.byte swingDown, $1B, eighthSwing, $0B, swingUp, $01
+	.byte set_loop1_counter, 7  
 
 bank2_dpcmMainLoop:
 	
@@ -394,11 +399,5 @@ bank2_dpcmMainLoop:
 	
 	.byte loop1
 	.word bank2_dpcmMainLoop
-
-bank2_dpcm:
-
-	.byte quarterSwing, $0B, $0B, $0B
-	.byte swingDown, $1B, eighthSwing, $0B, swingUp, $01
-	.byte set_loop1_counter, 7  
 	.byte loop
-	.word bank2_dpcmMainLoop
+	.word bank2_dpcm
