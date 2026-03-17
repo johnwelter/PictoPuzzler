@@ -7,7 +7,7 @@ pitch_envelopes:
 pe_loopLast = $80
 pe_loopAll = $81
 pe_loopPart = $82	;requires byte timer amount after
-pe_delay = $83		;requires byte amount after - of negative, not yet reset. only allow if timer is currently 0
+pe_delay = $83		;requires byte amount after
 
 se_pe_none:
 	.byte $00
@@ -16,7 +16,7 @@ se_pe_none:
 se_pe_mod:
 
 	.byte $00, pe_delay, $0A, $00, $00, $FE, $FE, $FC, $FC, $FE, $FE, $00, $00, $02, $02, $04, $04, $02, $02
-	.byte pe_loopAll
+	.byte pe_loopPart, $10
 
 se_pe_sweep:
 	

@@ -439,10 +439,10 @@ se_set_stream_arpeggio:
 .read_arp:
     ldy stream_arp_index, x      ;our current position within the volume envelope.
     lda [sound_ptr], y          ;grab the value.
-    cmp #$FF
-    bne .set_arp                ;if not FF, set the volume
+    cmp #$80
+    bne .set_arp                ;if not 80, set the volume
 	LDA #$00
-    STA stream_arp_index, x      ;else if FF, go back one and read again
+    STA stream_arp_index, x      ;else if 80, go back one to start
     jmp .read_arp                ;  FF essentially tells us to repeat the last
                                 ;  volume value for the remainder of the note
 .set_arp:
@@ -486,8 +486,8 @@ se_set_stream_pitch:
     sta sound_ptr+1
 	
 	LDA stream_pe_delay, x
-	;if not 0, decrement
-	AND #$7F			;check if, without minus flag, the delay is 0
+	;;if not 0, decrement
+	;AND #$7F			;check if, without minus flag, the delay is 0
 	BEQ .read_pe
 	DEC stream_pe_delay, x
 	RTS
@@ -520,11 +520,11 @@ se_set_stream_pitch:
 .notLoopPart:
 	cmp #pe_delay
 	BNE .notLoopDelay
-	LDA stream_pe_delay, x
-	BMI .delayUsed	;negative, delay was already used this time
+	;LDA stream_pe_delay, x
+	;BMI .delayUsed	;negative, delay was already used this time
 	iny
 	lda [sound_ptr], y
-	ORA #$80
+	;ORA #$80
 	STA stream_pe_delay, x
 	inc stream_pe_index, x
 	jmp .finish_pitchShift

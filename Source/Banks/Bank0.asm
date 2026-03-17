@@ -39,7 +39,7 @@
   .db $00, $00, $00, $00
   
   .incbin "Source/SoundEnginePreComp.nes"
-  .include "Source/Content/Sound/Music/Bank0.i"  ;holds the data for bank song
+  .include "Source/Content/Sound/Music/B0m.asm"  ;holds the data for bank song
 
   .org $BFFA     ;first of the three vectors starts here
   .dw NMI        ;when an NMI happens (once per frame if enabled) the 
