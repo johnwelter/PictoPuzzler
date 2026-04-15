@@ -15,60 +15,60 @@ arpeggios:
 
 se_arp_none:
 	.byte $00
-	.byte $80
+	.byte $81
 
 se_arp_lowerThird:
 	.byte $00, $00, $F8, $F8
-	.byte $80
+	.byte $81
 	
 se_arp_dimTriad:
 	.byte $00, $03, $06
-	.byte $80
+	.byte $81
 
 se_arp_minInvn1:
 	.byte $FB, $00, $03
-	.byte $80
+	.byte $81
 	
 se_arp_sharp5:
 	.byte $00, $04, $08
-	.byte $80
+	.byte $81
 
 se_arp_maj7:
 	.byte $00, $04, $07, $0B
-	.byte $80
+	.byte $81
 	
 se_arp_min7:
 	.byte $00, $03, $07, $0A
-	.byte $80
+	.byte $81
 
 se_arp_minFlat6:
 	.byte $00, $03, $07, $08
-	.byte $80
+	.byte $81
 	
 se_arp_spread5thlowerThird:
 
 	.byte $F8, $00, $07, $0C
-	.byte $80
+	.byte $81
 	
 se_arp_min7Invn1:
 
 	.byte $FE, $00, $03, $07
-	.byte $80
+	.byte $81
 
 se_arp_dom7Invn2:
 	
 	.byte $FB, $FE, $00, $04
-	.byte $80
+	.byte $81
 
 se_arp_dim7:
 	
 	.byte $00, $03, $06, $09
-	.byte $80
+	.byte $81
 
 se_arp_majPlusOct:
 
 	.byte $00, $04, $07, $0C
-	.byte $80
+	.byte $81
 	
 
 

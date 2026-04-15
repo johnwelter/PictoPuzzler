@@ -1,6 +1,7 @@
 sound_init:
     lda #$1F
     sta $4015   ;enable Square 1, Square 2, Triangle and Noise channels
+	sta sound_enable_flags
     
     lda #$00
     sta sound_disable_flag  ;clear disable flag
@@ -23,6 +24,7 @@ se_silence:
 sound_disable:
     lda #$00
     sta $4015   ;disable all channels
+	sta sound_enable_flags
     lda #$01
     sta sound_disable_flag  ;set disable flag
     rts
@@ -67,7 +69,7 @@ sound_load:
     iny
 	
 	;temp solution
-	lda #pe_none
+	lda #me_none
 	sta stream_pe, x
 	
 	;temp solution
@@ -228,7 +230,19 @@ se_fetch_byte:
     rts
 
 se_do_noise:
+
+	lda $4015
+	AND #$10				;get the current DMC bytes remaining
+	ORA #$07				;add in the lower three bits
+	AND sound_enable_flags 	;and with the current sound flags, minus noise
+	sta sound_enable_flags 	;disable noise
+	sta $4015
+
     lda sound_temp2
+	AND #%00100000
+	bne .leave
+	
+	lda sound_temp2
     and #%00010000
     beq .mode0
     lda sound_temp2
@@ -237,15 +251,22 @@ se_do_noise:
 .mode0:
     lda sound_temp2
     sta stream_note_LO, x
+
+	lda sound_enable_flags
+	ORA #%00001000
+	STA sound_enable_flags
+	sta $4015
+.leave:
     rts
 	
 se_do_dpmc:
 	TXA
 	PHA
 	
-	lda $4015
+	lda sound_enable_flags
 	AND #$0F
-	sta $4015 ;DPCM disable
+	sta sound_enable_flags ;DPCM disable
+	sta $4015
 	
 	lda sound_temp2		;load up sample index- we can cram in the pitch and keep ourselves to 6 samples (7 will be rest)
 	CMP #$70
@@ -267,10 +288,10 @@ se_do_dpmc:
 	lda SampleLength,x
 	sta $4013
 	
-	lda $4015
-	AND #$0F
+	lda sound_enable_flags
 	ORA #$10
-	STA $4015
+	STA sound_enable_flags
+	sta $4015
 .leave:
 	PLA
 	TAX
@@ -367,9 +388,9 @@ se_set_stream_volume:
     lda stream_ve, x            ;which volume envelope?
     asl a                       ;multiply by 2 because we are indexing into a table of addresses (words)
     tay
-    lda volume_envelopes, y     ;get the low byte of the address from the pointer table
+    lda kVol, y     ;get the low byte of the address from the pointer table
     sta sound_ptr               ;put it into our pointer variable
-    lda volume_envelopes+1, y   ;get the high byte of the address
+    lda kVol+1, y   ;get the high byte of the address
     sta sound_ptr+1
     
 .read_ve:
@@ -431,15 +452,15 @@ se_set_stream_arpeggio:
     lda stream_arp, x            ;which volume envelope?
     asl a                       ;multiply by 2 because we are indexing into a table of addresses (words)
     tay
-    lda arpeggios, y     ;get the low byte of the address from the pointer table
+    lda kArp, y     ;get the low byte of the address from the pointer table
     sta sound_ptr               ;put it into our pointer variable
-    lda	arpeggios+1, y   ;get the high byte of the address
+    lda	kArp+1, y   ;get the high byte of the address
     sta sound_ptr+1
     
 .read_arp:
     ldy stream_arp_index, x      ;our current position within the volume envelope.
     lda [sound_ptr], y          ;grab the value.
-    cmp #$80
+    cmp #$81
     bne .set_arp                ;if not 80, set the volume
 	LDA #$00
     STA stream_arp_index, x      ;else if 80, go back one to start
@@ -480,9 +501,9 @@ se_set_stream_pitch:
     lda stream_pe, x            ;which volume envelope?
     asl a                       ;multiply by 2 because we are indexing into a table of addresses (words)
     tay
-    lda pitch_envelopes, y     ;get the low byte of the address from the pointer table
+    lda kMod, y     ;get the low byte of the address from the pointer table
     sta sound_ptr               ;put it into our pointer variable
-    lda pitch_envelopes+1, y   ;get the high byte of the address
+    lda kMod+1, y   ;get the high byte of the address
     sta sound_ptr+1
 	
 	LDA stream_pe_delay, x
@@ -495,20 +516,20 @@ se_set_stream_pitch:
 .read_pe:
     ldy stream_pe_index, x      ;our current position within the volume envelope.
     lda [sound_ptr], y          ;grab the value.
-    cmp #pe_loopLast
+    cmp #l_cLast
 	BNE .notLoopLast
 	dec stream_pe_index, x      ;else if loop last, go back one and read again
 	jmp .read_pe 
 
 .notLoopLast:
-	cmp #pe_loopAll
+	cmp #l_cAll
 	BNE .notLoopAll
 	LDA #$00
 	STA stream_pe_index, x
 	jmp .read_pe
 	
 .notLoopAll:
-	cmp #pe_loopPart
+	cmp #l_cPart
 	BNE .notLoopPart
 	iny
 	lda stream_pe_index, x
@@ -518,7 +539,7 @@ se_set_stream_pitch:
 	jmp .read_pe
 
 .notLoopPart:
-	cmp #pe_delay
+	cmp #l_cHold
 	BNE .notLoopDelay
 	;LDA stream_pe_delay, x
 	;BMI .delayUsed	;negative, delay was already used this time

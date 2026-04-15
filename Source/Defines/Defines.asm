@@ -12,6 +12,11 @@
 ;; 0100 is the stack
 ;; 0200 is sprite ram
   .rsset $0300
+  ;; these need to be separate files while the sound engine is pre-compiled
+  .include "Source/External/SoundEngine/Tables/FX/kVol_idx.asm"
+  .include "Source/External/SoundEngine/Tables/FX/kMod_idx.asm"
+  .include "Source/External/SoundEngine/Tables/FX/kArp_idx.asm"
+  .include "Source/External/SoundEngine/Tables/note_idx.i"
   .include "Source/External/SoundEngine/Variables/SoundVariables.asm"
   .rsset $0400
   .rsset $0500

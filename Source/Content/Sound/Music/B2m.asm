@@ -91,7 +91,7 @@ bank2_square2:
 bank2_square1:
 	
 	.byte duty, $30
-	.byte pitch_envelope, pe_none
+	.byte pitch_envelope, me_none
 	.byte quarterSwing, Ds5, Cs5, Fs5, five_thirtyseconds, E5
 	.byte wholeSwing, Ds5, swingUp, rest, quarterSwing, rest
 	
@@ -114,7 +114,7 @@ bank2_square1:
 	.byte wholeSwing, rest
 	
 	.byte duty, $B0
-	.byte pitch_envelope, pe_none
+	.byte pitch_envelope, me_none
 	.byte volume_envelope, ve_blip_echo
 	.byte d_sixteenth, rest, G4, G4, E4, G4, swingDown, E4, quarterSwing, A4, swingUp, D4
 	.byte d_sixteenth, E4, G4, G4, E4, G4, swingDown, E4, quarterSwing, B4, swingUp, As4
@@ -126,7 +126,7 @@ bank2_square1:
 	.byte swingDown, G4, swingUp, E4, swingDown, Fs4, swingUp, D4, swingDown, E4, swingUp, A3, swingDown, D4, halfSwing_p1, B3
 	
 	.byte duty, $70
-	.byte pitch_envelope, pe_none
+	.byte pitch_envelope, me_none
 	.byte volume_envelope, ve_veryLong_decay
 	.byte quarterSwing, rest, E5, d_quarterSwing, G5, d_sixteenth, B5
 	.byte quarterSwing, D5, halfSwing, E5, d_sixteenth, B4, C5
@@ -151,12 +151,12 @@ bank2_tri:
 	
 bank2_triFirstLoop:
 
-	.byte pitch_envelope, pe_bassKick
+	.byte pitch_envelope, me_bassKick
 	.byte thirtysecond, B4, B4, B4, F4, F4, F4
 	.byte swingDown, D4, swingUp, B3
 	.byte swingDown, rest
 
-	.byte pitch_envelope, pe_none
+	.byte pitch_envelope, me_none
 	.byte d_sixteenth, E3
 	.byte swingUp, E3
 	.byte d_sixteenth, E2, E3, E2
@@ -202,12 +202,12 @@ bank2_triFirstLoop:
 	.byte loop1
 	.word bank2_triFirstLoop
 	
-	.byte pitch_envelope, pe_bassKick
+	.byte pitch_envelope, me_bassKick
 	.byte thirtysecond, B4, B4, B4, F4, F4, F4
 	.byte swingDown, D4, swingUp, B3
 	.byte d_sixteenth, rest
 	
-	.byte pitch_envelope, pe_none
+	.byte pitch_envelope, me_none
 	.byte d_sixteenth, C3, C3
 	.byte swingDown, C4
 	.byte eighth, C3
@@ -248,7 +248,7 @@ bank2_triFirstLoop:
 	.byte d_sixteenth, E3
 	.byte swingUp, E3
 	
-	.byte pitch_envelope, pe_none
+	.byte pitch_envelope, me_none
 	.byte d_sixteenth, C3, C3
 	.byte swingDown, C4
 	.byte eighth, C3
@@ -283,12 +283,12 @@ bank2_triFirstLoop:
 	.byte swingDown, E4
 	.byte eighth, E3
 	
-	.byte pitch_envelope, pe_bassKick
+	.byte pitch_envelope, me_bassKick
 	.byte thirtysecond, B4, B4, B4, F4, F4, F4
 	.byte swingDown, D4, swingUp, B3
 	.byte d_sixteenth, rest
 	
-	.byte pitch_envelope, pe_none
+	.byte pitch_envelope, me_none
 	.byte d_sixteenth, C3, C3
 	.byte swingDown, C4
 	.byte eighth, C3
@@ -329,7 +329,7 @@ bank2_triFirstLoop:
 	.byte d_sixteenth, E3
 	.byte swingUp, E3
 	
-	.byte pitch_envelope, pe_none
+	.byte pitch_envelope, me_none
 	.byte d_sixteenth, C3, C3
 	.byte swingDown, C4
 	.byte eighth, C3

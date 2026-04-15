@@ -1,5 +1,5 @@
 
     .include "Source/External/SoundEngine/Tables/note_length_table.i"
-    .include "Source/External/SoundEngine/Tables/FX/vol_envelopes.i"
-	.include "Source/External/SoundEngine/Tables/FX/pitch_envelopes.i"
-	.include "Source/External/SoundEngine/Tables/FX/arpeggios.i"
+    .include "Source/External/SoundEngine/Tables/FX/kVol.asm"
+	.include "Source/External/SoundEngine/Tables/FX/kMod.asm"
+	.include "Source/External/SoundEngine/Tables/FX/kArp.asm"

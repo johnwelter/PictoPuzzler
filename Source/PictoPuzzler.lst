@@ -163,8 +163,201 @@
    12                     ;; 0100 is the stack
    13                     ;; 0200 is sprite ram
    14           0300        .rsset $0300
+   15                       ;; these need to be separate files while the sound engine is pre-compiled
+#[3]   Source/External/SoundEngine/Tables/FX/kVol_idx.asm
+   16                       .include "Source/External/SoundEngine/Tables/FX/kVol_idx.asm"
+    1           0000      ve_short_staccato = $00
+    2           0001      ve_fade_in = $01
+    3           0002      ve_blip_echo = $02
+    4           0003      ve_tgl_1 = $03
+    5           0004      ve_tgl_2 = $04
+    6           0005      ve_battlekid_1 = $05
+    7           0006      ve_battlekid_1b = $06
+    8           0007      ve_battlekid_2 = $07
+    9           0008      ve_battlekid_2b = $08
+   10           0009      ve_drum_decay = $09
+   11           000A      ve_hiHat_decay = $0A
+   12           000B      ve_long_decay = $0B
+   13           000C      ve_tinyDecy = $0C
+   14           000D      ve_noDecay = $0D
+   15           000E      ve_long_tremelo = $0E
+   16           000F      ve_veryLong_decay = $0F
+   17                     
+#[2]   Source/Defines/Defines.asm
+#[3]   Source/External/SoundEngine/Tables/FX/kMod_idx.asm
+   17                       .include "Source/External/SoundEngine/Tables/FX/kMod_idx.asm"
+    1           0000      me_none = $00
+    2           0001      me_mod = $01
+    3           0002      me_sweep = $02
+    4           0003      me_bassKick = $03
+    5                     
+#[2]   Source/Defines/Defines.asm
+#[3]   Source/External/SoundEngine/Tables/FX/kArp_idx.asm
+   18                       .include "Source/External/SoundEngine/Tables/FX/kArp_idx.asm"
+    1           0000      arp_none = $00
+    2           0001      arp_lowerThird = $01
+    3           0002      arp_dimTriad = $02
+    4           0003      arp_minInvn1 = $03
+    5           0004      arp_sharp5 = $04
+    6           0005      arp_maj7 = $05
+    7           0006      arp_min7 = $06
+    8           0007      arp_minFlat6 = $07
+    9           0008      arp_spread5thlowerThird = $08
+   10           0009      arp_min7Invn1 = $09
+   11           000A      arp_dom7Invn2 = $0A
+   12           000B      arp_dim7 = $0B
+   13           000C      arp_majPlusOct = $0C
+   14                     
+#[2]   Source/Defines/Defines.asm
+#[3]   Source/External/SoundEngine/Tables/note_idx.i
+   19                       .include "Source/External/SoundEngine/Tables/note_idx.i"
+    1                     ;Note: octaves in music traditionally start at C, not A    
+    2           0000      A1 = $00    ;the "1" means Octave 1
+    3           0001      As1 = $01   ;the "s" means "sharp"
+    4           0001      Bb1 = $01   ;the "b" means "flat"  A# == Bb, so same value
+    5           0002      B1 = $02
+    6                     
+    7           0003      C2 = $03
+    8           0004      Cs2 = $04
+    9           0004      Db2 = $04
+   10           0005      D2 = $05
+   11           0006      Ds2 = $06
+   12           0006      Eb2 = $06
+   13           0007      E2 = $07
+   14           0008      F2 = $08
+   15           0009      Fs2 = $09
+   16           0009      Gb2 = $09
+   17           000A      G2 = $0A
+   18           000B      Gs2 = $0B
+   19           000B      Ab2 = $0B
+   20           000C      A2 = $0C
+   21           000D      As2 = $0D
+   22           000D      Bb2 = $0D
+   23           000E      B2 = $0E
+   24                     
+   25           000F      C3 = $0F
+   26           0010      Cs3 = $10
+   27           0010      Db3 = $10
+   28           0011      D3 = $11
+   29           0012      Ds3 = $12
+   30           0012      Eb3 = $12
+   31           0013      E3 = $13
+   32           0014      F3 = $14
+   33           0015      Fs3 = $15
+   34           0015      Gb3 = $15
+   35           0016      G3 = $16
+   36           0017      Gs3 = $17
+   37           0017      Ab3 = $17
+   38           0018      A3 = $18
+   39           0019      As3 = $19
+   40           0019      Bb3 = $19
+   41           001A      B3 = $1a
+   42                     
+   43           001B      C4 = $1b
+   44           001C      Cs4 = $1c
+   45           001C      Db4 = $1c
+   46           001D      D4 = $1d
+   47           001E      Ds4 = $1e
+   48           001E      Eb4 = $1e
+   49           001F      E4 = $1f
+   50           0020      F4 = $20
+   51           0021      Fs4 = $21
+   52           0021      Gb4 = $21
+   53           0022      G4 = $22
+   54           0023      Gs4 = $23
+   55           0023      Ab4 = $23
+   56           0024      A4 = $24
+   57           0025      As4 = $25
+   58           0025      Bb4 = $25
+   59           0026      B4 = $26
+   60                     
+   61           0027      C5 = $27
+   62           0028      Cs5 = $28
+   63           0028      Db5 = $28
+   64           0029      D5 = $29
+   65           002A      Ds5 = $2a
+   66           002A      Eb5 = $2a
+   67           002B      E5 = $2b
+   68           002C      F5 = $2c
+   69           002D      Fs5 = $2d
+   70           002D      Gb5 = $2d
+   71           002E      G5 = $2e
+   72           002F      Gs5 = $2f
+   73           002F      Ab5 = $2f
+   74           0030      A5 = $30
+   75           0031      As5 = $31
+   76           0031      Bb5 = $31
+   77           0032      B5 = $32
+   78                     
+   79           0033      C6 = $33
+   80           0034      Cs6 = $34
+   81           0034      Db6 = $34
+   82           0035      D6 = $35
+   83           0036      Ds6 = $36
+   84           0036      Eb6 = $36
+   85           0037      E6 = $37
+   86           0038      F6 = $38
+   87           0039      Fs6 = $39
+   88           0039      Gb6 = $39
+   89           003A      G6 = $3a
+   90           003B      Gs6 = $3b
+   91           003B      Ab6 = $3b
+   92           003C      A6 = $3c
+   93           003D      As6 = $3d
+   94           003D      Bb6 = $3d
+   95           003E      B6 = $3e
+   96                     
+   97           003F      C7 = $3f
+   98           0040      Cs7 = $40
+   99           0040      Db7 = $40
+  100           0041      D7 = $41
+  101           0042      Ds7 = $42
+  102           0042      Eb7 = $42
+  103           0043      E7 = $43
+  104           0044      F7 = $44
+  105           0045      Fs7 = $45
+  106           0045      Gb7 = $45
+  107           0046      G7 = $46
+  108           0047      Gs7 = $47
+  109           0047      Ab7 = $47
+  110           0048      A7 = $48
+  111           0049      As7 = $49
+  112           0049      Bb7 = $49
+  113           004A      B7 = $4a
+  114                     
+  115           004B      C8 = $4b
+  116           004C      Cs8 = $4c
+  117           004C      Db8 = $4c
+  118           004D      D8 = $4d
+  119           004E      Ds8 = $4e
+  120           004E      Eb8 = $4e
+  121           004F      E8 = $4f
+  122           0050      F8 = $50
+  123           0051      Fs8 = $51
+  124           0051      Gb8 = $51
+  125           0052      G8 = $52
+  126           0053      Gs8 = $53
+  127           0053      Ab8 = $53
+  128           0054      A8 = $54
+  129           0055      As8 = $55
+  130           0055      Bb8 = $55
+  131           0056      B8 = $56
+  132                     
+  133           0057      C9 = $57
+  134           0058      Cs9 = $58
+  135           0058      Db9 = $58
+  136           0059      D9 = $59
+  137           005A      Ds9 = $5a
+  138           005A      Eb9 = $5a
+  139           005B      E9 = $5b
+  140           005C      F9 = $5c
+  141           005D      Fs9 = $5d
+  142           005D      Gb9 = $5d
+  143                     
+  144           005E      rest = $5e
+#[2]   Source/Defines/Defines.asm
 #[3]   Source/External/SoundEngine/Variables/SoundVariables.asm
-   15                       .include "Source/External/SoundEngine/Variables/SoundVariables.asm"
+   20                       .include "Source/External/SoundEngine/Variables/SoundVariables.asm"
     1           0000      SQUARE_1 = $00 ;these are channel constants
     2           0001      SQUARE_2 = $01
     3           0002      TRIANGLE = $02
@@ -180,287 +373,115 @@
    13           0006      MUSIC_DPMC      = $06
    14           0007      SFX_DPMC        = $07
    15                     
-   16           0000      ve_short_staccato = $00
-   17           0001      ve_fade_in = $01
-   18           0002      ve_blip_echo = $02
-   19           0003      ve_tgl_1 = $03
-   20           0004      ve_tgl_2 = $04
-   21           0005      ve_battlekid_1 = $05
-   22           0006      ve_battlekid_1b = $06
-   23           0007      ve_battlekid_2 = $07
-   24           0008      ve_battlekid_2b = $08
-   25           0009      ve_drum_decay = $09
-   26           000A      ve_hiHat_decay = $0A
-   27           000B      ve_long_decay = $0B
-   28           000C      ve_tinyDecy = $0C
-   29           000D      ve_noDecay = $0D
-   30           000E      ve_long_tremelo = $0E
-   31           000F      ve_veryLong_decay = $0F
-   32                     
-   33                     ;these are aliases to use in the sound data.
-   34           00A0      endsound = $A0
-   35           00A1      loop = $A1
-   36           00A2      volume_envelope = $A2
-   37           00A3      duty = $A3
-   38           00A4      set_loop1_counter = $A4
-   39           00A5      loop1 = $A5
-   40           00A6      set_note_offset = $A6
-   41           00A7      adjust_note_offset = $A7
-   42           00A8      transpose = $A8
-   43           00A9      pitch_envelope = $A9
-   44           00AA      arpeggio = $AA
-   45                     
-   46           0000      pe_none = $00
-   47           0001      pe_mod = $01
-   48           0002      pe_sweep = $02
-   49           0003      pe_bassKick = $03
-   50                     
-   51                     ;Note: octaves in music traditionally start at C, not A    
-   52           0000      A1 = $00    ;the "1" means Octave 1
-   53           0001      As1 = $01   ;the "s" means "sharp"
-   54           0001      Bb1 = $01   ;the "b" means "flat"  A# == Bb, so same value
-   55           0002      B1 = $02
-   56                     
-   57           0003      C2 = $03
-   58           0004      Cs2 = $04
-   59           0004      Db2 = $04
-   60           0005      D2 = $05
-   61           0006      Ds2 = $06
-   62           0006      Eb2 = $06
-   63           0007      E2 = $07
-   64           0008      F2 = $08
-   65           0009      Fs2 = $09
-   66           0009      Gb2 = $09
-   67           000A      G2 = $0A
-   68           000B      Gs2 = $0B
-   69           000B      Ab2 = $0B
-   70           000C      A2 = $0C
-   71           000D      As2 = $0D
-   72           000D      Bb2 = $0D
-   73           000E      B2 = $0E
-   74                     
-   75           000F      C3 = $0F
-   76           0010      Cs3 = $10
-   77           0010      Db3 = $10
-   78           0011      D3 = $11
-   79           0012      Ds3 = $12
-   80           0012      Eb3 = $12
-   81           0013      E3 = $13
-   82           0014      F3 = $14
-   83           0015      Fs3 = $15
-   84           0015      Gb3 = $15
-   85           0016      G3 = $16
-   86           0017      Gs3 = $17
-   87           0017      Ab3 = $17
-   88           0018      A3 = $18
-   89           0019      As3 = $19
-   90           0019      Bb3 = $19
-   91           001A      B3 = $1a
-   92                     
-   93           001B      C4 = $1b
-   94           001C      Cs4 = $1c
-   95           001C      Db4 = $1c
-   96           001D      D4 = $1d
-   97           001E      Ds4 = $1e
-   98           001E      Eb4 = $1e
-   99           001F      E4 = $1f
-  100           0020      F4 = $20
-  101           0021      Fs4 = $21
-  102           0021      Gb4 = $21
-  103           0022      G4 = $22
-  104           0023      Gs4 = $23
-  105           0023      Ab4 = $23
-  106           0024      A4 = $24
-  107           0025      As4 = $25
-  108           0025      Bb4 = $25
-  109           0026      B4 = $26
-  110                     
-  111           0027      C5 = $27
-  112           0028      Cs5 = $28
-  113           0028      Db5 = $28
-  114           0029      D5 = $29
-  115           002A      Ds5 = $2a
-  116           002A      Eb5 = $2a
-  117           002B      E5 = $2b
-  118           002C      F5 = $2c
-  119           002D      Fs5 = $2d
-  120           002D      Gb5 = $2d
-  121           002E      G5 = $2e
-  122           002F      Gs5 = $2f
-  123           002F      Ab5 = $2f
-  124           0030      A5 = $30
-  125           0031      As5 = $31
-  126           0031      Bb5 = $31
-  127           0032      B5 = $32
-  128                     
-  129           0033      C6 = $33
-  130           0034      Cs6 = $34
-  131           0034      Db6 = $34
-  132           0035      D6 = $35
-  133           0036      Ds6 = $36
-  134           0036      Eb6 = $36
-  135           0037      E6 = $37
-  136           0038      F6 = $38
-  137           0039      Fs6 = $39
-  138           0039      Gb6 = $39
-  139           003A      G6 = $3a
-  140           003B      Gs6 = $3b
-  141           003B      Ab6 = $3b
-  142           003C      A6 = $3c
-  143           003D      As6 = $3d
-  144           003D      Bb6 = $3d
-  145           003E      B6 = $3e
-  146                     
-  147           003F      C7 = $3f
-  148           0040      Cs7 = $40
-  149           0040      Db7 = $40
-  150           0041      D7 = $41
-  151           0042      Ds7 = $42
-  152           0042      Eb7 = $42
-  153           0043      E7 = $43
-  154           0044      F7 = $44
-  155           0045      Fs7 = $45
-  156           0045      Gb7 = $45
-  157           0046      G7 = $46
-  158           0047      Gs7 = $47
-  159           0047      Ab7 = $47
-  160           0048      A7 = $48
-  161           0049      As7 = $49
-  162           0049      Bb7 = $49
-  163           004A      B7 = $4a
-  164                     
-  165           004B      C8 = $4b
-  166           004C      Cs8 = $4c
-  167           004C      Db8 = $4c
-  168           004D      D8 = $4d
-  169           004E      Ds8 = $4e
-  170           004E      Eb8 = $4e
-  171           004F      E8 = $4f
-  172           0050      F8 = $50
-  173           0051      Fs8 = $51
-  174           0051      Gb8 = $51
-  175           0052      G8 = $52
-  176           0053      Gs8 = $53
-  177           0053      Ab8 = $53
-  178           0054      A8 = $54
-  179           0055      As8 = $55
-  180           0055      Bb8 = $55
-  181           0056      B8 = $56
-  182                     
-  183           0057      C9 = $57
-  184           0058      Cs9 = $58
-  185           0058      Db9 = $58
-  186           0059      D9 = $59
-  187           005A      Ds9 = $5a
-  188           005A      Eb9 = $5a
-  189           005B      E9 = $5b
-  190           005C      F9 = $5c
-  191           005D      Fs9 = $5d
-  192           005D      Gb9 = $5d
-  193                     
-  194           005E      rest = $5e
-  195           0070      d_rest = $70
-  196                     
-  197                     ;note length constants (aliases)
-  198           0080      thirtysecond = $80
-  199           0081      sixteenth = $81
-  200           0082      eighth = $82
-  201           0083      quarter = $83
-  202           0084      half = $84
-  203           0085      whole = $85
-  204           0086      d_sixteenth = $86
-  205           0087      d_eighth = $87
-  206           0088      d_quarter = $88
-  207           0089      d_half = $89
-  208           008A      d_whole = $8A   ;don't forget we are counting in hex
-  209           008B      t_quarter = $8B
-  210           008C      five_eighths =$8C
-  211           008D      five_sixteenths=$8D
-  212           008E      d_half_d_eight = $8E
-  213           008F      whole_quarter_sixteenth = $8F
-  214           0090      d_half_eighth = $90
-  215           0091      whole_sixteenth = $91
-  216           0087      quarterSwing = $87
-  217           0088      halfSwing = $88
-  218           0089      wholeSwing = $89
-  219           0086      eighthSwing = $86
-  220           0081      swingDown = $81
-  221           0080      swingUp = $80
-  222           0092      five_thirtyseconds = $92
-  223                     
-  224           0093      d_halfSwing_p1 = $93
-  225           0094      halfSwing_p1 = $94
-  226           0095      halfSwing_p3 = $95
-  227           0096      halfSwing_m1 = $96
-  228           0097      wholeSwing_p1 = $97
-  229           0098      quarterSwing_p1 = $98
-  230           0099      d_quarterSwing = $99
-  231           009A      d_halfSwing = $9A
-  232           009B      wholeSwing_m1 = $9B
-  233                     
-  234           0000      arp_none = $00
-  235           0001      arp_lowerThird = $01
-  236           0002      arp_dimTriad = $02
-  237           0003      arp_minInvn1 = $03
-  238           0004      arp_sharp5 = $04
-  239           0005      arp_maj7 = $05
-  240           0006      arp_min7 = $06
-  241           0007      arp_minFlat6 = $07
-  242           0008      arp_spread5thlowerThird = $08
-  243           0009      arp_min7Invn1 = $09
-  244           000A      arp_dom7Invn2 = $0A
-  245           000B      arp_dim7 = $0B
-  246           000C      arp_majPlusOct = $0C
-  247                     
-  248                     
-  249           0300      sound_disable_flag  .rs 1   ;a flag variable that keeps track of whether the sound engine is disabled or not. 
-  250           0301      sound_temp1 .rs 1           ;temporary variables
-  251           0302      sound_temp2 .rs 1
-  252           0303      sound_sq1_old .rs 1  ;the last value written to $4003
-  253           0304      sound_sq2_old .rs 1  ;the last value written to $4007
-  254           0305      soft_apu_ports .rs 20
-  255                     
-  256                     ;reserve 6 bytes, one for each stream
-  257           0319      stream_curr_sound .rs 8     ;current song/sfx loaded
-  258           0321      stream_status .rs 8         ;status byte.   bit0: (1: stream enabled; 0: stream disabled)
-  259           0329      stream_channel .rs 8        ;what channel is this stream playing on?
-  260           0331      stream_ptr_LO .rs 8         ;low byte of pointer to data stream
-  261           0339      stream_ptr_HI .rs 8         ;high byte of pointer to data stream
-  262           0341      stream_ve .rs 8             ;current volume envelope
-  263           0349      stream_ve_index .rs 8       ;current position within the volume envelope
-  264           0351      stream_vol_duty .rs 8       ;stream volume/duty settings
-  265           0359      stream_note_idx .rs 8
-  266           0361      stream_note_LO .rs 8        ;low 8 bits of period for the current note on a stream
-  267           0369      stream_note_HI .rs 8        ;high 3 bits of period for the current note on a stream 
-  268           0371      stream_tempo .rs 8          ;the value to add to our ticker total each frame
-  269           0379      stream_ticker_total .rs 8   ;our running ticker total.
-  270           0381      stream_note_length_counter .rs 8
-  271           0389      stream_note_length .rs 8
-  272           0391      stream_loop1 .rs 8          ;loop counter
-  273           0399      stream_note_offset .rs 6
-  274           039F      stream_pe .rs 8             ;current volume envelope
-  275           03A7      stream_pe_index .rs 8       ;current position within the volume envelope
-  276           03AF      stream_pe_offset .rs 8
-  277           03B7      stream_pe_delay .rs 8
-  278           03BF      stream_arp .rs 8
-  279           03C7      stream_arp_index .rs 8
-  280           03CF      stream_arp_offset .rs 8
+   16                     ;these are aliases to use in the sound data.
+   17           00A0      endsound = $A0
+   18           00A1      loop = $A1
+   19           00A2      volume_envelope = $A2
+   20           00A3      duty = $A3
+   21           00A4      set_loop1_counter = $A4
+   22           00A5      loop1 = $A5
+   23           00A6      set_note_offset = $A6
+   24           00A7      adjust_note_offset = $A7
+   25           00A8      transpose = $A8
+   26           00A9      pitch_envelope = $A9
+   27           00AA      arpeggio = $AA
+   28                     
+   29           0070      d_rest = $70
+   30                     
+   31                     ;note length constants (aliases)
+   32           0080      thirtysecond = $80
+   33           0081      sixteenth = $81
+   34           0082      eighth = $82
+   35           0083      quarter = $83
+   36           0084      half = $84
+   37           0085      whole = $85
+   38           0086      d_sixteenth = $86
+   39           0087      d_eighth = $87
+   40           0088      d_quarter = $88
+   41           0089      d_half = $89
+   42           008A      d_whole = $8A   ;don't forget we are counting in hex
+   43           008B      t_quarter = $8B
+   44           008C      five_eighths =$8C
+   45           008D      five_sixteenths=$8D
+   46           008E      d_half_d_eight = $8E
+   47           008F      whole_quarter_sixteenth = $8F
+   48           0090      d_half_eighth = $90
+   49           0091      whole_sixteenth = $91
+   50           0087      quarterSwing = $87
+   51           0088      halfSwing = $88
+   52           0089      wholeSwing = $89
+   53           0086      eighthSwing = $86
+   54           0081      swingDown = $81
+   55           0080      swingUp = $80
+   56           0092      five_thirtyseconds = $92
+   57           0093      d_halfSwing_p1 = $93
+   58           0094      halfSwing_p1 = $94
+   59           0095      halfSwing_p3 = $95
+   60           0096      halfSwing_m1 = $96
+   61           0097      wholeSwing_p1 = $97
+   62           0098      quarterSwing_p1 = $98
+   63           0099      d_quarterSwing = $99
+   64           009A      d_halfSwing = $9A
+   65           009B      wholeSwing_m1 = $9B
+   66                     
+   67           00FF      l_last = $FF
+   68           00FE      l_All = $FE
+   69           00FD      l_Part = $FD
+   70           00FC      l_Hold = $FC
+   71           0080      l_cLast = $80
+   72           0081      l_cAll = $81
+   73           0082      l_cPart = $82
+   74           0083      l_cHold = $83
+   75                     
+   76           0300      sound_enable_flags .rs 1        ;updated and written to 4015 (reading 4015 is not the same as writing)
+   77           0301      sound_disable_flag  .rs 1   ;a flag variable that keeps track of whether the sound engine is disabled or not. 
+   78           0302      sound_temp1 .rs 1           ;temporary variables
+   79           0303      sound_temp2 .rs 1
+   80           0304      sound_sq1_old .rs 1  ;the last value written to $4003
+   81           0305      sound_sq2_old .rs 1  ;the last value written to $4007
+   82           0306      soft_apu_ports .rs 20
+   83                     
+   84                     ;reserve 6 bytes, one for each stream
+   85           031A      stream_curr_sound .rs 8     ;current song/sfx loaded
+   86           0322      stream_status .rs 8         ;status byte.   bit0: (1: stream enabled; 0: stream disabled)
+   87           032A      stream_channel .rs 8        ;what channel is this stream playing on?
+   88           0332      stream_ptr_LO .rs 8         ;low byte of pointer to data stream
+   89           033A      stream_ptr_HI .rs 8         ;high byte of pointer to data stream
+   90           0342      stream_ve .rs 8             ;current volume envelope
+   91           034A      stream_ve_index .rs 8       ;current position within the volume envelope
+   92           0352      stream_vol_duty .rs 8       ;stream volume/duty settings
+   93           035A      stream_note_idx .rs 8
+   94           0362      stream_note_LO .rs 8        ;low 8 bits of period for the current note on a stream
+   95           036A      stream_note_HI .rs 8        ;high 3 bits of period for the current note on a stream 
+   96           0372      stream_tempo .rs 8          ;the value to add to our ticker total each frame
+   97           037A      stream_ticker_total .rs 8   ;our running ticker total.
+   98           0382      stream_note_length_counter .rs 8
+   99           038A      stream_note_length .rs 8
+  100           0392      stream_loop1 .rs 8          ;loop counter
+  101           039A      stream_note_offset .rs 6
+  102           03A0      stream_pe .rs 8             ;current volume envelope
+  103           03A8      stream_pe_index .rs 8       ;current position within the volume envelope
+  104           03B0      stream_pe_offset .rs 8
+  105           03B8      stream_pe_delay .rs 8
+  106           03C0      stream_arp .rs 8
+  107           03C8      stream_arp_index .rs 8
+  108           03D0      stream_arp_offset .rs 8
 #[2]   Source/Defines/Defines.asm
-   16           0400        .rsset $0400
-   17           0500        .rsset $0500
-   18           0600        .rsset $0600
-   19           0700        .rsset $0700
-   20           6000        .rsset $6000
+   21           0400        .rsset $0400
+   22           0500        .rsset $0500
+   23           0600        .rsset $0600
+   24           0700        .rsset $0700
+   25           6000        .rsset $6000
 #[3]   Source/Defines/ScreenStateVariables.asm
-   21                       .include "Source/Defines/ScreenStateVariables.asm"
+   26                       .include "Source/Defines/ScreenStateVariables.asm"
     1           6000      Screen_Copy             .rs 1024
     2           6400      ScreenB_Copy    .rs 1024
     3           6800      SaveScreen_Copy .rs 1024
     4           6C00      Palette_Copy    .rs 32
 #[2]   Source/Defines/Defines.asm
-   22           7000        .rsset $7000
+   27           7000        .rsset $7000
 #[3]   Source/Defines/SaveVariables.asm
-   23                       .include "Source/Defines/SaveVariables.asm"
+   28                       .include "Source/Defines/SaveVariables.asm"
     1           7000      hasContinue .rs 1
     2           7001      solutionCount           .rs 1
     3           7002      nonSolutionCount        .rs 1
@@ -477,97 +498,97 @@
    14           70E2      puzzle_clear_bank2 .rs 108
    15                     
 #[2]   Source/Defines/Defines.asm
-   24                     
-   25                     
-   26                     ;precompiled labels
-   27                     
+   29                     
+   30                     
+   31                     ;precompiled labels
+   32                     
 #[3]   Source/SoundEnginePreComp.fns
-   28                       .include "Source/SoundEnginePreComp.fns"
+   33                       .include "Source/SoundEnginePreComp.fns"
     1                     ; Source/SoundEnginePreComp.asm
-    2           A923      se_arp_spread5thlowerThird       = $A923
-    3           A513      endScreen_square1                = $A513
-    4           A910      se_arp_sharp5                    = $A910
-    5           A61E      se_op_adjust_note_offset         = $A61E
-    6           A534      endScreen_square2                = $A534
-    7           A10B      sound_load                       = $A10B
-    8           A4EA      menu_header                      = $A4EA
-    9           A661      note_table                       = $A661
-   10           A464      se_set_apu                       = $A464
-   11           A262      se_do_dpmc                       = $A262
-   12           A605      se_op_set_loop1_counter          = $A605
-   13           A83F      se_veryLong_decay                = $A83F
-   14           A2A0      se_check_rest                    = $A2A0
-   15           A7B0      se_battlekid_loud                = $A7B0
-   16           A90C      se_arp_minInvn1                  = $A90C
-   17           A4D9      song0_header                     = $A4D9
-   18           A3B5      se_set_stream_pitch              = $A3B5
-   19           A2FF      se_set_stream_volume             = $A2FF
-   20           A80A      se_tinyDecy                      = $A80A
-   21           A8D7      se_pe_bassKick                   = $A8D7
-   22           A2D1      se_set_temp_ports                = $A2D1
-   23           A8AC      se_pe_mod                        = $A8AC
-   24           A58A      menuCursor_header                = $A58A
-   25           A5AE      sound_opcodes                    = $A5AE
-   26           A1BC      se_fetch_byte                    = $A1BC
-   27           A5C4      se_op_endsound                   = $A5C4
-   28           A7C2      se_battlekid_soft_long           = $A7C2
-   29           A24C      se_do_noise                      = $A24C
-   30           A79D      se_ve_tgl_1                      = $A79D
-   31           A901      se_arp_none                      = $A901
-   32           A555      endScreen_tri                    = $A555
-   33           A71F      note_length_table                = $A71F
-   34           A5DD      se_op_infinite_loop              = $A5DD
-   35           A7A5      se_ve_tgl_2                      = $A7A5
-   36           A656      se_op_change_arp                 = $A656
-   37           A5F4      se_op_change_ve                  = $A5F4
-   38           A903      se_arp_lowerThird                = $A903
-   39           A596      puzzleCursor_header              = $A596
-   40           A593      menuCursor_square2               = $A593
-   41           A5AB      noiseBlip_noise                  = $A5AB
-   42           A628      se_op_transpose                  = $A628
-   43           A914      se_arp_maj7                      = $A914
-   44           A0EA      se_silence                       = $A0EA
-   45           A2B6      se_opcode_launcher               = $A2B6
-   46           A35B      se_set_stream_arpeggio           = $A35B
-   47           A8C1      se_pe_sweep                      = $A8C1
-   48           A80D      se_noDecay                       = $A80D
-   49           A8E7      arpeggios                        = $A8E7
-   50           A932      se_arp_dim7                      = $A932
-   51           A75B      se_ve_1                          = $A75B
-   52           A618      se_op_set_note_offset            = $A618
-   53           A5FF      se_op_duty                       = $A5FF
-   54           A93C      BankSong                         = $A93C
-   55           A648      se_op_change_pe                  = $A648
-   56           A763      se_ve_2                          = $A763
-   57           A91E      se_arp_minFlat6                  = $A91E
-   58           A919      se_arp_min7                      = $A919
-   59           A77A      se_ve_3                          = $A77A
-   60           A73B      volume_envelopes                 = $A73B
-   61           A60B      se_op_loop1                      = $A60B
-   62           A185      sound_play_frame                 = $A185
-   63           A80F      se_long_tremelo                  = $A80F
-   64           A5A2      noiseBlip_header                 = $A5A2
-   65           A59F      puzzleCursor_square2             = $A59F
-   66           A100      sound_disable                    = $A100
-   67           A57C      endScreen_noise                  = $A57C
-   68           A7D7      se_long_decay                    = $A7D7
-   69           A7B6      se_battlekid_loud_long           = $A7B6
-   70           A4C9      song_headers                     = $A4C9
-   71           A92D      se_arp_dom7Invn2                 = $A92D
-   72           A7C8      se_drum_decay                    = $A7C8
-   73           A937      se_arp_majPlusOct                = $A937
-   74           A4ED      drawImg_header                   = $A4ED
-   75           A4F0      endScreen_header                 = $A4F0
-   76           A928      se_arp_min7Invn1                 = $A928
-   77           A908      se_arp_dimTriad                  = $A908
-   78           A8AA      se_pe_none                       = $A8AA
-   79           A0D8      sound_init                       = $A0D8
-   80           A7D2      se_hiHat_decay                   = $A7D2
-   81           A7BC      se_battlekid_soft                = $A7BC
-   82           A8A2      pitch_envelopes                  = $A8A2
+    2           A836      se_ve_tinyDecy                   = $A836
+    3           A957      se_arp_spread5thlowerThird       = $A957
+    4           A7EE      se_ve_battlekid_2b               = $A7EE
+    5           A53F      endScreen_square1                = $A53F
+    6           A944      se_arp_sharp5                    = $A944
+    7           A78F      se_ve_fade_in                    = $A78F
+    8           A64A      se_op_adjust_note_offset         = $A64A
+    9           A560      endScreen_square2                = $A560
+   10           A111      sound_load                       = $A111
+   11           A516      menu_header                      = $A516
+   12           A68D      note_table                       = $A68D
+   13           A490      se_set_apu                       = $A490
+   14           A28A      se_do_dpmc                       = $A28A
+   15           A7DC      se_ve_battlekid_1                = $A7DC
+   16           A631      se_op_set_loop1_counter          = $A631
+   17           A8F5      se_me_sweep                      = $A8F5
+   18           A7E8      se_ve_battlekid_2                = $A7E8
+   19           A2CC      se_check_rest                    = $A2CC
+   20           A8D8      se_me_mod                        = $A8D8
+   21           A940      se_arp_minInvn1                  = $A940
+   22           A505      song0_header                     = $A505
+   23           A3E1      se_set_stream_pitch              = $A3E1
+   24           A32B      se_set_stream_volume             = $A32B
+   25           A86B      se_ve_veryLong_decay             = $A86B
+   26           A7A6      se_ve_blip_echo                  = $A7A6
+   27           A2FD      se_set_temp_ports                = $A2FD
+   28           A5B6      menuCursor_header                = $A5B6
+   29           A5DA      sound_opcodes                    = $A5DA
+   30           A1C2      se_fetch_byte                    = $A1C2
+   31           A5F0      se_op_endsound                   = $A5F0
+   32           A252      se_do_noise                      = $A252
+   33           A7C9      se_ve_tgl_1                      = $A7C9
+   34           A935      se_arp_none                      = $A935
+   35           A581      endScreen_tri                    = $A581
+   36           A74B      note_length_table                = $A74B
+   37           A787      se_ve_short_staccato             = $A787
+   38           A609      se_op_infinite_loop              = $A609
+   39           A7D1      se_ve_tgl_2                      = $A7D1
+   40           A682      se_op_change_arp                 = $A682
+   41           A620      se_op_change_ve                  = $A620
+   42           A937      se_arp_lowerThird                = $A937
+   43           A5C2      puzzleCursor_header              = $A5C2
+   44           A8D6      se_me_none                       = $A8D6
+   45           A5BF      menuCursor_square2               = $A5BF
+   46           A5D7      noiseBlip_noise                  = $A5D7
+   47           A7FE      se_ve_hiHat_decay                = $A7FE
+   48           A654      se_op_transpose                  = $A654
+   49           A767      kVol                             = $A767
+   50           A948      se_arp_maj7                      = $A948
+   51           A90B      se_me_bassKick                   = $A90B
+   52           A0ED      se_silence                       = $A0ED
+   53           A2E2      se_opcode_launcher               = $A2E2
+   54           A387      se_set_stream_arpeggio           = $A387
+   55           A83B      se_ve_long_tremelo               = $A83B
+   56           A966      se_arp_dim7                      = $A966
+   57           A803      se_ve_long_decay                 = $A803
+   58           A644      se_op_set_note_offset            = $A644
+   59           A62B      se_op_duty                       = $A62B
+   60           A970      BankSong                         = $A970
+   61           A674      se_op_change_pe                  = $A674
+   62           A952      se_arp_minFlat6                  = $A952
+   63           A94D      se_arp_min7                      = $A94D
+   64           A7E2      se_ve_battlekid_1b               = $A7E2
+   65           A8CE      kMod                             = $A8CE
+   66           A7F4      se_ve_drum_decay                 = $A7F4
+   67           A637      se_op_loop1                      = $A637
+   68           A18B      sound_play_frame                 = $A18B
+   69           A5CE      noiseBlip_header                 = $A5CE
+   70           A91B      kArp                             = $A91B
+   71           A5CB      puzzleCursor_square2             = $A5CB
+   72           A103      sound_disable                    = $A103
+   73           A5A8      endScreen_noise                  = $A5A8
+   74           A4F5      song_headers                     = $A4F5
+   75           A839      se_ve_noDecay                    = $A839
+   76           A961      se_arp_dom7Invn2                 = $A961
+   77           A96B      se_arp_majPlusOct                = $A96B
+   78           A519      drawImg_header                   = $A519
+   79           A51C      endScreen_header                 = $A51C
+   80           A95C      se_arp_min7Invn1                 = $A95C
+   81           A93C      se_arp_dimTriad                  = $A93C
+   82           A0D8      sound_init                       = $A0D8
 #[2]   Source/Defines/Defines.asm
-   29                       ;.include "Source/PictoPuzzler.fns"
-   30                       
+   34                       ;.include "Source/PictoPuzzler.fns"
+   35                       
 #[1]   Source/PictoPuzzler.asm
 #[2]   Source/Routines/Macros/Macros.asm
    15                       .include "Source/Routines/Macros/Macros.asm"
@@ -1953,774 +1974,774 @@
    41  01:A0D8              .incbin "Source/SoundEnginePreComp.nes"
 #[3]   Source/Content/Sound/Music/B0m.asm
    42                       .include "Source/Content/Sound/Music/B0m.asm"  ;holds the data for bank song
-    1  01:A93C            bank0_header:
-    2  01:A93C  05            .byte $05           ;4 streams
+    1  01:A970            bank0_header:
+    2  01:A970  05            .byte $05           ;4 streams
     3                         
-    4  01:A93D  00            .byte MUSIC_SQ1     ;which stream
-    5  01:A93E  01            .byte $01           ;status byte (stream enabled)
-    6  01:A93F  00            .byte SQUARE_1      ;which channel
-    7  01:A940  70            .byte $70           ;initial duty (01)
-    8  01:A941  0B            .byte ve_long_decay ;volume envelope
-    9  01:A942  65 A9         .word bank0_square1 ;pointer to stream
-   10  01:A944  3A            .byte $3A           ;tempo
+    4  01:A971  00            .byte MUSIC_SQ1     ;which stream
+    5  01:A972  01            .byte $01           ;status byte (stream enabled)
+    6  01:A973  00            .byte SQUARE_1      ;which channel
+    7  01:A974  70            .byte $70           ;initial duty (01)
+    8  01:A975  0B            .byte ve_long_decay ;volume envelope
+    9  01:A976  99 A9         .word bank0_square1 ;pointer to stream
+   10  01:A978  3A            .byte $3A           ;tempo
    11                         
-   12  01:A945  01            .byte MUSIC_SQ2     ;which stream
-   13  01:A946  01            .byte $01           ;status byte (stream enabled)
-   14  01:A947  01            .byte SQUARE_2      ;which channel
-   15  01:A948  70            .byte $70           ;initial duty (10)
-   16  01:A949  03            .byte ve_tgl_1      ;volume envelope
-   17  01:A94A  09 AB         .word bank0_square2 ;pointer to stream
-   18  01:A94C  3A            .byte $3A           ;tempo
+   12  01:A979  01            .byte MUSIC_SQ2     ;which stream
+   13  01:A97A  01            .byte $01           ;status byte (stream enabled)
+   14  01:A97B  01            .byte SQUARE_2      ;which channel
+   15  01:A97C  70            .byte $70           ;initial duty (10)
+   16  01:A97D  03            .byte ve_tgl_1      ;volume envelope
+   17  01:A97E  3D AB         .word bank0_square2 ;pointer to stream
+   18  01:A980  3A            .byte $3A           ;tempo
    19                         
-   20  01:A94D  02            .byte MUSIC_TRI     ;which stream
-   21  01:A94E  01            .byte $01           ;status byte (stream enabled)
-   22  01:A94F  02            .byte TRIANGLE      ;which channel
-   23  01:A950  80            .byte $80           ;initial volume (on)
-   24  01:A951  03            .byte ve_tgl_1      ;volume envelope
-   25  01:A952  FC AC         .word bank0_tri     ;pointer to stream
-   26  01:A954  3A            .byte $3A           ;tempo
+   20  01:A981  02            .byte MUSIC_TRI     ;which stream
+   21  01:A982  01            .byte $01           ;status byte (stream enabled)
+   22  01:A983  02            .byte TRIANGLE      ;which channel
+   23  01:A984  80            .byte $80           ;initial volume (on)
+   24  01:A985  03            .byte ve_tgl_1      ;volume envelope
+   25  01:A986  30 AD         .word bank0_tri     ;pointer to stream
+   26  01:A988  3A            .byte $3A           ;tempo
    27                         
-   28  01:A955  03            .byte MUSIC_NOI     ;which stream
-   29  01:A956  01            .byte $01           ;enabled
-   30  01:A957  03            .byte NOISE     
-   31  01:A958  30            .byte $30           ;initial duty_vol
-   32  01:A959  0A            .byte ve_hiHat_decay ;volume envelope
-   33  01:A95A  E8 AE         .word bank0_noise   ;pointer to stream
-   34  01:A95C  3A            .byte $3A           ;tempo
+   28  01:A989  03            .byte MUSIC_NOI     ;which stream
+   29  01:A98A  01            .byte $01           ;enabled
+   30  01:A98B  03            .byte NOISE     
+   31  01:A98C  30            .byte $30           ;initial duty_vol
+   32  01:A98D  0A            .byte ve_hiHat_decay ;volume envelope
+   33  01:A98E  1C AF         .word bank0_noise   ;pointer to stream
+   34  01:A990  3A            .byte $3A           ;tempo
    35                             
-   36  01:A95D  06                .byte MUSIC_DPMC
-   37  01:A95E  01                .byte $01
-   38  01:A95F  04                .byte DPMC
-   39  01:A960  30                .byte $30
-   40  01:A961  0A                .byte ve_hiHat_decay
-   41  01:A962  0E AF             .word bank0_dpcm  ;pointer to stream
-   42  01:A964  3A            .byte $3A           ;tempo
+   36  01:A991  06                .byte MUSIC_DPMC
+   37  01:A992  01                .byte $01
+   38  01:A993  04                .byte DPMC
+   39  01:A994  30                .byte $30
+   40  01:A995  0A                .byte ve_hiHat_decay
+   41  01:A996  42 AF             .word bank0_dpcm  ;pointer to stream
+   42  01:A998  3A            .byte $3A           ;tempo
    43                     
    44                         
-   45  01:A965            bank0_square1:
+   45  01:A999            bank0_square1:
    46                     
-   47  01:A965  A9 02             .byte pitch_envelope, pe_sweep
-   48  01:A967  A2 0B             .byte volume_envelope, ve_long_decay 
-   49  01:A969  83 5E         .byte quarter, rest
-   50  01:A96B  87 29             .byte d_eighth, D5
-   51  01:A96D  A9 01             .byte pitch_envelope, pe_mod
-   52  01:A96F  8E 27             .byte d_half_d_eight, C5
-   53  01:A971  81 26 27          .byte sixteenth, B4, C5
-   54  01:A974  82 26             .byte eighth, B4
-   55  01:A976  81 21             .byte sixteenth, Fs4
-   56  01:A978  82 22 24          .byte eighth, G4,  A4
-   57  01:A97B  81 26             .byte sixteenth, B4
-   58  01:A97D  A9 02             .byte pitch_envelope, pe_sweep
-   59  01:A97F  87 21             .byte d_eighth, Fs4
-   60  01:A981  A9 01             .byte pitch_envelope, pe_mod
-   61  01:A983  8F 24             .byte whole_quarter_sixteenth, A4
-   62  01:A985  81 5E             .byte sixteenth, rest
-   63  01:A987  15 16 17          .byte Fs3, G3, Gs3, A3, Gs3, G3, Fs3
-       01:A98A  18 17 16  
-       01:A98D  15        
+   47  01:A999  A9 02             .byte pitch_envelope, me_sweep
+   48  01:A99B  A2 0B             .byte volume_envelope, ve_long_decay 
+   49  01:A99D  83 5E         .byte quarter, rest
+   50  01:A99F  87 29             .byte d_eighth, D5
+   51  01:A9A1  A9 01             .byte pitch_envelope, me_mod
+   52  01:A9A3  8E 27             .byte d_half_d_eight, C5
+   53  01:A9A5  81 26 27          .byte sixteenth, B4, C5
+   54  01:A9A8  82 26             .byte eighth, B4
+   55  01:A9AA  81 21             .byte sixteenth, Fs4
+   56  01:A9AC  82 22 24          .byte eighth, G4,  A4
+   57  01:A9AF  81 26             .byte sixteenth, B4
+   58  01:A9B1  A9 02             .byte pitch_envelope, me_sweep
+   59  01:A9B3  87 21             .byte d_eighth, Fs4
+   60  01:A9B5  A9 01             .byte pitch_envelope, me_mod
+   61  01:A9B7  8F 24             .byte whole_quarter_sixteenth, A4
+   62  01:A9B9  81 5E             .byte sixteenth, rest
+   63  01:A9BB  15 16 17          .byte Fs3, G3, Gs3, A3, Gs3, G3, Fs3
+       01:A9BE  18 17 16  
+       01:A9C1  15        
    64                             
-   65  01:A98E  A9 02             .byte pitch_envelope, pe_sweep
-   66  01:A990  83 5E             .byte quarter, rest
-   67  01:A992  87 29             .byte d_eighth, D5
-   68  01:A994  A9 01             .byte pitch_envelope, pe_mod
-   69  01:A996  8E 27             .byte d_half_d_eight, C5
-   70  01:A998  81 26 27          .byte sixteenth, B4, C5
-   71  01:A99B  82 26             .byte eighth, B4
-   72  01:A99D  81 21             .byte sixteenth, Fs4
-   73  01:A99F  82 22 2B          .byte eighth, G4,  E5
-   74  01:A9A2  A9 02             .byte pitch_envelope, pe_sweep
-   75  01:A9A4  81 2E             .byte sixteenth, G5
-   76  01:A9A6  A9 01             .byte pitch_envelope, pe_mod
-   77  01:A9A8  8A 2D             .byte d_whole, Fs5
-   78  01:A9AA  81 5E             .byte sixteenth, rest
-   79  01:A9AC  15 16 18          .byte Fs3, G3, A3, G3, A3, D4, Fs4
-       01:A9AF  16 18 1D  
-       01:A9B2  21        
+   65  01:A9C2  A9 02             .byte pitch_envelope, me_sweep
+   66  01:A9C4  83 5E             .byte quarter, rest
+   67  01:A9C6  87 29             .byte d_eighth, D5
+   68  01:A9C8  A9 01             .byte pitch_envelope, me_mod
+   69  01:A9CA  8E 27             .byte d_half_d_eight, C5
+   70  01:A9CC  81 26 27          .byte sixteenth, B4, C5
+   71  01:A9CF  82 26             .byte eighth, B4
+   72  01:A9D1  81 21             .byte sixteenth, Fs4
+   73  01:A9D3  82 22 2B          .byte eighth, G4,  E5
+   74  01:A9D6  A9 02             .byte pitch_envelope, me_sweep
+   75  01:A9D8  81 2E             .byte sixteenth, G5
+   76  01:A9DA  A9 01             .byte pitch_envelope, me_mod
+   77  01:A9DC  8A 2D             .byte d_whole, Fs5
+   78  01:A9DE  81 5E             .byte sixteenth, rest
+   79  01:A9E0  15 16 18          .byte Fs3, G3, A3, G3, A3, D4, Fs4
+       01:A9E3  16 18 1D  
+       01:A9E6  21        
    80                         
-   81  01:A9B3  A9 02             .byte pitch_envelope, pe_sweep
-   82  01:A9B5  83 5E             .byte quarter, rest
-   83  01:A9B7  87 2E             .byte d_eighth, G5
-   84  01:A9B9  A9 01             .byte pitch_envelope, pe_mod
-   85  01:A9BB  8E 2C             .byte d_half_d_eight, F5
-   86  01:A9BD  81 2B 2C          .byte sixteenth, E5, F5
-   87  01:A9C0  82 2B             .byte eighth, E5
-   88  01:A9C2  81 26             .byte sixteenth, B4
-   89  01:A9C4  82 27 29          .byte eighth, C5,  D5
-   90  01:A9C7  81 2B 29          .byte sixteenth, E5, D5 
-   91  01:A9CA  82 26 27          .byte eighth, B4, C5, A4, B4, G4 
-       01:A9CD  24 26 22  
-   92  01:A9D0  81 27 26          .byte sixteenth, C5, B4, G4, F4, D4
-       01:A9D3  22 20 1D  
-   93  01:A9D6  A9 02             .byte pitch_envelope, pe_sweep
-   94  01:A9D8  82 20             .byte eighth, F4
-   95  01:A9DA  A9 01             .byte pitch_envelope, pe_mod
-   96  01:A9DC  81 24             .byte sixteenth, A4
-   97  01:A9DE  A9 02             .byte pitch_envelope, pe_sweep
-   98  01:A9E0  82 22             .byte eighth, G4
-   99  01:A9E2  A9 01             .byte pitch_envelope, pe_mod
-  100  01:A9E4  81 27             .byte sixteenth, C5
-  101  01:A9E6  8C 26             .byte five_eighths, B4
+   81  01:A9E7  A9 02             .byte pitch_envelope, me_sweep
+   82  01:A9E9  83 5E             .byte quarter, rest
+   83  01:A9EB  87 2E             .byte d_eighth, G5
+   84  01:A9ED  A9 01             .byte pitch_envelope, me_mod
+   85  01:A9EF  8E 2C             .byte d_half_d_eight, F5
+   86  01:A9F1  81 2B 2C          .byte sixteenth, E5, F5
+   87  01:A9F4  82 2B             .byte eighth, E5
+   88  01:A9F6  81 26             .byte sixteenth, B4
+   89  01:A9F8  82 27 29          .byte eighth, C5,  D5
+   90  01:A9FB  81 2B 29          .byte sixteenth, E5, D5 
+   91  01:A9FE  82 26 27          .byte eighth, B4, C5, A4, B4, G4 
+       01:AA01  24 26 22  
+   92  01:AA04  81 27 26          .byte sixteenth, C5, B4, G4, F4, D4
+       01:AA07  22 20 1D  
+   93  01:AA0A  A9 02             .byte pitch_envelope, me_sweep
+   94  01:AA0C  82 20             .byte eighth, F4
+   95  01:AA0E  A9 01             .byte pitch_envelope, me_mod
+   96  01:AA10  81 24             .byte sixteenth, A4
+   97  01:AA12  A9 02             .byte pitch_envelope, me_sweep
+   98  01:AA14  82 22             .byte eighth, G4
+   99  01:AA16  A9 01             .byte pitch_envelope, me_mod
+  100  01:AA18  81 27             .byte sixteenth, C5
+  101  01:AA1A  8C 26             .byte five_eighths, B4
   102                             
-  103  01:A9E8  A9 02             .byte pitch_envelope, pe_sweep
-  104  01:A9EA  83 5E             .byte quarter, rest
-  105  01:A9EC  87 29             .byte d_eighth, D5
-  106  01:A9EE  A9 01             .byte pitch_envelope, pe_mod
-  107  01:A9F0  8E 27             .byte d_half_d_eight, C5
-  108  01:A9F2  81 26 27          .byte sixteenth, B4, C5
-  109  01:A9F5  82 26             .byte eighth, B4
-  110  01:A9F7  81 21             .byte sixteenth, Fs4
-  111  01:A9F9  82 22             .byte eighth, G4
-  112  01:A9FB  A9 02             .byte pitch_envelope, pe_sweep
-  113  01:A9FD  24                .byte A4
-  114  01:A9FE  A9 01             .byte pitch_envelope, pe_mod
-  115  01:AA00  81 22             .byte sixteenth, G4
-  116  01:AA02  8A 21             .byte d_whole, Fs4
-  117  01:AA04  81 5E             .byte sixteenth, rest
-  118  01:AA06  15 16 18          .byte Fs3, G3, A3, G3, A3, D4, Fs4
-       01:AA09  16 18 1D  
-       01:AA0C  21        
+  103  01:AA1C  A9 02             .byte pitch_envelope, me_sweep
+  104  01:AA1E  83 5E             .byte quarter, rest
+  105  01:AA20  87 29             .byte d_eighth, D5
+  106  01:AA22  A9 01             .byte pitch_envelope, me_mod
+  107  01:AA24  8E 27             .byte d_half_d_eight, C5
+  108  01:AA26  81 26 27          .byte sixteenth, B4, C5
+  109  01:AA29  82 26             .byte eighth, B4
+  110  01:AA2B  81 21             .byte sixteenth, Fs4
+  111  01:AA2D  82 22             .byte eighth, G4
+  112  01:AA2F  A9 02             .byte pitch_envelope, me_sweep
+  113  01:AA31  24                .byte A4
+  114  01:AA32  A9 01             .byte pitch_envelope, me_mod
+  115  01:AA34  81 22             .byte sixteenth, G4
+  116  01:AA36  8A 21             .byte d_whole, Fs4
+  117  01:AA38  81 5E             .byte sixteenth, rest
+  118  01:AA3A  15 16 18          .byte Fs3, G3, A3, G3, A3, D4, Fs4
+       01:AA3D  16 18 1D  
+       01:AA40  21        
   119                             
   120                             ;;bridge
   121                             
-  122  01:AA0D  87 24 22          .byte d_eighth, A4, G4, Fs4
-       01:AA10  21        
-  123  01:AA11  80 09 30          .byte thirtysecond, Fs2, A5, G2, G5, Gs2, Fs5, A2
-       01:AA14  0A 2E 0B  
-       01:AA17  2D 0C     
-  124  01:AA19  29 0B 27          .byte D5, Gs2, C5, G2, A4, Fs2, G4
-       01:AA1C  0A 24 09  
-       01:AA1F  22        
-  125  01:AA20  87 20 1F          .byte d_eighth, F4, E4, D4, A3
-       01:AA23  1D 18     
-  126  01:AA25  82 1B             .byte eighth, C4
-  127  01:AA27  81 16             .byte sixteenth, G3
-  128  01:AA29  91 15             .byte whole_sixteenth, Fs3
-  129  01:AA2B  84 5E             .byte half, rest
-  130  01:AA2D  81 5E             .byte sixteenth, rest
-  131  01:AA2F  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
-       01:AA32  18 16 18  
-       01:AA35  1D 21     
+  122  01:AA41  87 24 22          .byte d_eighth, A4, G4, Fs4
+       01:AA44  21        
+  123  01:AA45  80 09 30          .byte thirtysecond, Fs2, A5, G2, G5, Gs2, Fs5, A2
+       01:AA48  0A 2E 0B  
+       01:AA4B  2D 0C     
+  124  01:AA4D  29 0B 27          .byte D5, Gs2, C5, G2, A4, Fs2, G4
+       01:AA50  0A 24 09  
+       01:AA53  22        
+  125  01:AA54  87 20 1F          .byte d_eighth, F4, E4, D4, A3
+       01:AA57  1D 18     
+  126  01:AA59  82 1B             .byte eighth, C4
+  127  01:AA5B  81 16             .byte sixteenth, G3
+  128  01:AA5D  91 15             .byte whole_sixteenth, Fs3
+  129  01:AA5F  84 5E             .byte half, rest
+  130  01:AA61  81 5E             .byte sixteenth, rest
+  131  01:AA63  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
+       01:AA66  18 16 18  
+       01:AA69  1D 21     
   132                             
-  133  01:AA37  87 24 22          .byte d_eighth, A4, G4, Fs4
-       01:AA3A  21        
-  134  01:AA3B  80 09 30          .byte thirtysecond, Fs2, A5, G2, G5, Gs2, Fs5, A2
-       01:AA3E  0A 2E 0B  
-       01:AA41  2D 0C     
-  135  01:AA43  29 0B 27          .byte D5, Gs2, C5, G2, A4, Fs2, G4
-       01:AA46  0A 24 09  
-       01:AA49  22        
-  136  01:AA4A  87 20 1F          .byte d_eighth, F4, E4, D4, A3
-       01:AA4D  1D 18     
-  137  01:AA4F  82 1B             .byte eighth, C4
-  138  01:AA51  81 22             .byte sixteenth, G4
-  139  01:AA53  91 21             .byte whole_sixteenth, Fs4
-  140  01:AA55  84 5E             .byte half, rest
-  141  01:AA57  81 5E             .byte sixteenth, rest
-  142  01:AA59  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
-       01:AA5C  18 16 18  
-       01:AA5F  1D 21     
+  133  01:AA6B  87 24 22          .byte d_eighth, A4, G4, Fs4
+       01:AA6E  21        
+  134  01:AA6F  80 09 30          .byte thirtysecond, Fs2, A5, G2, G5, Gs2, Fs5, A2
+       01:AA72  0A 2E 0B  
+       01:AA75  2D 0C     
+  135  01:AA77  29 0B 27          .byte D5, Gs2, C5, G2, A4, Fs2, G4
+       01:AA7A  0A 24 09  
+       01:AA7D  22        
+  136  01:AA7E  87 20 1F          .byte d_eighth, F4, E4, D4, A3
+       01:AA81  1D 18     
+  137  01:AA83  82 1B             .byte eighth, C4
+  138  01:AA85  81 22             .byte sixteenth, G4
+  139  01:AA87  91 21             .byte whole_sixteenth, Fs4
+  140  01:AA89  84 5E             .byte half, rest
+  141  01:AA8B  81 5E             .byte sixteenth, rest
+  142  01:AA8D  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
+       01:AA90  18 16 18  
+       01:AA93  1D 21     
   143                     
   144                             ;; reach-around
-  145  01:AA61  A9 02             .byte pitch_envelope, pe_sweep
-  146  01:AA63  A2 0B             .byte volume_envelope, ve_long_decay 
-  147  01:AA65  87 22 22          .byte d_eighth, G4, G4
-  148  01:AA68  A9 01             .byte pitch_envelope, pe_mod
-  149  01:AA6A  A2 04             .byte volume_envelope, ve_tgl_2
-  150  01:AA6C  82 24             .byte eighth, A4
-  151  01:AA6E  A2 03             .byte volume_envelope, ve_tgl_1
-  152  01:AA70  80 5E 38          .byte thirtysecond, rest, F6
-  153  01:AA73  81 39 35          .byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
-       01:AA76  33 30 2E  
-       01:AA79  2D 30     
-  154  01:AA7B  82 2E             .byte eighth, G5
-  155  01:AA7D  81 27             .byte sixteenth, C5
-  156  01:AA7F  82 2C             .byte eighth, F5
-  157  01:AA81  81 29             .byte sixteenth, D5
-  158  01:AA83  82 2E             .byte eighth, G5
-  159  01:AA85  81 2D             .byte sixteenth, Fs5
-  160  01:AA87  82 30             .byte eighth, A5
-  161  01:AA89  81 27 2E          .byte sixteenth, C5, G5, Fs5, C6, A5
-       01:AA8C  2D 33 30  
+  145  01:AA95  A9 02             .byte pitch_envelope, me_sweep
+  146  01:AA97  A2 0B             .byte volume_envelope, ve_long_decay 
+  147  01:AA99  87 22 22          .byte d_eighth, G4, G4
+  148  01:AA9C  A9 01             .byte pitch_envelope, me_mod
+  149  01:AA9E  A2 04             .byte volume_envelope, ve_tgl_2
+  150  01:AAA0  82 24             .byte eighth, A4
+  151  01:AAA2  A2 03             .byte volume_envelope, ve_tgl_1
+  152  01:AAA4  80 5E 38          .byte thirtysecond, rest, F6
+  153  01:AAA7  81 39 35          .byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
+       01:AAAA  33 30 2E  
+       01:AAAD  2D 30     
+  154  01:AAAF  82 2E             .byte eighth, G5
+  155  01:AAB1  81 27             .byte sixteenth, C5
+  156  01:AAB3  82 2C             .byte eighth, F5
+  157  01:AAB5  81 29             .byte sixteenth, D5
+  158  01:AAB7  82 2E             .byte eighth, G5
+  159  01:AAB9  81 2D             .byte sixteenth, Fs5
+  160  01:AABB  82 30             .byte eighth, A5
+  161  01:AABD  81 27 2E          .byte sixteenth, C5, G5, Fs5, C6, A5
+       01:AAC0  2D 33 30  
   162                             
-  163  01:AA8F  A9 02             .byte pitch_envelope, pe_sweep
-  164  01:AA91  A2 0B             .byte volume_envelope, ve_long_decay 
-  165  01:AA93  87 22 22          .byte d_eighth, G4, G4
-  166  01:AA96  A9 01             .byte pitch_envelope, pe_mod
-  167  01:AA98  A2 04             .byte volume_envelope, ve_tgl_2
-  168  01:AA9A  82 24             .byte eighth, A4
-  169  01:AA9C  A2 03             .byte volume_envelope, ve_tgl_1
-  170  01:AA9E  80 5E 1C          .byte thirtysecond, rest, Cs4
-  171  01:AAA1  81 1D 21          .byte sixteenth, D4, Fs4, D5, A4, D5, Fs5
-       01:AAA4  29 24 29  
-       01:AAA7  2D        
-  172  01:AAA8  81 33 30          .byte sixteenth, C6, A5, E5, A4, F5, C5, Fs4
-       01:AAAB  2B 24 2C  
-       01:AAAE  27 21     
-  173  01:AAB0  81 2E 29          .byte sixteenth, G5, D5, A4, D5, A4, E4, G5, Fs5, C6, D6
-       01:AAB3  24 29 24  
-       01:AAB6  1F 2E 2D  
-       01:AAB9  33 35     
+  163  01:AAC3  A9 02             .byte pitch_envelope, me_sweep
+  164  01:AAC5  A2 0B             .byte volume_envelope, ve_long_decay 
+  165  01:AAC7  87 22 22          .byte d_eighth, G4, G4
+  166  01:AACA  A9 01             .byte pitch_envelope, me_mod
+  167  01:AACC  A2 04             .byte volume_envelope, ve_tgl_2
+  168  01:AACE  82 24             .byte eighth, A4
+  169  01:AAD0  A2 03             .byte volume_envelope, ve_tgl_1
+  170  01:AAD2  80 5E 1C          .byte thirtysecond, rest, Cs4
+  171  01:AAD5  81 1D 21          .byte sixteenth, D4, Fs4, D5, A4, D5, Fs5
+       01:AAD8  29 24 29  
+       01:AADB  2D        
+  172  01:AADC  81 33 30          .byte sixteenth, C6, A5, E5, A4, F5, C5, Fs4
+       01:AADF  2B 24 2C  
+       01:AAE2  27 21     
+  173  01:AAE4  81 2E 29          .byte sixteenth, G5, D5, A4, D5, A4, E4, G5, Fs5, C6, D6
+       01:AAE7  24 29 24  
+       01:AAEA  1F 2E 2D  
+       01:AAED  33 35     
   174                             
-  175  01:AABB  A9 02             .byte pitch_envelope, pe_sweep
-  176  01:AABD  A2 0B             .byte volume_envelope, ve_long_decay 
-  177  01:AABF  87 22 22          .byte d_eighth, G4, G4
-  178  01:AAC2  A9 01             .byte pitch_envelope, pe_mod
-  179  01:AAC4  A2 04             .byte volume_envelope, ve_tgl_2
-  180  01:AAC6  82 24             .byte eighth, A4
-  181  01:AAC8  A2 03             .byte volume_envelope, ve_tgl_1
-  182  01:AACA  80 5E 38          .byte thirtysecond, rest, F6
-  183  01:AACD  81 39 35          .byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
-       01:AAD0  33 30 2E  
-       01:AAD3  2D 30     
-  184  01:AAD5  82 2E             .byte eighth, G5
-  185  01:AAD7  81 27             .byte sixteenth, C5
-  186  01:AAD9  82 2C             .byte eighth, F5
-  187  01:AADB  81 29             .byte sixteenth, D5
-  188  01:AADD  82 2E             .byte eighth, G5
-  189  01:AADF  81 2D             .byte sixteenth, Fs5
-  190  01:AAE1  82 30             .byte eighth, A5
-  191  01:AAE3  81 27 2E          .byte sixteenth, C5, G5, Fs5, C6, A5
-       01:AAE6  2D 33 30  
+  175  01:AAEF  A9 02             .byte pitch_envelope, me_sweep
+  176  01:AAF1  A2 0B             .byte volume_envelope, ve_long_decay 
+  177  01:AAF3  87 22 22          .byte d_eighth, G4, G4
+  178  01:AAF6  A9 01             .byte pitch_envelope, me_mod
+  179  01:AAF8  A2 04             .byte volume_envelope, ve_tgl_2
+  180  01:AAFA  82 24             .byte eighth, A4
+  181  01:AAFC  A2 03             .byte volume_envelope, ve_tgl_1
+  182  01:AAFE  80 5E 38          .byte thirtysecond, rest, F6
+  183  01:AB01  81 39 35          .byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
+       01:AB04  33 30 2E  
+       01:AB07  2D 30     
+  184  01:AB09  82 2E             .byte eighth, G5
+  185  01:AB0B  81 27             .byte sixteenth, C5
+  186  01:AB0D  82 2C             .byte eighth, F5
+  187  01:AB0F  81 29             .byte sixteenth, D5
+  188  01:AB11  82 2E             .byte eighth, G5
+  189  01:AB13  81 2D             .byte sixteenth, Fs5
+  190  01:AB15  82 30             .byte eighth, A5
+  191  01:AB17  81 27 2E          .byte sixteenth, C5, G5, Fs5, C6, A5
+       01:AB1A  2D 33 30  
   192                             
-  193  01:AAE9  A9 02             .byte pitch_envelope, pe_sweep
-  194  01:AAEB  A2 0B             .byte volume_envelope, ve_long_decay 
-  195  01:AAED  87 22 22          .byte d_eighth, G4, G4
-  196  01:AAF0  A9 01             .byte pitch_envelope, pe_mod
-  197  01:AAF2  A2 04             .byte volume_envelope, ve_tgl_2
-  198  01:AAF4  82 24             .byte eighth, A4
-  199  01:AAF6  A2 0B             .byte volume_envelope, ve_long_decay 
-  200  01:AAF8  88 5E             .byte d_quarter, rest
-  201  01:AAFA  8C 24             .byte five_eighths, A4
-  202  01:AAFC  A2 03             .byte volume_envelope, ve_tgl_1
-  203  01:AAFE  81 5E             .byte sixteenth, rest
-  204  01:AB00  82 21 22          .byte eighth, Fs4, G4, Gs4
-       01:AB03  23        
-  205  01:AB04  81 24             .byte sixteenth, A4
+  193  01:AB1D  A9 02             .byte pitch_envelope, me_sweep
+  194  01:AB1F  A2 0B             .byte volume_envelope, ve_long_decay 
+  195  01:AB21  87 22 22          .byte d_eighth, G4, G4
+  196  01:AB24  A9 01             .byte pitch_envelope, me_mod
+  197  01:AB26  A2 04             .byte volume_envelope, ve_tgl_2
+  198  01:AB28  82 24             .byte eighth, A4
+  199  01:AB2A  A2 0B             .byte volume_envelope, ve_long_decay 
+  200  01:AB2C  88 5E             .byte d_quarter, rest
+  201  01:AB2E  8C 24             .byte five_eighths, A4
+  202  01:AB30  A2 03             .byte volume_envelope, ve_tgl_1
+  203  01:AB32  81 5E             .byte sixteenth, rest
+  204  01:AB34  82 21 22          .byte eighth, Fs4, G4, Gs4
+       01:AB37  23        
+  205  01:AB38  81 24             .byte sixteenth, A4
   206                     
-  207  01:AB06  A1                .byte loop
-  208  01:AB07  65 A9         .word bank0_square1
+  207  01:AB3A  A1                .byte loop
+  208  01:AB3B  99 A9         .word bank0_square1
   209                             
   210                             
   211                     
-  212  01:AB09            bank0_square2:
+  212  01:AB3D            bank0_square2:
   213                     
-  214  01:AB09  81 05 0A          .byte sixteenth, D2, G2, A2, D2 
-       01:AB0C  0C 05     
-  215  01:AB0E  82 11             .byte eighth, D3
-  216  01:AB10  81 05             .byte sixteenth, D2
-  217  01:AB12  88 0F             .byte d_quarter, C3
-  218  01:AB14  81 0A 0C          .byte sixteenth, G2, A2, C3
-       01:AB17  0F        
-  219  01:AB18  05 0A 0C          .byte D2, G2, A2, D2 
-       01:AB1B  05        
-  220  01:AB1C  82 11             .byte eighth, D3
-  221  01:AB1E  81 05             .byte sixteenth, D2
-  222  01:AB20  82 0F 09          .byte eighth, C3, Fs2, G2, Gs2
-       01:AB23  0A 0B     
-  223  01:AB25  81 0C             .byte sixteenth, A2
-  224  01:AB27  81 05 0A          .byte sixteenth, D2, G2, A2, D2 
-       01:AB2A  0C 05     
-  225  01:AB2C  82 11             .byte eighth, D3
-  226  01:AB2E  81 05             .byte sixteenth, D2
-  227  01:AB30  88 0F             .byte d_quarter, C3
-  228  01:AB32  81 0A 0C          .byte sixteenth, G2, A2, C3
-       01:AB35  0F        
-  229  01:AB36  05 0A 0C          .byte D2, G2, A2, D2 
-       01:AB39  05        
-  230  01:AB3A  82 11             .byte eighth, D3
-  231  01:AB3C  81 05             .byte sixteenth, D2
-  232  01:AB3E  82 0F             .byte eighth, C3 
-  233  01:AB40  81 09 0A          .byte sixteenth, Fs2, G2, Gs2, A2, Gs2, G2, Fs2
-       01:AB43  0B 0C 0B  
-       01:AB46  0A 09     
+  214  01:AB3D  81 05 0A          .byte sixteenth, D2, G2, A2, D2 
+       01:AB40  0C 05     
+  215  01:AB42  82 11             .byte eighth, D3
+  216  01:AB44  81 05             .byte sixteenth, D2
+  217  01:AB46  88 0F             .byte d_quarter, C3
+  218  01:AB48  81 0A 0C          .byte sixteenth, G2, A2, C3
+       01:AB4B  0F        
+  219  01:AB4C  05 0A 0C          .byte D2, G2, A2, D2 
+       01:AB4F  05        
+  220  01:AB50  82 11             .byte eighth, D3
+  221  01:AB52  81 05             .byte sixteenth, D2
+  222  01:AB54  82 0F 09          .byte eighth, C3, Fs2, G2, Gs2
+       01:AB57  0A 0B     
+  223  01:AB59  81 0C             .byte sixteenth, A2
+  224  01:AB5B  81 05 0A          .byte sixteenth, D2, G2, A2, D2 
+       01:AB5E  0C 05     
+  225  01:AB60  82 11             .byte eighth, D3
+  226  01:AB62  81 05             .byte sixteenth, D2
+  227  01:AB64  88 0F             .byte d_quarter, C3
+  228  01:AB66  81 0A 0C          .byte sixteenth, G2, A2, C3
+       01:AB69  0F        
+  229  01:AB6A  05 0A 0C          .byte D2, G2, A2, D2 
+       01:AB6D  05        
+  230  01:AB6E  82 11             .byte eighth, D3
+  231  01:AB70  81 05             .byte sixteenth, D2
+  232  01:AB72  82 0F             .byte eighth, C3 
+  233  01:AB74  81 09 0A          .byte sixteenth, Fs2, G2, Gs2, A2, Gs2, G2, Fs2
+       01:AB77  0B 0C 0B  
+       01:AB7A  0A 09     
   234                             
-  235  01:AB48  81 05 0A          .byte sixteenth, D2, G2, A2, D2 
-       01:AB4B  0C 05     
-  236  01:AB4D  82 11             .byte eighth, D3
-  237  01:AB4F  81 05             .byte sixteenth, D2
-  238  01:AB51  88 0F             .byte d_quarter, C3
-  239  01:AB53  81 0A 0C          .byte sixteenth, G2, A2, C3
-       01:AB56  0F        
-  240  01:AB57  05 0A 0C          .byte D2, G2, A2, D2 
-       01:AB5A  05        
-  241  01:AB5B  82 11             .byte eighth, D3
-  242  01:AB5D  81 05             .byte sixteenth, D2
-  243  01:AB5F  82 0F 09          .byte eighth, C3, Fs2, G2, Gs2
-       01:AB62  0A 0B     
-  244  01:AB64  81 0C             .byte sixteenth, A2
-  245  01:AB66  05 0A 0C          .byte D2, G2, A2, D2 
-       01:AB69  05        
-  246  01:AB6A  82 11             .byte eighth, D3
-  247  01:AB6C  81 05             .byte sixteenth, D2
-  248  01:AB6E  88 0F             .byte d_quarter, C3
-  249  01:AB70  81 0A 0C          .byte sixteenth, G2, A2, C3
-       01:AB73  0F        
-  250  01:AB74  05 0A 0C          .byte D2, G2, A2, D2 
-       01:AB77  05        
-  251  01:AB78  82 11             .byte eighth, D3
-  252  01:AB7A  81 05             .byte sixteenth, D2
-  253  01:AB7C  82 0F             .byte eighth, C3 
-  254  01:AB7E  81 09 0A          .byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3 
-       01:AB81  0C 0A 0C  
-       01:AB84  11 15     
+  235  01:AB7C  81 05 0A          .byte sixteenth, D2, G2, A2, D2 
+       01:AB7F  0C 05     
+  236  01:AB81  82 11             .byte eighth, D3
+  237  01:AB83  81 05             .byte sixteenth, D2
+  238  01:AB85  88 0F             .byte d_quarter, C3
+  239  01:AB87  81 0A 0C          .byte sixteenth, G2, A2, C3
+       01:AB8A  0F        
+  240  01:AB8B  05 0A 0C          .byte D2, G2, A2, D2 
+       01:AB8E  05        
+  241  01:AB8F  82 11             .byte eighth, D3
+  242  01:AB91  81 05             .byte sixteenth, D2
+  243  01:AB93  82 0F 09          .byte eighth, C3, Fs2, G2, Gs2
+       01:AB96  0A 0B     
+  244  01:AB98  81 0C             .byte sixteenth, A2
+  245  01:AB9A  05 0A 0C          .byte D2, G2, A2, D2 
+       01:AB9D  05        
+  246  01:AB9E  82 11             .byte eighth, D3
+  247  01:ABA0  81 05             .byte sixteenth, D2
+  248  01:ABA2  88 0F             .byte d_quarter, C3
+  249  01:ABA4  81 0A 0C          .byte sixteenth, G2, A2, C3
+       01:ABA7  0F        
+  250  01:ABA8  05 0A 0C          .byte D2, G2, A2, D2 
+       01:ABAB  05        
+  251  01:ABAC  82 11             .byte eighth, D3
+  252  01:ABAE  81 05             .byte sixteenth, D2
+  253  01:ABB0  82 0F             .byte eighth, C3 
+  254  01:ABB2  81 09 0A          .byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3 
+       01:ABB5  0C 0A 0C  
+       01:ABB8  11 15     
   255                             
-  256  01:AB86  0A 0F 11          .byte G2, C3, D3, G2 
-       01:AB89  0A        
-  257  01:AB8A  82 16             .byte eighth, G3
-  258  01:AB8C  81 0A             .byte sixteenth, G2
-  259  01:AB8E  88 14             .byte d_quarter, F3
-  260  01:AB90  81 0F 11          .byte sixteenth, C3, D3, F3
-       01:AB93  14        
-  261  01:AB94  81 0A 0F          .byte sixteenth, G2, C3, D3, G2 
-       01:AB97  11 0A     
-  262  01:AB99  82 16             .byte eighth, G3
-  263  01:AB9B  81 0A             .byte sixteenth, G2
-  264  01:AB9D  88 14             .byte d_quarter, F3
-  265  01:AB9F  81 14 13          .byte sixteenth, F3, E3, D3
-       01:ABA2  11        
-  266  01:ABA3  0A 0F 11          .byte G2, C3, D3, G2 
-       01:ABA6  0A        
-  267  01:ABA7  82 16             .byte eighth, G3
-  268  01:ABA9  81 0A             .byte sixteenth, G2
-  269  01:ABAB  88 14             .byte d_quarter, F3
-  270  01:ABAD  81 0F 11          .byte sixteenth, C3, D3, F3
-       01:ABB0  14        
-  271  01:ABB1  81 0A 0F          .byte sixteenth, G2, C3, D3, G2 
-       01:ABB4  11 0A     
-  272  01:ABB6  82 16             .byte eighth, G3
-  273  01:ABB8  81 0A             .byte sixteenth, G2
-  274  01:ABBA  88 14             .byte d_quarter, F3
-  275  01:ABBC  81 14 13          .byte sixteenth, F3, E3, D3
-       01:ABBF  11        
+  256  01:ABBA  0A 0F 11          .byte G2, C3, D3, G2 
+       01:ABBD  0A        
+  257  01:ABBE  82 16             .byte eighth, G3
+  258  01:ABC0  81 0A             .byte sixteenth, G2
+  259  01:ABC2  88 14             .byte d_quarter, F3
+  260  01:ABC4  81 0F 11          .byte sixteenth, C3, D3, F3
+       01:ABC7  14        
+  261  01:ABC8  81 0A 0F          .byte sixteenth, G2, C3, D3, G2 
+       01:ABCB  11 0A     
+  262  01:ABCD  82 16             .byte eighth, G3
+  263  01:ABCF  81 0A             .byte sixteenth, G2
+  264  01:ABD1  88 14             .byte d_quarter, F3
+  265  01:ABD3  81 14 13          .byte sixteenth, F3, E3, D3
+       01:ABD6  11        
+  266  01:ABD7  0A 0F 11          .byte G2, C3, D3, G2 
+       01:ABDA  0A        
+  267  01:ABDB  82 16             .byte eighth, G3
+  268  01:ABDD  81 0A             .byte sixteenth, G2
+  269  01:ABDF  88 14             .byte d_quarter, F3
+  270  01:ABE1  81 0F 11          .byte sixteenth, C3, D3, F3
+       01:ABE4  14        
+  271  01:ABE5  81 0A 0F          .byte sixteenth, G2, C3, D3, G2 
+       01:ABE8  11 0A     
+  272  01:ABEA  82 16             .byte eighth, G3
+  273  01:ABEC  81 0A             .byte sixteenth, G2
+  274  01:ABEE  88 14             .byte d_quarter, F3
+  275  01:ABF0  81 14 13          .byte sixteenth, F3, E3, D3
+       01:ABF3  11        
   276                     
-  277  01:ABC0  81 05 0A          .byte sixteenth, D2, G2, A2, D2 
-       01:ABC3  0C 05     
-  278  01:ABC5  82 11             .byte eighth, D3
-  279  01:ABC7  81 05             .byte sixteenth, D2
-  280  01:ABC9  88 0F             .byte d_quarter, C3
-  281  01:ABCB  81 0A 0C          .byte sixteenth, G2, A2, C3
-       01:ABCE  0F        
-  282  01:ABCF  05 0A 0C          .byte D2, G2, A2, D2 
-       01:ABD2  05        
-  283  01:ABD3  82 11             .byte eighth, D3
-  284  01:ABD5  81 05             .byte sixteenth, D2
-  285  01:ABD7  82 0F 09          .byte eighth, C3, Fs2, G2, Gs2
-       01:ABDA  0A 0B     
-  286  01:ABDC  81 0C             .byte sixteenth, A2
-  287  01:ABDE  05 0A 0C          .byte D2, G2, A2, D2 
-       01:ABE1  05        
-  288  01:ABE2  82 11             .byte eighth, D3
-  289  01:ABE4  81 05             .byte sixteenth, D2
-  290  01:ABE6  88 0F             .byte d_quarter, C3
-  291  01:ABE8  81 0A 0C          .byte sixteenth, G2, A2, C3
-       01:ABEB  0F        
-  292  01:ABEC  05 0A 0C          .byte D2, G2, A2, D2 
-       01:ABEF  05        
-  293  01:ABF0  82 11             .byte eighth, D3
-  294  01:ABF2  81 05             .byte sixteenth, D2
-  295  01:ABF4  82 0F             .byte eighth, C3 
-  296  01:ABF6  81 09 0A          .byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3 
-       01:ABF9  0C 0A 0C  
-       01:ABFC  11 15     
+  277  01:ABF4  81 05 0A          .byte sixteenth, D2, G2, A2, D2 
+       01:ABF7  0C 05     
+  278  01:ABF9  82 11             .byte eighth, D3
+  279  01:ABFB  81 05             .byte sixteenth, D2
+  280  01:ABFD  88 0F             .byte d_quarter, C3
+  281  01:ABFF  81 0A 0C          .byte sixteenth, G2, A2, C3
+       01:AC02  0F        
+  282  01:AC03  05 0A 0C          .byte D2, G2, A2, D2 
+       01:AC06  05        
+  283  01:AC07  82 11             .byte eighth, D3
+  284  01:AC09  81 05             .byte sixteenth, D2
+  285  01:AC0B  82 0F 09          .byte eighth, C3, Fs2, G2, Gs2
+       01:AC0E  0A 0B     
+  286  01:AC10  81 0C             .byte sixteenth, A2
+  287  01:AC12  05 0A 0C          .byte D2, G2, A2, D2 
+       01:AC15  05        
+  288  01:AC16  82 11             .byte eighth, D3
+  289  01:AC18  81 05             .byte sixteenth, D2
+  290  01:AC1A  88 0F             .byte d_quarter, C3
+  291  01:AC1C  81 0A 0C          .byte sixteenth, G2, A2, C3
+       01:AC1F  0F        
+  292  01:AC20  05 0A 0C          .byte D2, G2, A2, D2 
+       01:AC23  05        
+  293  01:AC24  82 11             .byte eighth, D3
+  294  01:AC26  81 05             .byte sixteenth, D2
+  295  01:AC28  82 0F             .byte eighth, C3 
+  296  01:AC2A  81 09 0A          .byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3 
+       01:AC2D  0C 0A 0C  
+       01:AC30  11 15     
   297                             
   298                             ;;bridge
   299                             
-  300  01:ABFE  A2 0B             .byte volume_envelope, ve_long_decay 
-  301  01:AC00  87 1B 1A          .byte d_eighth, C4, B3, A3
-       01:AC03  18        
-  302  01:AC04  81 09 0A          .byte sixteenth, Fs2, G2, Gs2, A2, Gs2, G2, Fs2
-       01:AC07  0B 0C 0B  
-       01:AC0A  0A 09     
-  303  01:AC0C  87 18 16          .byte d_eighth, A3, G3, Fs3, D3
-       01:AC0F  15 11     
-  304  01:AC11  82 14             .byte eighth, F3
-  305  01:AC13  81 11             .byte sixteenth, D3
-  306  01:AC15  90 0F             .byte d_half_eighth, C3
-  307  01:AC17  A2 03             .byte volume_envelope, ve_tgl_1
-  308  01:AC19  81 0A 0C          .byte sixteenth, G2, A2, C3
-       01:AC1C  0F        
-  309  01:AC1D  05 0A 0C          .byte D2, G2, A2, D2 
-       01:AC20  05        
-  310  01:AC21  82 11             .byte eighth, D3
-  311  01:AC23  81 05             .byte sixteenth, D2
-  312  01:AC25  82 0F             .byte eighth, C3 
-  313  01:AC27  81 09 0A          .byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3
-       01:AC2A  0C 0A 0C  
-       01:AC2D  11 15     
+  300  01:AC32  A2 0B             .byte volume_envelope, ve_long_decay 
+  301  01:AC34  87 1B 1A          .byte d_eighth, C4, B3, A3
+       01:AC37  18        
+  302  01:AC38  81 09 0A          .byte sixteenth, Fs2, G2, Gs2, A2, Gs2, G2, Fs2
+       01:AC3B  0B 0C 0B  
+       01:AC3E  0A 09     
+  303  01:AC40  87 18 16          .byte d_eighth, A3, G3, Fs3, D3
+       01:AC43  15 11     
+  304  01:AC45  82 14             .byte eighth, F3
+  305  01:AC47  81 11             .byte sixteenth, D3
+  306  01:AC49  90 0F             .byte d_half_eighth, C3
+  307  01:AC4B  A2 03             .byte volume_envelope, ve_tgl_1
+  308  01:AC4D  81 0A 0C          .byte sixteenth, G2, A2, C3
+       01:AC50  0F        
+  309  01:AC51  05 0A 0C          .byte D2, G2, A2, D2 
+       01:AC54  05        
+  310  01:AC55  82 11             .byte eighth, D3
+  311  01:AC57  81 05             .byte sixteenth, D2
+  312  01:AC59  82 0F             .byte eighth, C3 
+  313  01:AC5B  81 09 0A          .byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3
+       01:AC5E  0C 0A 0C  
+       01:AC61  11 15     
   314                             
-  315  01:AC2F  A2 0B             .byte volume_envelope, ve_long_decay 
-  316  01:AC31  87 1B 1A          .byte d_eighth, C4, B3, A3
-       01:AC34  18        
-  317  01:AC35  81 09 0A          .byte sixteenth, Fs2, G2, Gs2, A2, Gs2, G2, Fs2
-       01:AC38  0B 0C 0B  
-       01:AC3B  0A 09     
-  318  01:AC3D  87 18 16          .byte d_eighth, A3, G3, Fs3, D3
-       01:AC40  15 11     
-  319  01:AC42  82 14             .byte eighth, F3
-  320  01:AC44  81 1B             .byte sixteenth, C4
-  321  01:AC46  90 1D             .byte d_half_eighth, D4
-  322  01:AC48  A2 03             .byte volume_envelope, ve_tgl_1
-  323  01:AC4A  81 0A 0C          .byte sixteenth, G2, A2, C3
-       01:AC4D  0F        
-  324  01:AC4E  05 0A 0C          .byte D2, G2, A2, D2 
-       01:AC51  05        
-  325  01:AC52  82 11             .byte eighth, D3
-  326  01:AC54  81 05             .byte sixteenth, D2
-  327  01:AC56  82 0F             .byte eighth, C3 
-  328  01:AC58  81 09 0A          .byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3
-       01:AC5B  0C 0A 0C  
-       01:AC5E  11 15     
+  315  01:AC63  A2 0B             .byte volume_envelope, ve_long_decay 
+  316  01:AC65  87 1B 1A          .byte d_eighth, C4, B3, A3
+       01:AC68  18        
+  317  01:AC69  81 09 0A          .byte sixteenth, Fs2, G2, Gs2, A2, Gs2, G2, Fs2
+       01:AC6C  0B 0C 0B  
+       01:AC6F  0A 09     
+  318  01:AC71  87 18 16          .byte d_eighth, A3, G3, Fs3, D3
+       01:AC74  15 11     
+  319  01:AC76  82 14             .byte eighth, F3
+  320  01:AC78  81 1B             .byte sixteenth, C4
+  321  01:AC7A  90 1D             .byte d_half_eighth, D4
+  322  01:AC7C  A2 03             .byte volume_envelope, ve_tgl_1
+  323  01:AC7E  81 0A 0C          .byte sixteenth, G2, A2, C3
+       01:AC81  0F        
+  324  01:AC82  05 0A 0C          .byte D2, G2, A2, D2 
+       01:AC85  05        
+  325  01:AC86  82 11             .byte eighth, D3
+  326  01:AC88  81 05             .byte sixteenth, D2
+  327  01:AC8A  82 0F             .byte eighth, C3 
+  328  01:AC8C  81 09 0A          .byte sixteenth, Fs2, G2, A2, G2, A2, D3, Fs3
+       01:AC8F  0C 0A 0C  
+       01:AC92  11 15     
   329                             
   330                             ;; reach-around
-  331  01:AC60  A2 0B             .byte volume_envelope, ve_long_decay 
-  332  01:AC62  87 1F 1F          .byte d_eighth, E4, E4
-  333  01:AC65  A2 04             .byte volume_envelope, ve_tgl_2
-  334  01:AC67  82 21             .byte eighth, Fs4
-  335  01:AC69  A2 07             .byte volume_envelope, ve_battlekid_2
-  336  01:AC6B  86 5E             .byte d_sixteenth, rest
-  337  01:AC6D  80 38             .byte thirtysecond, F6
-  338  01:AC6F  81 39 35          .byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
-       01:AC72  33 30 2E  
-       01:AC75  2D 30     
-  339  01:AC77  82 2E             .byte eighth, G5
-  340  01:AC79  81 27             .byte sixteenth, C5
-  341  01:AC7B  82 2C             .byte eighth, F5
-  342  01:AC7D  81 29             .byte sixteenth, D5
-  343  01:AC7F  82 2E             .byte eighth, G5
-  344  01:AC81  81 2D             .byte sixteenth, Fs5
-  345  01:AC83  82 30             .byte eighth, A5
-  346  01:AC85  81 27 2E          .byte sixteenth, C5, G5, Fs5, C6 
-       01:AC88  2D 33     
+  331  01:AC94  A2 0B             .byte volume_envelope, ve_long_decay 
+  332  01:AC96  87 1F 1F          .byte d_eighth, E4, E4
+  333  01:AC99  A2 04             .byte volume_envelope, ve_tgl_2
+  334  01:AC9B  82 21             .byte eighth, Fs4
+  335  01:AC9D  A2 07             .byte volume_envelope, ve_battlekid_2
+  336  01:AC9F  86 5E             .byte d_sixteenth, rest
+  337  01:ACA1  80 38             .byte thirtysecond, F6
+  338  01:ACA3  81 39 35          .byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
+       01:ACA6  33 30 2E  
+       01:ACA9  2D 30     
+  339  01:ACAB  82 2E             .byte eighth, G5
+  340  01:ACAD  81 27             .byte sixteenth, C5
+  341  01:ACAF  82 2C             .byte eighth, F5
+  342  01:ACB1  81 29             .byte sixteenth, D5
+  343  01:ACB3  82 2E             .byte eighth, G5
+  344  01:ACB5  81 2D             .byte sixteenth, Fs5
+  345  01:ACB7  82 30             .byte eighth, A5
+  346  01:ACB9  81 27 2E          .byte sixteenth, C5, G5, Fs5, C6 
+       01:ACBC  2D 33     
   347                             
-  348  01:AC8A  A2 0B             .byte volume_envelope, ve_long_decay 
-  349  01:AC8C  87 1F 1F          .byte d_eighth, E4, E4
-  350  01:AC8F  A2 04             .byte volume_envelope, ve_tgl_2
-  351  01:AC91  82 21             .byte eighth, Fs4
-  352  01:AC93  A2 07             .byte volume_envelope, ve_battlekid_2
-  353  01:AC95  86 5E             .byte d_sixteenth, rest
-  354  01:AC97  80 1C             .byte thirtysecond, Cs4
-  355  01:AC99  81 1D 21          .byte sixteenth, D4, Fs4, D5, A4, D5, Fs5
-       01:AC9C  29 24 29  
-       01:AC9F  2D        
-  356  01:ACA0  81 33 30          .byte sixteenth, C6, A5, E5, A4, F5, C5, Fs4
-       01:ACA3  2B 24 2C  
-       01:ACA6  27 21     
-  357  01:ACA8  81 2E 29          .byte sixteenth, G5, D5, A4, D5, A4, E4, G5, Fs5, C6
-       01:ACAB  24 29 24  
-       01:ACAE  1F 2E 2D  
-       01:ACB1  33        
+  348  01:ACBE  A2 0B             .byte volume_envelope, ve_long_decay 
+  349  01:ACC0  87 1F 1F          .byte d_eighth, E4, E4
+  350  01:ACC3  A2 04             .byte volume_envelope, ve_tgl_2
+  351  01:ACC5  82 21             .byte eighth, Fs4
+  352  01:ACC7  A2 07             .byte volume_envelope, ve_battlekid_2
+  353  01:ACC9  86 5E             .byte d_sixteenth, rest
+  354  01:ACCB  80 1C             .byte thirtysecond, Cs4
+  355  01:ACCD  81 1D 21          .byte sixteenth, D4, Fs4, D5, A4, D5, Fs5
+       01:ACD0  29 24 29  
+       01:ACD3  2D        
+  356  01:ACD4  81 33 30          .byte sixteenth, C6, A5, E5, A4, F5, C5, Fs4
+       01:ACD7  2B 24 2C  
+       01:ACDA  27 21     
+  357  01:ACDC  81 2E 29          .byte sixteenth, G5, D5, A4, D5, A4, E4, G5, Fs5, C6
+       01:ACDF  24 29 24  
+       01:ACE2  1F 2E 2D  
+       01:ACE5  33        
   358                             
-  359  01:ACB2  A2 0B             .byte volume_envelope, ve_long_decay 
-  360  01:ACB4  87 1F 1F          .byte d_eighth, E4, E4
-  361  01:ACB7  A2 04             .byte volume_envelope, ve_tgl_2
-  362  01:ACB9  82 21             .byte eighth, Fs4
-  363  01:ACBB  A2 07             .byte volume_envelope, ve_battlekid_2
-  364  01:ACBD  86 5E             .byte d_sixteenth, rest
-  365  01:ACBF  80 38             .byte thirtysecond, F6
-  366  01:ACC1  81 39 35          .byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
-       01:ACC4  33 30 2E  
-       01:ACC7  2D 30     
-  367  01:ACC9  82 2E             .byte eighth, G5
-  368  01:ACCB  81 27             .byte sixteenth, C5
-  369  01:ACCD  82 2C             .byte eighth, F5
-  370  01:ACCF  81 29             .byte sixteenth, D5
-  371  01:ACD1  82 2E             .byte eighth, G5
-  372  01:ACD3  81 2D             .byte sixteenth, Fs5
-  373  01:ACD5  82 30             .byte eighth, A5
-  374  01:ACD7  81 27 2E          .byte sixteenth, C5, G5, Fs5, C6 
-       01:ACDA  2D 33     
+  359  01:ACE6  A2 0B             .byte volume_envelope, ve_long_decay 
+  360  01:ACE8  87 1F 1F          .byte d_eighth, E4, E4
+  361  01:ACEB  A2 04             .byte volume_envelope, ve_tgl_2
+  362  01:ACED  82 21             .byte eighth, Fs4
+  363  01:ACEF  A2 07             .byte volume_envelope, ve_battlekid_2
+  364  01:ACF1  86 5E             .byte d_sixteenth, rest
+  365  01:ACF3  80 38             .byte thirtysecond, F6
+  366  01:ACF5  81 39 35          .byte sixteenth, Fs6, D6, C6, A5, G5, Fs5, A5
+       01:ACF8  33 30 2E  
+       01:ACFB  2D 30     
+  367  01:ACFD  82 2E             .byte eighth, G5
+  368  01:ACFF  81 27             .byte sixteenth, C5
+  369  01:AD01  82 2C             .byte eighth, F5
+  370  01:AD03  81 29             .byte sixteenth, D5
+  371  01:AD05  82 2E             .byte eighth, G5
+  372  01:AD07  81 2D             .byte sixteenth, Fs5
+  373  01:AD09  82 30             .byte eighth, A5
+  374  01:AD0B  81 27 2E          .byte sixteenth, C5, G5, Fs5, C6 
+       01:AD0E  2D 33     
   375                             
-  376  01:ACDC  A2 0B             .byte volume_envelope, ve_long_decay 
-  377  01:ACDE  87 1F 1F          .byte d_eighth, E4, E4
-  378  01:ACE1  A2 04             .byte volume_envelope, ve_tgl_2
-  379  01:ACE3  82 21             .byte eighth, Fs4
-  380  01:ACE5  A2 0B             .byte volume_envelope, ve_long_decay 
-  381  01:ACE7  88 5E             .byte d_quarter, rest
-  382  01:ACE9  AA 01             .byte arpeggio, arp_lowerThird
-  383  01:ACEB  8C 27             .byte five_eighths, C5
-  384  01:ACED  A2 03             .byte volume_envelope, ve_tgl_1
-  385  01:ACEF  AA 00             .byte arpeggio, arp_none
-  386  01:ACF1  81 5E             .byte sixteenth, rest
-  387  01:ACF3  82 09 0A          .byte eighth, Fs2, G2, Gs2
-       01:ACF6  0B        
-  388  01:ACF7  81 0C             .byte sixteenth, A2
+  376  01:AD10  A2 0B             .byte volume_envelope, ve_long_decay 
+  377  01:AD12  87 1F 1F          .byte d_eighth, E4, E4
+  378  01:AD15  A2 04             .byte volume_envelope, ve_tgl_2
+  379  01:AD17  82 21             .byte eighth, Fs4
+  380  01:AD19  A2 0B             .byte volume_envelope, ve_long_decay 
+  381  01:AD1B  88 5E             .byte d_quarter, rest
+  382  01:AD1D  AA 01             .byte arpeggio, arp_lowerThird
+  383  01:AD1F  8C 27             .byte five_eighths, C5
+  384  01:AD21  A2 03             .byte volume_envelope, ve_tgl_1
+  385  01:AD23  AA 00             .byte arpeggio, arp_none
+  386  01:AD25  81 5E             .byte sixteenth, rest
+  387  01:AD27  82 09 0A          .byte eighth, Fs2, G2, Gs2
+       01:AD2A  0B        
+  388  01:AD2B  81 0C             .byte sixteenth, A2
   389                             
-  390  01:ACF9  A1            .byte loop
-  391  01:ACFA  09 AB         .word bank0_square2
+  390  01:AD2D  A1            .byte loop
+  391  01:AD2E  3D AB         .word bank0_square2
   392                         
-  393  01:ACFC            bank0_tri:
+  393  01:AD30            bank0_tri:
   394                     
-  395  01:ACFC  81 11 16          .byte sixteenth, D3, G3, A3, D3 
-       01:ACFF  18 11     
-  396  01:AD01  82 1D             .byte eighth, D4
-  397  01:AD03  81 11             .byte sixteenth, D3
-  398  01:AD05  88 1B             .byte d_quarter, C4
-  399  01:AD07  81 16 18          .byte sixteenth, G3, A3, C4
-       01:AD0A  1B        
-  400  01:AD0B  11 16 18          .byte D3, G3, A3, D3 
-       01:AD0E  11        
-  401  01:AD0F  82 1D             .byte eighth, D4
-  402  01:AD11  81 11             .byte sixteenth, D3
-  403  01:AD13  82 1B 15          .byte eighth, C4, Fs3, G3, Gs3
-       01:AD16  16 17     
-  404  01:AD18  81 18             .byte sixteenth, A3
-  405  01:AD1A  11 16 18          .byte D3, G3, A3, D3 
-       01:AD1D  11        
-  406  01:AD1E  82 1D             .byte eighth, D4
-  407  01:AD20  81 11             .byte sixteenth, D3
-  408  01:AD22  88 1B             .byte d_quarter, C4
-  409  01:AD24  81 16 18          .byte sixteenth, G3, A3, C4
-       01:AD27  1B        
-  410  01:AD28  11 16 18          .byte D3, G3, A3, D3 
-       01:AD2B  11        
-  411  01:AD2C  82 1D             .byte eighth, D4
-  412  01:AD2E  81 11             .byte sixteenth, D3
-  413  01:AD30  82 1B             .byte eighth, C4
-  414  01:AD32  81 15 16          .byte sixteenth, Fs3, G3, Gs3, A3, Gs3, G3, Fs3
-       01:AD35  17 18 17  
-       01:AD38  16 15     
+  395  01:AD30  81 11 16          .byte sixteenth, D3, G3, A3, D3 
+       01:AD33  18 11     
+  396  01:AD35  82 1D             .byte eighth, D4
+  397  01:AD37  81 11             .byte sixteenth, D3
+  398  01:AD39  88 1B             .byte d_quarter, C4
+  399  01:AD3B  81 16 18          .byte sixteenth, G3, A3, C4
+       01:AD3E  1B        
+  400  01:AD3F  11 16 18          .byte D3, G3, A3, D3 
+       01:AD42  11        
+  401  01:AD43  82 1D             .byte eighth, D4
+  402  01:AD45  81 11             .byte sixteenth, D3
+  403  01:AD47  82 1B 15          .byte eighth, C4, Fs3, G3, Gs3
+       01:AD4A  16 17     
+  404  01:AD4C  81 18             .byte sixteenth, A3
+  405  01:AD4E  11 16 18          .byte D3, G3, A3, D3 
+       01:AD51  11        
+  406  01:AD52  82 1D             .byte eighth, D4
+  407  01:AD54  81 11             .byte sixteenth, D3
+  408  01:AD56  88 1B             .byte d_quarter, C4
+  409  01:AD58  81 16 18          .byte sixteenth, G3, A3, C4
+       01:AD5B  1B        
+  410  01:AD5C  11 16 18          .byte D3, G3, A3, D3 
+       01:AD5F  11        
+  411  01:AD60  82 1D             .byte eighth, D4
+  412  01:AD62  81 11             .byte sixteenth, D3
+  413  01:AD64  82 1B             .byte eighth, C4
+  414  01:AD66  81 15 16          .byte sixteenth, Fs3, G3, Gs3, A3, Gs3, G3, Fs3
+       01:AD69  17 18 17  
+       01:AD6C  16 15     
   415                             
-  416  01:AD3A  11 16 18          .byte D3, G3, A3, D3 
-       01:AD3D  11        
-  417  01:AD3E  82 1D             .byte eighth, D4
-  418  01:AD40  81 11             .byte sixteenth, D3
-  419  01:AD42  88 1B             .byte d_quarter, C4
-  420  01:AD44  81 16 18          .byte sixteenth, G3, A3, C4
-       01:AD47  1B        
-  421  01:AD48  11 16 18          .byte D3, G3, A3, D3 
-       01:AD4B  11        
-  422  01:AD4C  82 1D             .byte eighth, D4
-  423  01:AD4E  81 11             .byte sixteenth, D3
-  424  01:AD50  82 1B 15          .byte eighth, C4, Fs3, G3, Gs3
-       01:AD53  16 17     
-  425  01:AD55  81 18             .byte sixteenth, A3
-  426  01:AD57  11 16 18          .byte D3, G3, A3, D3 
-       01:AD5A  11        
-  427  01:AD5B  82 1D             .byte eighth, D4
-  428  01:AD5D  81 11             .byte sixteenth, D3
-  429  01:AD5F  88 1B             .byte d_quarter, C4
-  430  01:AD61  81 16 18          .byte sixteenth, G3, A3, C4
-       01:AD64  1B        
-  431  01:AD65  11 16 18          .byte D3, G3, A3, D3 
-       01:AD68  11        
-  432  01:AD69  82 1D             .byte eighth, D4
-  433  01:AD6B  81 11             .byte sixteenth, D3
-  434  01:AD6D  82 1B             .byte eighth, C4
-  435  01:AD6F  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
-       01:AD72  18 16 18  
-       01:AD75  1D 21     
+  416  01:AD6E  11 16 18          .byte D3, G3, A3, D3 
+       01:AD71  11        
+  417  01:AD72  82 1D             .byte eighth, D4
+  418  01:AD74  81 11             .byte sixteenth, D3
+  419  01:AD76  88 1B             .byte d_quarter, C4
+  420  01:AD78  81 16 18          .byte sixteenth, G3, A3, C4
+       01:AD7B  1B        
+  421  01:AD7C  11 16 18          .byte D3, G3, A3, D3 
+       01:AD7F  11        
+  422  01:AD80  82 1D             .byte eighth, D4
+  423  01:AD82  81 11             .byte sixteenth, D3
+  424  01:AD84  82 1B 15          .byte eighth, C4, Fs3, G3, Gs3
+       01:AD87  16 17     
+  425  01:AD89  81 18             .byte sixteenth, A3
+  426  01:AD8B  11 16 18          .byte D3, G3, A3, D3 
+       01:AD8E  11        
+  427  01:AD8F  82 1D             .byte eighth, D4
+  428  01:AD91  81 11             .byte sixteenth, D3
+  429  01:AD93  88 1B             .byte d_quarter, C4
+  430  01:AD95  81 16 18          .byte sixteenth, G3, A3, C4
+       01:AD98  1B        
+  431  01:AD99  11 16 18          .byte D3, G3, A3, D3 
+       01:AD9C  11        
+  432  01:AD9D  82 1D             .byte eighth, D4
+  433  01:AD9F  81 11             .byte sixteenth, D3
+  434  01:ADA1  82 1B             .byte eighth, C4
+  435  01:ADA3  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
+       01:ADA6  18 16 18  
+       01:ADA9  1D 21     
   436                             
-  437  01:AD77  16 1B 1D          .byte G3, C4, D4, G3 
-       01:AD7A  16        
-  438  01:AD7B  82 22             .byte eighth, G4
-  439  01:AD7D  81 16             .byte sixteenth, G3
-  440  01:AD7F  88 20             .byte d_quarter, F4
-  441  01:AD81  81 1B 1D          .byte sixteenth, C4, D4, F4
-       01:AD84  20        
-  442  01:AD85  81 16 1B          .byte sixteenth, G3, C4, D4, G3 
-       01:AD88  1D 16     
-  443  01:AD8A  82 22             .byte eighth, G4
-  444  01:AD8C  81 16             .byte sixteenth, G3
-  445  01:AD8E  88 20             .byte d_quarter, F4
-  446  01:AD90  81 20 1F          .byte sixteenth, F4, E4, D4
-       01:AD93  1D        
-  447  01:AD94  16 1B 1D          .byte G3, C4, D4, G3 
-       01:AD97  16        
-  448  01:AD98  82 22             .byte eighth, G4
-  449  01:AD9A  81 16             .byte sixteenth, G3
-  450  01:AD9C  88 20             .byte d_quarter, F4
-  451  01:AD9E  81 1B 1D          .byte sixteenth, C4, D4, F4
-       01:ADA1  20        
-  452  01:ADA2  81 16 1B          .byte sixteenth, G3, C4, D4, G3 
-       01:ADA5  1D 16     
-  453  01:ADA7  82 22             .byte eighth, G4
-  454  01:ADA9  81 16             .byte sixteenth, G3
-  455  01:ADAB  88 20             .byte d_quarter, F4
-  456  01:ADAD  81 20 1F          .byte sixteenth, F4, E4, D4
-       01:ADB0  1D        
+  437  01:ADAB  16 1B 1D          .byte G3, C4, D4, G3 
+       01:ADAE  16        
+  438  01:ADAF  82 22             .byte eighth, G4
+  439  01:ADB1  81 16             .byte sixteenth, G3
+  440  01:ADB3  88 20             .byte d_quarter, F4
+  441  01:ADB5  81 1B 1D          .byte sixteenth, C4, D4, F4
+       01:ADB8  20        
+  442  01:ADB9  81 16 1B          .byte sixteenth, G3, C4, D4, G3 
+       01:ADBC  1D 16     
+  443  01:ADBE  82 22             .byte eighth, G4
+  444  01:ADC0  81 16             .byte sixteenth, G3
+  445  01:ADC2  88 20             .byte d_quarter, F4
+  446  01:ADC4  81 20 1F          .byte sixteenth, F4, E4, D4
+       01:ADC7  1D        
+  447  01:ADC8  16 1B 1D          .byte G3, C4, D4, G3 
+       01:ADCB  16        
+  448  01:ADCC  82 22             .byte eighth, G4
+  449  01:ADCE  81 16             .byte sixteenth, G3
+  450  01:ADD0  88 20             .byte d_quarter, F4
+  451  01:ADD2  81 1B 1D          .byte sixteenth, C4, D4, F4
+       01:ADD5  20        
+  452  01:ADD6  81 16 1B          .byte sixteenth, G3, C4, D4, G3 
+       01:ADD9  1D 16     
+  453  01:ADDB  82 22             .byte eighth, G4
+  454  01:ADDD  81 16             .byte sixteenth, G3
+  455  01:ADDF  88 20             .byte d_quarter, F4
+  456  01:ADE1  81 20 1F          .byte sixteenth, F4, E4, D4
+       01:ADE4  1D        
   457                     
-  458  01:ADB1  11 16 18          .byte D3, G3, A3, D3 
-       01:ADB4  11        
-  459  01:ADB5  82 1D             .byte eighth, D4
-  460  01:ADB7  81 11             .byte sixteenth, D3
-  461  01:ADB9  88 1B             .byte d_quarter, C4
-  462  01:ADBB  81 16 18          .byte sixteenth, G3, A3, C4
-       01:ADBE  1B        
-  463  01:ADBF  11 16 18          .byte D3, G3, A3, D3 
-       01:ADC2  11        
-  464  01:ADC3  82 1D             .byte eighth, D4
-  465  01:ADC5  81 11             .byte sixteenth, D3
-  466  01:ADC7  82 1B 15          .byte eighth, C4, Fs3, G3, Gs3
-       01:ADCA  16 17     
-  467  01:ADCC  81 18             .byte sixteenth, A3
-  468  01:ADCE  11 16 18          .byte D3, G3, A3, D3 
-       01:ADD1  11        
-  469  01:ADD2  82 1D             .byte eighth, D4
-  470  01:ADD4  81 11             .byte sixteenth, D3
-  471  01:ADD6  88 1B             .byte d_quarter, C4
-  472  01:ADD8  81 16 18          .byte sixteenth, G3, A3, C4
-       01:ADDB  1B        
-  473  01:ADDC  11 16 18          .byte D3, G3, A3, D3 
-       01:ADDF  11        
-  474  01:ADE0  82 1D             .byte eighth, D4
-  475  01:ADE2  81 11             .byte sixteenth, D3
-  476  01:ADE4  82 1B             .byte eighth, C4
-  477  01:ADE6  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
-       01:ADE9  18 16 18  
-       01:ADEC  1D 21     
+  458  01:ADE5  11 16 18          .byte D3, G3, A3, D3 
+       01:ADE8  11        
+  459  01:ADE9  82 1D             .byte eighth, D4
+  460  01:ADEB  81 11             .byte sixteenth, D3
+  461  01:ADED  88 1B             .byte d_quarter, C4
+  462  01:ADEF  81 16 18          .byte sixteenth, G3, A3, C4
+       01:ADF2  1B        
+  463  01:ADF3  11 16 18          .byte D3, G3, A3, D3 
+       01:ADF6  11        
+  464  01:ADF7  82 1D             .byte eighth, D4
+  465  01:ADF9  81 11             .byte sixteenth, D3
+  466  01:ADFB  82 1B 15          .byte eighth, C4, Fs3, G3, Gs3
+       01:ADFE  16 17     
+  467  01:AE00  81 18             .byte sixteenth, A3
+  468  01:AE02  11 16 18          .byte D3, G3, A3, D3 
+       01:AE05  11        
+  469  01:AE06  82 1D             .byte eighth, D4
+  470  01:AE08  81 11             .byte sixteenth, D3
+  471  01:AE0A  88 1B             .byte d_quarter, C4
+  472  01:AE0C  81 16 18          .byte sixteenth, G3, A3, C4
+       01:AE0F  1B        
+  473  01:AE10  11 16 18          .byte D3, G3, A3, D3 
+       01:AE13  11        
+  474  01:AE14  82 1D             .byte eighth, D4
+  475  01:AE16  81 11             .byte sixteenth, D3
+  476  01:AE18  82 1B             .byte eighth, C4
+  477  01:AE1A  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
+       01:AE1D  18 16 18  
+       01:AE20  1D 21     
   478                             
   479                             ;;bridge
   480                             
-  481  01:ADEE  81                .byte sixteenth
-  482  01:ADEF  27 22 1B          .byte C5, G4, C4, G4, D4, G3, A3, D4, A4
-       01:ADF2  22 1D 16  
-       01:ADF5  18 1D 24  
-  483  01:ADF8  3C 3A 39          .byte A6, G6, Fs6, D6, C6, A5, G5
-       01:ADFB  35 33 30  
-       01:ADFE  2E        
-  484  01:ADFF  20 1B 14          .byte F4, C4, F3, E4, A3, Ds3, D4, A3, D3
-       01:AE02  1F 18 12  
-       01:AE05  1D 18 11  
-  485  01:AE08  11 1D 11          .byte D3, D4, D3, A3, D3, F3, C3
-       01:AE0B  18 11 14  
-       01:AE0E  0F        
-  486  01:AE0F  11 16 18          .byte D3, G3, A3, D3 
-       01:AE12  11        
-  487  01:AE13  82 1D             .byte eighth, D4
-  488  01:AE15  81 11             .byte sixteenth, D3
-  489  01:AE17  88 1B             .byte d_quarter, C4
-  490  01:AE19  81 16 18          .byte sixteenth, G3, A3, C4
-       01:AE1C  1B        
-  491  01:AE1D  11 16 18          .byte D3, G3, A3, D3 
-       01:AE20  11        
-  492  01:AE21  82 1D             .byte eighth, D4
-  493  01:AE23  81 11             .byte sixteenth, D3
-  494  01:AE25  82 1B             .byte eighth, C4
-  495  01:AE27  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
-       01:AE2A  18 16 18  
-       01:AE2D  1D 21     
-  496  01:AE2F  27 22 1B          .byte C5, G4, C4, G4, D4, G3, A3, D4, A4
-       01:AE32  22 1D 16  
-       01:AE35  18 1D 24  
-  497  01:AE38  3C 3A 39          .byte A6, G6, Fs6, D6, C6, A5, G5
-       01:AE3B  35 33 30  
-       01:AE3E  2E        
-  498  01:AE3F  20 1B 14          .byte F4, C4, F3, E4, A3, Ds3, D4, A3, D3
-       01:AE42  1F 18 12  
-       01:AE45  1D 18 11  
-  499  01:AE48  11 1D 11          .byte D3, D4, D3, A3, D3, F3, C3
-       01:AE4B  18 11 14  
-       01:AE4E  0F        
-  500  01:AE4F  11 16 18          .byte D3, G3, A3, D3 
-       01:AE52  11        
-  501  01:AE53  82 1D             .byte eighth, D4
-  502  01:AE55  81 11             .byte sixteenth, D3
-  503  01:AE57  88 1B             .byte d_quarter, C4
-  504  01:AE59  81 16 18          .byte sixteenth, G3, A3, C4
-       01:AE5C  1B        
-  505  01:AE5D  11 16 18          .byte D3, G3, A3, D3 
-       01:AE60  11        
-  506  01:AE61  82 1D             .byte eighth, D4
-  507  01:AE63  81 11             .byte sixteenth, D3
-  508  01:AE65  82 1B             .byte eighth, C4
-  509  01:AE67  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
-       01:AE6A  18 16 18  
-       01:AE6D  1D 21     
+  481  01:AE22  81                .byte sixteenth
+  482  01:AE23  27 22 1B          .byte C5, G4, C4, G4, D4, G3, A3, D4, A4
+       01:AE26  22 1D 16  
+       01:AE29  18 1D 24  
+  483  01:AE2C  3C 3A 39          .byte A6, G6, Fs6, D6, C6, A5, G5
+       01:AE2F  35 33 30  
+       01:AE32  2E        
+  484  01:AE33  20 1B 14          .byte F4, C4, F3, E4, A3, Ds3, D4, A3, D3
+       01:AE36  1F 18 12  
+       01:AE39  1D 18 11  
+  485  01:AE3C  11 1D 11          .byte D3, D4, D3, A3, D3, F3, C3
+       01:AE3F  18 11 14  
+       01:AE42  0F        
+  486  01:AE43  11 16 18          .byte D3, G3, A3, D3 
+       01:AE46  11        
+  487  01:AE47  82 1D             .byte eighth, D4
+  488  01:AE49  81 11             .byte sixteenth, D3
+  489  01:AE4B  88 1B             .byte d_quarter, C4
+  490  01:AE4D  81 16 18          .byte sixteenth, G3, A3, C4
+       01:AE50  1B        
+  491  01:AE51  11 16 18          .byte D3, G3, A3, D3 
+       01:AE54  11        
+  492  01:AE55  82 1D             .byte eighth, D4
+  493  01:AE57  81 11             .byte sixteenth, D3
+  494  01:AE59  82 1B             .byte eighth, C4
+  495  01:AE5B  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
+       01:AE5E  18 16 18  
+       01:AE61  1D 21     
+  496  01:AE63  27 22 1B          .byte C5, G4, C4, G4, D4, G3, A3, D4, A4
+       01:AE66  22 1D 16  
+       01:AE69  18 1D 24  
+  497  01:AE6C  3C 3A 39          .byte A6, G6, Fs6, D6, C6, A5, G5
+       01:AE6F  35 33 30  
+       01:AE72  2E        
+  498  01:AE73  20 1B 14          .byte F4, C4, F3, E4, A3, Ds3, D4, A3, D3
+       01:AE76  1F 18 12  
+       01:AE79  1D 18 11  
+  499  01:AE7C  11 1D 11          .byte D3, D4, D3, A3, D3, F3, C3
+       01:AE7F  18 11 14  
+       01:AE82  0F        
+  500  01:AE83  11 16 18          .byte D3, G3, A3, D3 
+       01:AE86  11        
+  501  01:AE87  82 1D             .byte eighth, D4
+  502  01:AE89  81 11             .byte sixteenth, D3
+  503  01:AE8B  88 1B             .byte d_quarter, C4
+  504  01:AE8D  81 16 18          .byte sixteenth, G3, A3, C4
+       01:AE90  1B        
+  505  01:AE91  11 16 18          .byte D3, G3, A3, D3 
+       01:AE94  11        
+  506  01:AE95  82 1D             .byte eighth, D4
+  507  01:AE97  81 11             .byte sixteenth, D3
+  508  01:AE99  82 1B             .byte eighth, C4
+  509  01:AE9B  81 15 16          .byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
+       01:AE9E  18 16 18  
+       01:AEA1  1D 21     
   510                             
   511                             ;; reach-around
-  512  01:AE6F  A2 0B             .byte volume_envelope, ve_long_decay 
-  513  01:AE71  87 0F 0F          .byte d_eighth, C3, C3
-  514  01:AE74  A2 04             .byte volume_envelope, ve_tgl_2
-  515  01:AE76  82 11             .byte eighth, D3
-  516  01:AE78  A2 03             .byte volume_envelope, ve_tgl_1
-  517  01:AE7A  87 5E             .byte d_eighth, rest
-  518  01:AE7C  81 11 11          .byte sixteenth, D3, D3, D4
-       01:AE7F  1D        
-  519  01:AE80  8D 5E             .byte five_sixteenths, rest
-  520  01:AE82  81 11 11          .byte sixteenth, D3, D3, D4
-       01:AE85  1D        
-  521  01:AE86  8D 5E             .byte five_sixteenths, rest
-  522  01:AE88  81 11 11          .byte sixteenth, D3, D3, D4
-       01:AE8B  1D        
-  523  01:AE8C  82 5E             .byte eighth, rest
+  512  01:AEA3  A2 0B             .byte volume_envelope, ve_long_decay 
+  513  01:AEA5  87 0F 0F          .byte d_eighth, C3, C3
+  514  01:AEA8  A2 04             .byte volume_envelope, ve_tgl_2
+  515  01:AEAA  82 11             .byte eighth, D3
+  516  01:AEAC  A2 03             .byte volume_envelope, ve_tgl_1
+  517  01:AEAE  87 5E             .byte d_eighth, rest
+  518  01:AEB0  81 11 11          .byte sixteenth, D3, D3, D4
+       01:AEB3  1D        
+  519  01:AEB4  8D 5E             .byte five_sixteenths, rest
+  520  01:AEB6  81 11 11          .byte sixteenth, D3, D3, D4
+       01:AEB9  1D        
+  521  01:AEBA  8D 5E             .byte five_sixteenths, rest
+  522  01:AEBC  81 11 11          .byte sixteenth, D3, D3, D4
+       01:AEBF  1D        
+  523  01:AEC0  82 5E             .byte eighth, rest
   524                             
-  525  01:AE8E  A2 0B             .byte volume_envelope, ve_long_decay 
-  526  01:AE90  87 0F 0F          .byte d_eighth, C3, C3
-  527  01:AE93  A2 04             .byte volume_envelope, ve_tgl_2
-  528  01:AE95  82 11             .byte eighth, D3
-  529  01:AE97  A2 03             .byte volume_envelope, ve_tgl_1
-  530  01:AE99  87 5E             .byte d_eighth, rest
-  531  01:AE9B  81 11 11          .byte sixteenth, D3, D3, D4
-       01:AE9E  1D        
-  532  01:AE9F  8D 5E             .byte five_sixteenths, rest
-  533  01:AEA1  81 11 11          .byte sixteenth, D3, D3, D4
-       01:AEA4  1D        
-  534  01:AEA5  8D 5E             .byte five_sixteenths, rest
-  535  01:AEA7  81 11 11          .byte sixteenth, D3, D3, D4
-       01:AEAA  1D        
-  536  01:AEAB  82 5E             .byte eighth, rest
+  525  01:AEC2  A2 0B             .byte volume_envelope, ve_long_decay 
+  526  01:AEC4  87 0F 0F          .byte d_eighth, C3, C3
+  527  01:AEC7  A2 04             .byte volume_envelope, ve_tgl_2
+  528  01:AEC9  82 11             .byte eighth, D3
+  529  01:AECB  A2 03             .byte volume_envelope, ve_tgl_1
+  530  01:AECD  87 5E             .byte d_eighth, rest
+  531  01:AECF  81 11 11          .byte sixteenth, D3, D3, D4
+       01:AED2  1D        
+  532  01:AED3  8D 5E             .byte five_sixteenths, rest
+  533  01:AED5  81 11 11          .byte sixteenth, D3, D3, D4
+       01:AED8  1D        
+  534  01:AED9  8D 5E             .byte five_sixteenths, rest
+  535  01:AEDB  81 11 11          .byte sixteenth, D3, D3, D4
+       01:AEDE  1D        
+  536  01:AEDF  82 5E             .byte eighth, rest
   537                                     
-  538  01:AEAD  A2 0B             .byte volume_envelope, ve_long_decay 
-  539  01:AEAF  87 0F 0F          .byte d_eighth, C3, C3
-  540  01:AEB2  A2 04             .byte volume_envelope, ve_tgl_2
-  541  01:AEB4  82 11             .byte eighth, D3
-  542  01:AEB6  A2 03             .byte volume_envelope, ve_tgl_1
-  543  01:AEB8  87 5E             .byte d_eighth, rest
-  544  01:AEBA  81 11 11          .byte sixteenth, D3, D3, D4
-       01:AEBD  1D        
-  545  01:AEBE  8D 5E             .byte five_sixteenths, rest
-  546  01:AEC0  81 11 11          .byte sixteenth, D3, D3, D4
-       01:AEC3  1D        
-  547  01:AEC4  8D 5E             .byte five_sixteenths, rest
-  548  01:AEC6  81 11 11          .byte sixteenth, D3, D3, D4
-       01:AEC9  1D        
-  549  01:AECA  82 5E             .byte eighth, rest
+  538  01:AEE1  A2 0B             .byte volume_envelope, ve_long_decay 
+  539  01:AEE3  87 0F 0F          .byte d_eighth, C3, C3
+  540  01:AEE6  A2 04             .byte volume_envelope, ve_tgl_2
+  541  01:AEE8  82 11             .byte eighth, D3
+  542  01:AEEA  A2 03             .byte volume_envelope, ve_tgl_1
+  543  01:AEEC  87 5E             .byte d_eighth, rest
+  544  01:AEEE  81 11 11          .byte sixteenth, D3, D3, D4
+       01:AEF1  1D        
+  545  01:AEF2  8D 5E             .byte five_sixteenths, rest
+  546  01:AEF4  81 11 11          .byte sixteenth, D3, D3, D4
+       01:AEF7  1D        
+  547  01:AEF8  8D 5E             .byte five_sixteenths, rest
+  548  01:AEFA  81 11 11          .byte sixteenth, D3, D3, D4
+       01:AEFD  1D        
+  549  01:AEFE  82 5E             .byte eighth, rest
   550                             
-  551  01:AECC  A2 0B             .byte volume_envelope, ve_long_decay 
-  552  01:AECE  87 0F 0F          .byte d_eighth, C3, C3
-  553  01:AED1  A2 04             .byte volume_envelope, ve_tgl_2
-  554  01:AED3  82 11             .byte eighth, D3
-  555  01:AED5  A2 0B             .byte volume_envelope, ve_long_decay
-  556  01:AED7  88 5E             .byte d_quarter, rest
-  557  01:AED9  8C 0C             .byte five_eighths, A2
-  558  01:AEDB  A2 03             .byte volume_envelope, ve_tgl_1
-  559  01:AEDD  81 5E             .byte sixteenth, rest
-  560  01:AEDF  82 15 16          .byte eighth, Fs3, G3, Gs3
-       01:AEE2  17        
-  561  01:AEE3  81 18             .byte sixteenth, A3
+  551  01:AF00  A2 0B             .byte volume_envelope, ve_long_decay 
+  552  01:AF02  87 0F 0F          .byte d_eighth, C3, C3
+  553  01:AF05  A2 04             .byte volume_envelope, ve_tgl_2
+  554  01:AF07  82 11             .byte eighth, D3
+  555  01:AF09  A2 0B             .byte volume_envelope, ve_long_decay
+  556  01:AF0B  88 5E             .byte d_quarter, rest
+  557  01:AF0D  8C 0C             .byte five_eighths, A2
+  558  01:AF0F  A2 03             .byte volume_envelope, ve_tgl_1
+  559  01:AF11  81 5E             .byte sixteenth, rest
+  560  01:AF13  82 15 16          .byte eighth, Fs3, G3, Gs3
+       01:AF16  17        
+  561  01:AF17  81 18             .byte sixteenth, A3
   562                             
-  563  01:AEE5  A1            .byte loop
-  564  01:AEE6  FC AC         .word bank0_tri
+  563  01:AF19  A1            .byte loop
+  564  01:AF1A  30 AD         .word bank0_tri
   565                         
-  566  01:AEE8            bank0_noise:
-  567  01:AEE8  81 04 04      .byte sixteenth, $04, $04, $04, $04
-       01:AEEB  04 04     
-  568  01:AEED  A2 09             .byte volume_envelope, ve_drum_decay 
-  569  01:AEEF  81 04         .byte sixteenth, $04
-  570  01:AEF1  A2 0A             .byte volume_envelope, ve_hiHat_decay
-  571  01:AEF3  81 04 04      .byte sixteenth, $04, $04, $04, $04
-       01:AEF6  04 04     
-  572  01:AEF8  A2 09         .byte volume_envelope, ve_drum_decay 
-  573  01:AEFA  81 04         .byte sixteenth, $04
-  574  01:AEFC  A2 0A             .byte volume_envelope, ve_hiHat_decay
-  575  01:AEFE  81 04 04      .byte sixteenth, $04, $04
-  576  01:AF01  A2 09             .byte volume_envelope, ve_drum_decay 
-  577  01:AF03  81 04         .byte sixteenth, $04
-  578  01:AF05  A2 0A             .byte volume_envelope, ve_hiHat_decay
-  579  01:AF07  81 04 04          .byte sixteenth, $04, $04, $04
-       01:AF0A  04        
-  580  01:AF0B  A1            .byte loop
-  581  01:AF0C  E8 AE         .word bank0_noise
+  566  01:AF1C            bank0_noise:
+  567  01:AF1C  81 04 04      .byte sixteenth, $04, $04, $04, $04
+       01:AF1F  04 04     
+  568  01:AF21  A2 09             .byte volume_envelope, ve_drum_decay 
+  569  01:AF23  81 04         .byte sixteenth, $04
+  570  01:AF25  A2 0A             .byte volume_envelope, ve_hiHat_decay
+  571  01:AF27  81 04 04      .byte sixteenth, $04, $04, $04, $04
+       01:AF2A  04 04     
+  572  01:AF2C  A2 09         .byte volume_envelope, ve_drum_decay 
+  573  01:AF2E  81 04         .byte sixteenth, $04
+  574  01:AF30  A2 0A             .byte volume_envelope, ve_hiHat_decay
+  575  01:AF32  81 04 04      .byte sixteenth, $04, $04
+  576  01:AF35  A2 09             .byte volume_envelope, ve_drum_decay 
+  577  01:AF37  81 04         .byte sixteenth, $04
+  578  01:AF39  A2 0A             .byte volume_envelope, ve_hiHat_decay
+  579  01:AF3B  81 04 04          .byte sixteenth, $04, $04, $04
+       01:AF3E  04        
+  580  01:AF3F  A1            .byte loop
+  581  01:AF40  1C AF         .word bank0_noise
   582                     
-  583  01:AF0E            bank0_dpcm:
-  584  01:AF0E  83 0B 1B          .byte quarter, $0B, $1B, $0B, $1B
-       01:AF11  0B 1B     
-  585  01:AF13  0B 87 1B          .byte $0B, d_eighth, $1B, sixteenth, $1B 
-       01:AF16  81 1B     
-  586  01:AF18  82 0B 0B          .byte eighth, $0B, $0B, quarter, $1B
-       01:AF1B  83 1B     
-  587  01:AF1D  A1                .byte loop
-  588  01:AF1E  0E AF             .word bank0_dpcm
+  583  01:AF42            bank0_dpcm:
+  584  01:AF42  83 0B 1B          .byte quarter, $0B, $1B, $0B, $1B
+       01:AF45  0B 1B     
+  585  01:AF47  0B 87 1B          .byte $0B, d_eighth, $1B, sixteenth, $1B 
+       01:AF4A  81 1B     
+  586  01:AF4C  82 0B 0B          .byte eighth, $0B, $0B, quarter, $1B
+       01:AF4F  83 1B     
+  587  01:AF51  A1                .byte loop
+  588  01:AF52  42 AF             .word bank0_dpcm
 #[2]   Source/Banks/Bank0.asm
    43                     
    44           BFFA        .org $BFFA     ;first of the three vectors starts here
@@ -3956,90 +3977,249 @@
    39  03:A0D8              .incbin "Source/SoundEnginePreComp.nes"
 #[3]   Source/Content/Sound/Music/B1m.asm
    40                       .include "Source/Content/Sound/Music/B1m.asm"  ;holds the data for bank song
-    1  03:A93C            B1m_header:
-    2  03:A93C  05            .byte $05
+    1  03:A970            B1m_header:
+    2  03:A970  05            .byte $05
     3                     
-    4  03:A93D  00            .byte MUSIC_SQ1
-    5  03:A93E  01            .byte $01
-    6  03:A93F  00            .byte SQUARE_1
-    7  03:A940  30            .byte $30
-    8  03:A941  00            .byte $00
-    9  03:A942  5F A9         .word B1m_square_1
-   10  03:A944  46            .byte $46
+    4  03:A971  00            .byte MUSIC_SQ1
+    5  03:A972  01            .byte $01
+    6  03:A973  00            .byte SQUARE_1
+    7  03:A974  30            .byte $30
+    8  03:A975  00            .byte $00
+    9  03:A976  99 A9         .word B1m_square_1
+   10  03:A978  46            .byte $46
    11                     
-   12  03:A945  01            .byte MUSIC_SQ2
-   13  03:A946  00            .byte $00
-   14                     
-   15  03:A947  02            .byte MUSIC_TRI
-   16  03:A948  01            .byte $01
-   17  03:A949  02            .byte TRIANGLE
-   18  03:A94A  80            .byte $80
-   19  03:A94B  00            .byte $00
-   20  03:A94C  7E A9         .word B1m_triangle
-   21  03:A94E  46            .byte $46
-   22                     
-   23  03:A94F  03            .byte MUSIC_NOI
-   24  03:A950  01            .byte $01
-   25  03:A951  03            .byte NOISE
-   26  03:A952  30            .byte $30
-   27  03:A953  00            .byte $00
-   28  03:A954  97 A9         .word B1m_noise
-   29  03:A956  46            .byte $46
-   30                     
-   31  03:A957  06            .byte MUSIC_DPMC
-   32  03:A958  01            .byte $01
-   33  03:A959  04            .byte DPMC
-   34  03:A95A  00            .byte $00
-   35  03:A95B  00            .byte $00
-   36  03:A95C  A4 A9         .word B1m_dpmc
-   37  03:A95E  46            .byte $46
-   38                     
-   39  03:A95F            B1m_square_1:
-   40  03:A95F  83 A2 02      .byte $83, $A2, $02, $A9, $00, $AA, $00, $24, $81, $1F, $24, $83, $2B, $82, $2B, $83
-       03:A962  A9 00 AA  
-       03:A965  00 24 81  
-       03:A968  1F 24 83  
-       03:A96B  2B 82 2B  
-       03:A96E  83        
-   41  03:A96F  27 26 22      .byte $27, $26, $22, $83, $20, $24, $26, $1F, $22, $82, $27, $26
-       03:A972  83 20 24  
-       03:A975  26 1F 22  
-       03:A978  82 27 26  
-   42  03:A97B  A1            .byte $A1
-   43  03:A97C  5F A9         .word B1m_square_1
-   44                     
-   45  03:A97E            B1m_triangle:
-   46  03:A97E  88 A2 09      .byte $88, $A2, $09, $18, $83, $18, $82, $18, $83, $14, $0F, $16, $88, $14, $83, $0F
-       03:A981  18 83 18  
-       03:A984  82 18 83  
-       03:A987  14 0F 16  
-       03:A98A  88 14 83  
-       03:A98D  0F        
-   47  03:A98E  82 20 83      .byte $82, $20, $83, $1B, $1A, $16
-       03:A991  1B 1A 16  
-   48  03:A994  A1            .byte $A1
-   49  03:A995  7E A9         .word B1m_triangle
-   50                     
-   51  03:A997            B1m_noise:
-   52  03:A997  81 A2 0A      .byte $81, $A2, $0A, $03, $82, $01, $01, $81, $01, $01
-       03:A99A  03 82 01  
-       03:A99D  01 81 01  
-       03:A9A0  01        
-   53  03:A9A1  A1            .byte $A1
-   54  03:A9A2  97 A9         .word B1m_noise
-   55                     
-   56  03:A9A4            B1m_dpmc:
-   57  03:A9A4  83 0E 81      .byte $83, $0E, $81, $1E, $1E, $82, $0E, $82, $1E, $82, $1E, $83, $0E, $81, $1E, $1E
-       03:A9A7  1E 1E 82  
-       03:A9AA  0E 82 1E  
-       03:A9AD  82 1E 83  
-       03:A9B0  0E 81 1E  
-       03:A9B3  1E        
-   58  03:A9B4  1E 0E 1E      .byte $1E, $0E, $1E, $0E, $1E, $1E
-       03:A9B7  0E 1E 1E  
-   59  03:A9BA  A1            .byte $A1
-   60  03:A9BB  A4 A9         .word B1m_dpmc
+   12  03:A979  01            .byte MUSIC_SQ2
+   13  03:A97A  01            .byte $01
+   14  03:A97B  01            .byte SQUARE_2
+   15  03:A97C  30            .byte $30
+   16  03:A97D  00            .byte $00
+   17  03:A97E  ED A9         .word B1m_square_2
+   18  03:A980  46            .byte $46
+   19                     
+   20  03:A981  02            .byte MUSIC_TRI
+   21  03:A982  01            .byte $01
+   22  03:A983  02            .byte TRIANGLE
+   23  03:A984  80            .byte $80
+   24  03:A985  00            .byte $00
+   25  03:A986  3E AA         .word B1m_triangle
+   26  03:A988  46            .byte $46
+   27                     
+   28  03:A989  03            .byte MUSIC_NOI
+   29  03:A98A  01            .byte $01
+   30  03:A98B  03            .byte NOISE
+   31  03:A98C  30            .byte $30
+   32  03:A98D  00            .byte $00
+   33  03:A98E  9F AA         .word B1m_noise
+   34  03:A990  46            .byte $46
+   35                     
+   36  03:A991  06            .byte MUSIC_DPMC
+   37  03:A992  01            .byte $01
+   38  03:A993  04            .byte DPMC
+   39  03:A994  00            .byte $00
+   40  03:A995  00            .byte $00
+   41  03:A996  FD AA         .word B1m_dpmc
+   42  03:A998  46            .byte $46
+   43                     
+   44  03:A999            B1m_square_1:
+   45  03:A999  A4 05         .byte  $A4, $05
+   46  03:A99B            B1m_square_1_sublp_1:
+   47  03:A99B  82 A2 02      .byte $82, $A2, $02, $A9, $00, $AA, $00, $A3, $B0, $11, $18, $1D, $1B, $22, $21, $11
+       03:A99E  A9 00 AA  
+       03:A9A1  00 A3 B0  
+       03:A9A4  11 18 1D  
+       03:A9A7  1B 22 21  
+       03:A9AA  11        
+   48  03:A9AB  18 1D 1B      .byte $18, $1D, $1B, $22, $21, $11, $18, $1D, $1B, $22, $21, $24, $1F, $21, $1D, $1F
+       03:A9AE  22 21 11  
+       03:A9B1  18 1D 1B  
+       03:A9B4  22 21 24  
+       03:A9B7  1F 21 1D  
+       03:A9BA  1F        
+   49  03:A9BB  1B            .byte $1B
+   50  03:A9BC  A5            .byte $A5
+   51  03:A9BD  9B A9         .word B1m_square_1_sublp_1
+   52  03:A9BF  A4 03         .byte  $A4, $03
+   53  03:A9C1            B1m_square_1_sublp_2:
+   54  03:A9C1  82 A2 02      .byte $82, $A2, $02, $A3, $B0, $11, $18, $1D, $1B, $22, $21
+       03:A9C4  A3 B0 11  
+       03:A9C7  18 1D 1B  
+       03:A9CA  22 21     
+   55  03:A9CC  A5            .byte $A5
+   56  03:A9CD  C1 A9         .word B1m_square_1_sublp_2
+   57  03:A9CF  83 A2 02      .byte $83, $A2, $02, $24, $A2, $02, $24, $A2, $07, $24, $89, $A2, $0F, $A9, $02, $21
+       03:A9D2  24 A2 02  
+       03:A9D5  24 A2 07  
+       03:A9D8  24 89 A2  
+       03:A9DB  0F A9 02  
+       03:A9DE  21        
+   58  03:A9DF  24 1F 21      .byte $24, $1F, $21, $89, $1A, $89, $5E, $89, $5E, $89, $5E
+       03:A9E2  89 1A 89  
+       03:A9E5  5E 89 5E  
+       03:A9E8  89 5E     
+   59  03:A9EA  A1            .byte $A1
+   60  03:A9EB  99 A9         .word B1m_square_1
    61                     
+   62  03:A9ED            B1m_square_2:
+   63  03:A9ED  82 5E         .byte $82, $5E
+   64  03:A9EF  A4 05         .byte  $A4, $05
+   65  03:A9F1            B1m_square_2_sublp_1:
+   66  03:A9F1  82 A2 01      .byte $82, $A2, $01, $A3, $B0, $11, $18, $1D, $1B, $22, $21, $82, $A3, $B0, $11, $18
+       03:A9F4  A3 B0 11  
+       03:A9F7  18 1D 1B  
+       03:A9FA  22 21 82  
+       03:A9FD  A3 B0 11  
+       03:AA00  18        
+   67  03:AA01  1D 1B 22      .byte $1D, $1B, $22, $21, $82, $A3, $B0, $11, $18, $1D, $1B, $22, $21, $24, $1F, $21
+       03:AA04  21 82 A3  
+       03:AA07  B0 11 18  
+       03:AA0A  1D 1B 22  
+       03:AA0D  21 24 1F  
+       03:AA10  21        
+   68  03:AA11  1D 1F 1B      .byte $1D, $1F, $1B
+   69  03:AA14  A5            .byte $A5
+   70  03:AA15  F1 A9         .word B1m_square_2_sublp_1
+   71  03:AA17  A4 03         .byte  $A4, $03
+   72  03:AA19            B1m_square_2_sublp_2:
+   73  03:AA19  82 A2 01      .byte $82, $A2, $01, $A3, $B0, $11, $18, $1D, $1B, $22, $21
+       03:AA1C  A3 B0 11  
+       03:AA1F  18 1D 1B  
+       03:AA22  22 21     
+   74  03:AA24  A5            .byte $A5
+   75  03:AA25  19 AA         .word B1m_square_2_sublp_2
+   76  03:AA27  83 A2 02      .byte $83, $A2, $02, $24, $A2, $07, $24, $82, $A2, $07, $24, $89, $5E, $5E, $5E, $5E
+       03:AA2A  24 A2 07  
+       03:AA2D  24 82 A2  
+       03:AA30  07 24 89  
+       03:AA33  5E 5E 5E  
+       03:AA36  5E        
+   77  03:AA37  5E 5E 5E      .byte $5E, $5E, $5E, $5E
+       03:AA3A  5E        
+   78  03:AA3B  A1            .byte $A1
+   79  03:AA3C  ED A9         .word B1m_square_2
+   80                     
+   81  03:AA3E            B1m_triangle:
+   82  03:AA3E  89 A2 0B      .byte $89, $A2, $0B, $A9, $00, $5E, $5E, $5E, $5E
+       03:AA41  A9 00 5E  
+       03:AA44  5E 5E 5E  
+   83  03:AA47  A4 02         .byte  $A4, $02
+   84  03:AA49            B1m_triangle_sublp_1:
+   85  03:AA49  88 1D 83      .byte $88, $1D, $83, $A2, $00, $1D, $82, $1D, $83, $A2, $0F, $1D, $18, $1A, $88, $A2
+       03:AA4C  A2 00 1D  
+       03:AA4F  82 1D 83  
+       03:AA52  A2 0F 1D  
+       03:AA55  18 1A 88  
+       03:AA58  A2        
+   86  03:AA59  0B 1B 83      .byte $0B, $1B, $83, $A2, $00, $1B, $82, $1B, $83, $A2, $0F, $1B, $16, $18, $88, $1D
+       03:AA5C  A2 00 1B  
+       03:AA5F  82 1B 83  
+       03:AA62  A2 0F 1B  
+       03:AA65  16 18 88  
+       03:AA68  1D        
+   87  03:AA69  83 A2 00      .byte $83, $A2, $00, $1D, $82, $1D, $83, $A2, $0F, $1D, $A9, $02, $1F, $82, $1F, $A9
+       03:AA6C  1D 82 1D  
+       03:AA6F  83 A2 0F  
+       03:AA72  1D A9 02  
+       03:AA75  1F 82 1F  
+       03:AA78  A9        
+   88  03:AA79  00 1D 88      .byte $00, $1D, $88, $A2, $0B, $1B, $83, $A2, $00, $1B, $82, $1B, $83, $A2, $0F, $1B
+       03:AA7C  A2 0B 1B  
+       03:AA7F  83 A2 00  
+       03:AA82  1B 82 1B  
+       03:AA85  83 A2 0F  
+       03:AA88  1B        
+   89  03:AA89  16 15         .byte $16, $15
+   90  03:AA8B  A5            .byte $A5
+   91  03:AA8C  49 AA         .word B1m_triangle_sublp_1
+   92  03:AA8E  89 5E 5E      .byte $89, $5E, $5E, $5E, $5E, $89, $5E, $5E, $5E, $5E, $5E, $5E, $5E, $5E
+       03:AA91  5E 5E 89  
+       03:AA94  5E 5E 5E  
+       03:AA97  5E 5E 5E  
+       03:AA9A  5E 5E     
+   93  03:AA9C  A1            .byte $A1
+   94  03:AA9D  3E AA         .word B1m_triangle
+   95                     
+   96  03:AA9F            B1m_noise:
+   97  03:AA9F  89 A2 0F      .byte $89, $A2, $0F, $20, $20, $20, $20, $00, $20, $20, $20, $00, $20, $20, $84, $20
+       03:AAA2  20 20 20  
+       03:AAA5  20 00 20  
+       03:AAA8  20 20 00  
+       03:AAAB  20 20 84  
+       03:AAAE  20        
+   98  03:AAAF  83 A2 01      .byte $83, $A2, $01, $02, $83, $A2, $0A, $20, $88, $20, $82, $20, $20, $81, $04, $81
+       03:AAB2  02 83 A2  
+       03:AAB5  0A 20 88  
+       03:AAB8  20 82 20  
+       03:AABB  20 81 04  
+       03:AABE  81        
+   99  03:AABF  04 88 20      .byte $04, $88, $20, $82, $20, $88, $20, $83, $20, $82, $20, $83, $20, $82, $20, $81
+       03:AAC2  82 20 88  
+       03:AAC5  20 83 20  
+       03:AAC8  82 20 83  
+       03:AACB  20 82 20  
+       03:AACE  81        
+  100  03:AACF  04 04 83      .byte $04, $04, $83, $20, $89, $A2, $0F, $20, $20, $20, $20, $02, $20, $00, $84, $20
+       03:AAD2  20 89 A2  
+       03:AAD5  0F 20 20  
+       03:AAD8  20 20 02  
+       03:AADB  20 00 84  
+       03:AADE  20        
+  101  03:AADF  83 A2 01      .byte $83, $A2, $01, $02, $89, $A2, $0F, $04, $89, $A2, $0F, $04, $89, $A2, $0F, $04
+       03:AAE2  02 89 A2  
+       03:AAE5  0F 04 89  
+       03:AAE8  A2 0F 04  
+       03:AAEB  89 A2 0F  
+       03:AAEE  04        
+  102  03:AAEF  89 A2 0F      .byte $89, $A2, $0F, $04, $89, $A2, $0F, $04, $20, $20, $20
+       03:AAF2  04 89 A2  
+       03:AAF5  0F 04 20  
+       03:AAF8  20 20     
+  103  03:AAFA  A1            .byte $A1
+  104  03:AAFB  9F AA         .word B1m_noise
+  105                     
+  106  03:AAFD            B1m_dpmc:
+  107  03:AAFD  A4 06         .byte  $A4, $06
+  108  03:AAFF            B1m_dpmc_sublp_1:
+  109  03:AAFF  89 70 70      .byte $89, $70, $70
+  110  03:AB02  A5            .byte $A5
+  111  03:AB03  FF AA         .word B1m_dpmc_sublp_1
+  112  03:AB05  83 0E 88      .byte $83, $0E, $88, $70, $82, $0E, $1E, $70, $88, $1E, $82, $0E, $88, $0E, $83, $0E
+       03:AB08  70 82 0E  
+       03:AB0B  1E 70 88  
+       03:AB0E  1E 82 0E  
+       03:AB11  88 0E 83  
+       03:AB14  0E        
+  113  03:AB15  82 1E 83      .byte $82, $1E, $83, $0E, $82, $0E, $82, $70, $81, $1F, $1E, $0F, $0E, $83, $0E, $88
+       03:AB18  0E 82 0E  
+       03:AB1B  82 70 81  
+       03:AB1E  1F 1E 0F  
+       03:AB21  0E 83 0E  
+       03:AB24  88        
+  114  03:AB25  70 82 0E      .byte $70, $82, $0E, $1E, $80, $0E, $0E, $0E, $0E, $82, $1E, $1E, $1E, $1E, $82, $1E
+       03:AB28  1E 80 0E  
+       03:AB2B  0E 0E 0E  
+       03:AB2E  82 1E 1E  
+       03:AB31  1E 1E 82  
+       03:AB34  1E        
+  115  03:AB35  83 0E 83      .byte $83, $0E, $83, $1E, $82, $1E, $83, $0E, $82, $1E, $80, $0E, $0E, $0E, $0E, $82
+       03:AB38  1E 82 1E  
+       03:AB3B  83 0E 82  
+       03:AB3E  1E 80 0E  
+       03:AB41  0E 0E 0E  
+       03:AB44  82        
+  116  03:AB45  1E 82 1E      .byte $1E, $82, $1E, $84, $0E, $82, $70, $0E, $84, $0E, $82, $70, $0E, $84, $0E, $82
+       03:AB48  84 0E 82  
+       03:AB4B  70 0E 84  
+       03:AB4E  0E 82 70  
+       03:AB51  0E 84 0E  
+       03:AB54  82        
+  117  03:AB55  70 0E 89      .byte $70, $0E, $89, $0E, $89, $1E, $1E, $1E, $1E, $89, $0E, $7E, $7E, $7E
+       03:AB58  0E 89 1E  
+       03:AB5B  1E 1E 1E  
+       03:AB5E  89 0E 7E  
+       03:AB61  7E 7E     
+  118  03:AB63  A1            .byte $A1
+  119  03:AB64  FD AA         .word B1m_dpmc
+  120                     
 #[2]   Source/Banks/Bank1.asm
    41                       
    42           BFFA        .org $BFFA     ;first of the three vectors starts here
@@ -5248,507 +5428,507 @@
    39  05:A0D8              .incbin "Source/SoundEnginePreComp.nes"
 #[3]   Source/Content/Sound/Music/B2m.asm
    40                       .include "Source/Content/Sound/Music/B2m.asm"  ;holds the data for bank song
-    1  05:A93C            bank2_header:
-    2  05:A93C  05            .byte $05           ;4 streams
+    1  05:A970            bank2_header:
+    2  05:A970  05            .byte $05           ;4 streams
     3                         
-    4  05:A93D  00            .byte MUSIC_SQ1             ;which stream
-    5  05:A93E  01            .byte $01                   ;status byte (stream enabled)
-    6  05:A93F  00            .byte SQUARE_1              ;which channel
-    7  05:A940  30            .byte $30                   ;initial duty (01)
-    8  05:A941  0F            .byte ve_veryLong_decay ;volume envelope
-    9  05:A942  CB A9         .word bank2_square1         ;pointer to stream
-   10  05:A944  28            .byte $28                   ;tempo
+    4  05:A971  00            .byte MUSIC_SQ1             ;which stream
+    5  05:A972  01            .byte $01                   ;status byte (stream enabled)
+    6  05:A973  00            .byte SQUARE_1              ;which channel
+    7  05:A974  30            .byte $30                   ;initial duty (01)
+    8  05:A975  0F            .byte ve_veryLong_decay ;volume envelope
+    9  05:A976  FF A9         .word bank2_square1         ;pointer to stream
+   10  05:A978  28            .byte $28                   ;tempo
    11                         
-   12  05:A945  01            .byte MUSIC_SQ2             ;which stream
-   13  05:A946  01            .byte $01                   ;status byte (stream enabled)
-   14  05:A947  01            .byte SQUARE_2              ;which channel
-   15  05:A948  30            .byte $30                   ;initial duty (10)
-   16  05:A949  0F            .byte ve_veryLong_decay ;volume envelope
-   17  05:A94A  65 A9         .word bank2_square2         ;pointer to stream
-   18  05:A94C  28            .byte $28                   ;tempo
+   12  05:A979  01            .byte MUSIC_SQ2             ;which stream
+   13  05:A97A  01            .byte $01                   ;status byte (stream enabled)
+   14  05:A97B  01            .byte SQUARE_2              ;which channel
+   15  05:A97C  30            .byte $30                   ;initial duty (10)
+   16  05:A97D  0F            .byte ve_veryLong_decay ;volume envelope
+   17  05:A97E  99 A9         .word bank2_square2         ;pointer to stream
+   18  05:A980  28            .byte $28                   ;tempo
    19                         
-   20  05:A94D  02            .byte MUSIC_TRI     ;which stream
-   21  05:A94E  01            .byte $01           ;status byte (stream enabled)
-   22  05:A94F  02            .byte TRIANGLE      ;which channel
-   23  05:A950  80            .byte $80           ;initial volume (on)
-   24  05:A951  03            .byte ve_tgl_1      ;volume envelope
-   25  05:A952  D8 AA         .word bank2_tri     ;pointer to stream
-   26  05:A954  28            .byte $28           ;tempo
+   20  05:A981  02            .byte MUSIC_TRI     ;which stream
+   21  05:A982  01            .byte $01           ;status byte (stream enabled)
+   22  05:A983  02            .byte TRIANGLE      ;which channel
+   23  05:A984  80            .byte $80           ;initial volume (on)
+   24  05:A985  03            .byte ve_tgl_1      ;volume envelope
+   25  05:A986  0C AB         .word bank2_tri     ;pointer to stream
+   26  05:A988  28            .byte $28           ;tempo
    27                         
-   28  05:A955  03            .byte MUSIC_NOI     ;which stream
-   29  05:A956  01            .byte $01           ;enabled
-   30  05:A957  03            .byte NOISE     
-   31  05:A958  30            .byte $30           ;initial duty_vol
-   32  05:A959  0A            .byte ve_hiHat_decay ;volume envelope
-   33  05:A95A  8F AC         .word bank2_noise   ;pointer to stream
-   34  05:A95C  28            .byte $28           ;tempo
+   28  05:A989  03            .byte MUSIC_NOI     ;which stream
+   29  05:A98A  01            .byte $01           ;enabled
+   30  05:A98B  03            .byte NOISE     
+   31  05:A98C  30            .byte $30           ;initial duty_vol
+   32  05:A98D  0A            .byte ve_hiHat_decay ;volume envelope
+   33  05:A98E  C3 AC         .word bank2_noise   ;pointer to stream
+   34  05:A990  28            .byte $28           ;tempo
    35                             
-   36  05:A95D  06                .byte MUSIC_DPMC
-   37  05:A95E  01                .byte $01
-   38  05:A95F  04                .byte DPMC
-   39  05:A960  30                .byte $30
-   40  05:A961  0A                .byte ve_hiHat_decay
-   41  05:A962  B4 AC             .word bank2_dpcm  ;pointer to stream
-   42  05:A964  28            .byte $28           ;tempo
+   36  05:A991  06                .byte MUSIC_DPMC
+   37  05:A992  01                .byte $01
+   38  05:A993  04                .byte DPMC
+   39  05:A994  30                .byte $30
+   40  05:A995  0A                .byte ve_hiHat_decay
+   41  05:A996  E8 AC             .word bank2_dpcm  ;pointer to stream
+   42  05:A998  28            .byte $28           ;tempo
    43                     
    44                     ;;this will require funky timing to get it right. base everything on 32nd notes, using them as 24ths
    45                         
-   46  05:A965            bank2_square2:
+   46  05:A999            bank2_square2:
    47                     
-   48  05:A965  A3 30             .byte duty, $30
-   49  05:A967  AA 02             .byte arpeggio, arp_dimTriad
-   50  05:A969  87 1E             .byte quarterSwing, Ds4
-   51  05:A96B  AA 03             .byte arpeggio, arp_minInvn1
-   52  05:A96D  87 21             .byte quarterSwing, Fs4
-   53  05:A96F  AA 02             .byte arpeggio, arp_dimTriad
-   54  05:A971  87 21             .byte quarterSwing, Fs4
-   55  05:A973  AA 04             .byte arpeggio, arp_sharp5
-   56  05:A975  92 1F             .byte five_thirtyseconds, E4
+   48  05:A999  A3 30             .byte duty, $30
+   49  05:A99B  AA 02             .byte arpeggio, arp_dimTriad
+   50  05:A99D  87 1E             .byte quarterSwing, Ds4
+   51  05:A99F  AA 03             .byte arpeggio, arp_minInvn1
+   52  05:A9A1  87 21             .byte quarterSwing, Fs4
+   53  05:A9A3  AA 02             .byte arpeggio, arp_dimTriad
+   54  05:A9A5  87 21             .byte quarterSwing, Fs4
+   55  05:A9A7  AA 04             .byte arpeggio, arp_sharp5
+   56  05:A9A9  92 1F             .byte five_thirtyseconds, E4
    57                             
-   58  05:A977  89                .byte wholeSwing
-   59  05:A978  AA 05 1F          .byte arpeggio, arp_maj7, E4, rest
-       05:A97B  5E        
-   60  05:A97C  AA 06 1E          .byte arpeggio, arp_min7, Ds4, rest
-       05:A97F  5E        
-   61  05:A980  AA 05 1F          .byte arpeggio, arp_maj7, E4, rest
-       05:A983  5E        
-   62  05:A984  AA 06 1E          .byte arpeggio, arp_min7, Ds4, rest
-       05:A987  5E        
-   63  05:A988  AA 05 1F          .byte arpeggio, arp_maj7, E4, rest
-       05:A98B  5E        
-   64  05:A98C  AA 06 1E          .byte arpeggio, arp_min7, Ds4, rest
-       05:A98F  5E        
-   65  05:A990  AA 05 1F          .byte arpeggio, arp_maj7, E4, rest
-       05:A993  5E        
-   66  05:A994  AA 07 1E          .byte arpeggio, arp_minFlat6, Ds4, swingUp, rest
-       05:A997  80 5E     
-   67  05:A999  AA 08 89          .byte arpeggio, arp_spread5thlowerThird, wholeSwing, B4
-       05:A99C  26        
+   58  05:A9AB  89                .byte wholeSwing
+   59  05:A9AC  AA 05 1F          .byte arpeggio, arp_maj7, E4, rest
+       05:A9AF  5E        
+   60  05:A9B0  AA 06 1E          .byte arpeggio, arp_min7, Ds4, rest
+       05:A9B3  5E        
+   61  05:A9B4  AA 05 1F          .byte arpeggio, arp_maj7, E4, rest
+       05:A9B7  5E        
+   62  05:A9B8  AA 06 1E          .byte arpeggio, arp_min7, Ds4, rest
+       05:A9BB  5E        
+   63  05:A9BC  AA 05 1F          .byte arpeggio, arp_maj7, E4, rest
+       05:A9BF  5E        
+   64  05:A9C0  AA 06 1E          .byte arpeggio, arp_min7, Ds4, rest
+       05:A9C3  5E        
+   65  05:A9C4  AA 05 1F          .byte arpeggio, arp_maj7, E4, rest
+       05:A9C7  5E        
+   66  05:A9C8  AA 07 1E          .byte arpeggio, arp_minFlat6, Ds4, swingUp, rest
+       05:A9CB  80 5E     
+   67  05:A9CD  AA 08 89          .byte arpeggio, arp_spread5thlowerThird, wholeSwing, B4
+       05:A9D0  26        
    68                             
-   69  05:A99D  AA 09 24          .byte arpeggio, arp_min7Invn1, A4
-   70  05:A9A0  AA 0A 29          .byte arpeggio, arp_dom7Invn2, D5
-   71  05:A9A3  AA 09 26          .byte arpeggio, arp_min7Invn1, B4
-   72  05:A9A6  AA 0B 22          .byte arpeggio, arp_dim7, G4
+   69  05:A9D1  AA 09 24          .byte arpeggio, arp_min7Invn1, A4
+   70  05:A9D4  AA 0A 29          .byte arpeggio, arp_dom7Invn2, D5
+   71  05:A9D7  AA 09 26          .byte arpeggio, arp_min7Invn1, B4
+   72  05:A9DA  AA 0B 22          .byte arpeggio, arp_dim7, G4
    73                             
-   74  05:A9A9  AA 09 24          .byte arpeggio, arp_min7Invn1, A4
-   75  05:A9AC  AA 0A 29          .byte arpeggio, arp_dom7Invn2, D5
-   76  05:A9AF  AA 0C 22          .byte arpeggio, arp_majPlusOct, G4
-   77  05:A9B2  5E                .byte rest
+   74  05:A9DD  AA 09 24          .byte arpeggio, arp_min7Invn1, A4
+   75  05:A9E0  AA 0A 29          .byte arpeggio, arp_dom7Invn2, D5
+   76  05:A9E3  AA 0C 22          .byte arpeggio, arp_majPlusOct, G4
+   77  05:A9E6  5E                .byte rest
    78                             
-   79  05:A9B3  AA 09 24          .byte arpeggio, arp_min7Invn1, A4
-   80  05:A9B6  AA 0A 29          .byte arpeggio, arp_dom7Invn2, D5
-   81  05:A9B9  AA 09 26          .byte arpeggio, arp_min7Invn1, B4
-   82  05:A9BC  AA 0B 22          .byte arpeggio, arp_dim7, G4
+   79  05:A9E7  AA 09 24          .byte arpeggio, arp_min7Invn1, A4
+   80  05:A9EA  AA 0A 29          .byte arpeggio, arp_dom7Invn2, D5
+   81  05:A9ED  AA 09 26          .byte arpeggio, arp_min7Invn1, B4
+   82  05:A9F0  AA 0B 22          .byte arpeggio, arp_dim7, G4
    83                             
-   84  05:A9BF  AA 09 24          .byte arpeggio, arp_min7Invn1, A4
-   85  05:A9C2  AA 0A 29          .byte arpeggio, arp_dom7Invn2, D5
-   86  05:A9C5  AA 09 27          .byte arpeggio, arp_min7Invn1, C5
+   84  05:A9F3  AA 09 24          .byte arpeggio, arp_min7Invn1, A4
+   85  05:A9F6  AA 0A 29          .byte arpeggio, arp_dom7Invn2, D5
+   86  05:A9F9  AA 09 27          .byte arpeggio, arp_min7Invn1, C5
    87                             
-   88  05:A9C8  A1                .byte loop
-   89  05:A9C9  65 A9         .word bank2_square2
+   88  05:A9FC  A1                .byte loop
+   89  05:A9FD  99 A9         .word bank2_square2
    90                             
-   91  05:A9CB            bank2_square1:
+   91  05:A9FF            bank2_square1:
    92                             
-   93  05:A9CB  A3 30             .byte duty, $30
-   94  05:A9CD  A9 00             .byte pitch_envelope, pe_none
-   95  05:A9CF  87 2A 28          .byte quarterSwing, Ds5, Cs5, Fs5, five_thirtyseconds, E5
-       05:A9D2  2D 92 2B  
-   96  05:A9D5  89 2A 80          .byte wholeSwing, Ds5, swingUp, rest, quarterSwing, rest
-       05:A9D8  5E 87 5E  
+   93  05:A9FF  A3 30             .byte duty, $30
+   94  05:AA01  A9 00             .byte pitch_envelope, me_none
+   95  05:AA03  87 2A 28          .byte quarterSwing, Ds5, Cs5, Fs5, five_thirtyseconds, E5
+       05:AA06  2D 92 2B  
+   96  05:AA09  89 2A 80          .byte wholeSwing, Ds5, swingUp, rest, quarterSwing, rest
+       05:AA0C  5E 87 5E  
    97                             
-   98  05:A9DB  87 23 26          .byte quarterSwing, Gs4, B4, five_thirtyseconds, Ds5 
-       05:A9DE  92 2A     
-   99  05:A9E0  89 28 80          .byte wholeSwing, Cs5, swingUp, rest, quarterSwing, rest
-       05:A9E3  5E 87 5E  
+   98  05:AA0F  87 23 26          .byte quarterSwing, Gs4, B4, five_thirtyseconds, Ds5 
+       05:AA12  92 2A     
+   99  05:AA14  89 28 80          .byte wholeSwing, Cs5, swingUp, rest, quarterSwing, rest
+       05:AA17  5E 87 5E  
   100                             
-  101  05:A9E6  87 21 23          .byte quarterSwing, Fs4, Gs4, five_thirtyseconds, B4
-       05:A9E9  92 26     
-  102  05:A9EB  89 2A 80          .byte wholeSwing, Ds5, swingUp, rest, quarterSwing, rest
-       05:A9EE  5E 87 5E  
+  101  05:AA1A  87 21 23          .byte quarterSwing, Fs4, Gs4, five_thirtyseconds, B4
+       05:AA1D  92 26     
+  102  05:AA1F  89 2A 80          .byte wholeSwing, Ds5, swingUp, rest, quarterSwing, rest
+       05:AA22  5E 87 5E  
   103                             
-  104  05:A9F1  87 26 34          .byte quarterSwing, B4, Cs6, five_thirtyseconds, As5
-       05:A9F4  92 31     
-  105  05:A9F6  89 2D 80          .byte wholeSwing, Fs5, swingUp, rest
-       05:A9F9  5E        
-  106  05:A9FA  9B 2F             .byte wholeSwing_m1, Gs5
+  104  05:AA25  87 26 34          .byte quarterSwing, B4, Cs6, five_thirtyseconds, As5
+       05:AA28  92 31     
+  105  05:AA2A  89 2D 80          .byte wholeSwing, Fs5, swingUp, rest
+       05:AA2D  5E        
+  106  05:AA2E  9B 2F             .byte wholeSwing_m1, Gs5
   107                             
-  108  05:A9FC  A3 70             .byte duty, $70
-  109  05:A9FE  93 2A 92          .byte d_halfSwing_p1, Ds5, five_thirtyseconds, Fs5
-       05:AA01  2D        
-  110  05:AA02  94 28 88          .byte halfSwing_p1, Cs5, halfSwing, Ds5
-       05:AA05  2A        
-  111  05:AA06  81 25 80          .byte swingDown, As4, swingUp, Fs4, swingDown, B4, halfSwing_p1, As4, quarterSwing, Fs4
-       05:AA09  21 81 26  
-       05:AA0C  94 25 87  
-       05:AA0F  21        
-  112  05:AA10  81 2A 80          .byte swingDown, Ds5, swingUp, B4, swingDown, E5, halfSwing_p3, Ds5, swingUp, E4, swingDown, Ds4
-       05:AA13  26 81 2B  
-       05:AA16  95 2A 80  
-       05:AA19  1F 81 1E  
-  113  05:AA1C  84 26 86          .byte half, B4, d_sixteenth, Gs4, B4, swingDown, Ds5, halfSwing_p1, As4, halfSwing_m1, Fs4, wholeSwing_p1, B4
-       05:AA1F  23 26 81  
-       05:AA22  2A 94 25  
-       05:AA25  96 21 97  
-       05:AA28  26        
-  114  05:AA29  89 5E             .byte wholeSwing, rest
+  108  05:AA30  A3 70             .byte duty, $70
+  109  05:AA32  93 2A 92          .byte d_halfSwing_p1, Ds5, five_thirtyseconds, Fs5
+       05:AA35  2D        
+  110  05:AA36  94 28 88          .byte halfSwing_p1, Cs5, halfSwing, Ds5
+       05:AA39  2A        
+  111  05:AA3A  81 25 80          .byte swingDown, As4, swingUp, Fs4, swingDown, B4, halfSwing_p1, As4, quarterSwing, Fs4
+       05:AA3D  21 81 26  
+       05:AA40  94 25 87  
+       05:AA43  21        
+  112  05:AA44  81 2A 80          .byte swingDown, Ds5, swingUp, B4, swingDown, E5, halfSwing_p3, Ds5, swingUp, E4, swingDown, Ds4
+       05:AA47  26 81 2B  
+       05:AA4A  95 2A 80  
+       05:AA4D  1F 81 1E  
+  113  05:AA50  84 26 86          .byte half, B4, d_sixteenth, Gs4, B4, swingDown, Ds5, halfSwing_p1, As4, halfSwing_m1, Fs4, wholeSwing_p1, B4
+       05:AA53  23 26 81  
+       05:AA56  2A 94 25  
+       05:AA59  96 21 97  
+       05:AA5C  26        
+  114  05:AA5D  89 5E             .byte wholeSwing, rest
   115                             
-  116  05:AA2B  A3 B0             .byte duty, $B0
-  117  05:AA2D  A9 00             .byte pitch_envelope, pe_none
-  118  05:AA2F  A2 02             .byte volume_envelope, ve_blip_echo
-  119  05:AA31  86 5E 22          .byte d_sixteenth, rest, G4, G4, E4, G4, swingDown, E4, quarterSwing, A4, swingUp, D4
-       05:AA34  22 1F 22  
-       05:AA37  81 1F 87  
-       05:AA3A  24 80 1D  
-  120  05:AA3D  86 1F 22          .byte d_sixteenth, E4, G4, G4, E4, G4, swingDown, E4, quarterSwing, B4, swingUp, As4
-       05:AA40  22 1F 22  
-       05:AA43  81 1F 87  
-       05:AA46  26 80 25  
-  121  05:AA49  86 26 24          .byte d_sixteenth, B4, A4, G4, swingDown, Fs4, d_sixteenth, A4, swingUp, A4, d_sixteenth, G4, Fs4, E4
-       05:AA4C  22 81 21  
-       05:AA4F  86 24 80  
-       05:AA52  24 86 22  
-       05:AA55  21 1F     
-  122  05:AA57  22 21 81          .byte G4, Fs4, swingDown, E4, d_sixteenth, D4, d_quarterSwing, B3, swingUp, A3, swingDown, B3
-       05:AA5A  1F 86 1D  
-       05:AA5D  99 1A 80  
-       05:AA60  18 81 1A  
-  123  05:AA63  82 1B 86          .byte eighth, C4, d_sixteenth, C4, swingDown, C4, eighth, A3, d_sixteenth, B3, swingDown, A3, d_sixteenth, G3, eighth, A3
-       05:AA66  1B 81 1B  
-       05:AA69  82 18 86  
-       05:AA6C  1A 81 18  
-       05:AA6F  86 16 82  
-       05:AA72  18        
-  124  05:AA73  86 5E 1B          .byte d_sixteenth, rest, C4, swingDown, C4, eighth, A3, d_sixteenth, Fs4, swingDown, E4, d_sixteenth, D4, E4, swingUp, B3
-       05:AA76  81 1B 82  
-       05:AA79  18 86 21  
-       05:AA7C  81 1F 86  
-       05:AA7F  1D 1F 80  
-       05:AA82  1A        
-  125  05:AA83  86 1D 1F          .byte d_sixteenth, D4, E4, swingDown, G4, d_sixteenth, E4, B4, swingUp, B4, swingDown, G4, swingUp, A4, swingDown, Fs4, swingUp, D4, swingDown, E4, swingUp, Fs4
-       05:AA86  81 22 86  
-       05:AA89  1F 26 80  
-       05:AA8C  26 81 22  
-       05:AA8F  80 24 81  
-       05:AA92  21 80 1D  
-       05:AA95  81 1F 80  
-       05:AA98  21        
-  126  05:AA99  81 22 80          .byte swingDown, G4, swingUp, E4, swingDown, Fs4, swingUp, D4, swingDown, E4, swingUp, A3, swingDown, D4, halfSwing_p1, B3
-       05:AA9C  1F 81 21  
-       05:AA9F  80 1D 81  
-       05:AAA2  1F 80 18  
-       05:AAA5  81 1D 94  
-       05:AAA8  1A        
+  116  05:AA5F  A3 B0             .byte duty, $B0
+  117  05:AA61  A9 00             .byte pitch_envelope, me_none
+  118  05:AA63  A2 02             .byte volume_envelope, ve_blip_echo
+  119  05:AA65  86 5E 22          .byte d_sixteenth, rest, G4, G4, E4, G4, swingDown, E4, quarterSwing, A4, swingUp, D4
+       05:AA68  22 1F 22  
+       05:AA6B  81 1F 87  
+       05:AA6E  24 80 1D  
+  120  05:AA71  86 1F 22          .byte d_sixteenth, E4, G4, G4, E4, G4, swingDown, E4, quarterSwing, B4, swingUp, As4
+       05:AA74  22 1F 22  
+       05:AA77  81 1F 87  
+       05:AA7A  26 80 25  
+  121  05:AA7D  86 26 24          .byte d_sixteenth, B4, A4, G4, swingDown, Fs4, d_sixteenth, A4, swingUp, A4, d_sixteenth, G4, Fs4, E4
+       05:AA80  22 81 21  
+       05:AA83  86 24 80  
+       05:AA86  24 86 22  
+       05:AA89  21 1F     
+  122  05:AA8B  22 21 81          .byte G4, Fs4, swingDown, E4, d_sixteenth, D4, d_quarterSwing, B3, swingUp, A3, swingDown, B3
+       05:AA8E  1F 86 1D  
+       05:AA91  99 1A 80  
+       05:AA94  18 81 1A  
+  123  05:AA97  82 1B 86          .byte eighth, C4, d_sixteenth, C4, swingDown, C4, eighth, A3, d_sixteenth, B3, swingDown, A3, d_sixteenth, G3, eighth, A3
+       05:AA9A  1B 81 1B  
+       05:AA9D  82 18 86  
+       05:AAA0  1A 81 18  
+       05:AAA3  86 16 82  
+       05:AAA6  18        
+  124  05:AAA7  86 5E 1B          .byte d_sixteenth, rest, C4, swingDown, C4, eighth, A3, d_sixteenth, Fs4, swingDown, E4, d_sixteenth, D4, E4, swingUp, B3
+       05:AAAA  81 1B 82  
+       05:AAAD  18 86 21  
+       05:AAB0  81 1F 86  
+       05:AAB3  1D 1F 80  
+       05:AAB6  1A        
+  125  05:AAB7  86 1D 1F          .byte d_sixteenth, D4, E4, swingDown, G4, d_sixteenth, E4, B4, swingUp, B4, swingDown, G4, swingUp, A4, swingDown, Fs4, swingUp, D4, swingDown, E4, swingUp, Fs4
+       05:AABA  81 22 86  
+       05:AABD  1F 26 80  
+       05:AAC0  26 81 22  
+       05:AAC3  80 24 81  
+       05:AAC6  21 80 1D  
+       05:AAC9  81 1F 80  
+       05:AACC  21        
+  126  05:AACD  81 22 80          .byte swingDown, G4, swingUp, E4, swingDown, Fs4, swingUp, D4, swingDown, E4, swingUp, A3, swingDown, D4, halfSwing_p1, B3
+       05:AAD0  1F 81 21  
+       05:AAD3  80 1D 81  
+       05:AAD6  1F 80 18  
+       05:AAD9  81 1D 94  
+       05:AADC  1A        
   127                             
-  128  05:AAA9  A3 70             .byte duty, $70
-  129  05:AAAB  A9 00             .byte pitch_envelope, pe_none
-  130  05:AAAD  A2 0F             .byte volume_envelope, ve_veryLong_decay
-  131  05:AAAF  87 5E 2B          .byte quarterSwing, rest, E5, d_quarterSwing, G5, d_sixteenth, B5
-       05:AAB2  99 2E 86  
-       05:AAB5  32        
-  132  05:AAB6  87 29 88          .byte quarterSwing, D5, halfSwing, E5, d_sixteenth, B4, C5
-       05:AAB9  2B 86 26  
-       05:AABC  27        
-  133  05:AABD  9A 29 87          .byte d_halfSwing, D5, quarterSwing, Fs5
-       05:AAC0  2D        
-  134  05:AAC1  89 29             .byte wholeSwing, D5
+  128  05:AADD  A3 70             .byte duty, $70
+  129  05:AADF  A9 00             .byte pitch_envelope, me_none
+  130  05:AAE1  A2 0F             .byte volume_envelope, ve_veryLong_decay
+  131  05:AAE3  87 5E 2B          .byte quarterSwing, rest, E5, d_quarterSwing, G5, d_sixteenth, B5
+       05:AAE6  99 2E 86  
+       05:AAE9  32        
+  132  05:AAEA  87 29 88          .byte quarterSwing, D5, halfSwing, E5, d_sixteenth, B4, C5
+       05:AAED  2B 86 26  
+       05:AAF0  27        
+  133  05:AAF1  9A 29 87          .byte d_halfSwing, D5, quarterSwing, Fs5
+       05:AAF4  2D        
+  134  05:AAF5  89 29             .byte wholeSwing, D5
   135                     
-  136  05:AAC3  87 5E 2B          .byte quarterSwing, rest, E5, G5, B5
-       05:AAC6  2E 32     
-  137  05:AAC8  35 88 30          .byte D6, halfSwing, A5, swingDown, E5, swingUp, Fs5, swingDown, E5, swingUp, D5
-       05:AACB  81 2B 80  
-       05:AACE  2D 81 2B  
-       05:AAD1  80 29     
-  138  05:AAD3  89 2E             .byte wholeSwing, G5
+  136  05:AAF7  87 5E 2B          .byte quarterSwing, rest, E5, G5, B5
+       05:AAFA  2E 32     
+  137  05:AAFC  35 88 30          .byte D6, halfSwing, A5, swingDown, E5, swingUp, Fs5, swingDown, E5, swingUp, D5
+       05:AAFF  81 2B 80  
+       05:AB02  2D 81 2B  
+       05:AB05  80 29     
+  138  05:AB07  89 2E             .byte wholeSwing, G5
   139                             
-  140  05:AAD5  A1            .byte loop
-  141  05:AAD6  CB A9         .word bank2_square1
+  140  05:AB09  A1            .byte loop
+  141  05:AB0A  FF A9         .word bank2_square1
   142                         
-  143  05:AAD8            bank2_tri:
+  143  05:AB0C            bank2_tri:
   144                     
-  145  05:AAD8  A2 03             .byte volume_envelope, ve_tgl_1
-  146  05:AADA  A4 02             .byte set_loop1_counter, 2
+  145  05:AB0C  A2 03             .byte volume_envelope, ve_tgl_1
+  146  05:AB0E  A4 02             .byte set_loop1_counter, 2
   147                             
   148                             
-  149  05:AADC  88 5E             .byte halfSwing, rest
+  149  05:AB10  88 5E             .byte halfSwing, rest
   150                     
   151                             
-  152  05:AADE            bank2_triFirstLoop:
+  152  05:AB12            bank2_triFirstLoop:
   153                     
-  154  05:AADE  A9 03             .byte pitch_envelope, pe_bassKick
-  155  05:AAE0  80 26 26          .byte thirtysecond, B4, B4, B4, F4, F4, F4
-       05:AAE3  26 20 20  
-       05:AAE6  20        
-  156  05:AAE7  81 1D 80          .byte swingDown, D4, swingUp, B3
-       05:AAEA  1A        
-  157  05:AAEB  81 5E             .byte swingDown, rest
+  154  05:AB12  A9 03             .byte pitch_envelope, me_bassKick
+  155  05:AB14  80 26 26          .byte thirtysecond, B4, B4, B4, F4, F4, F4
+       05:AB17  26 20 20  
+       05:AB1A  20        
+  156  05:AB1B  81 1D 80          .byte swingDown, D4, swingUp, B3
+       05:AB1E  1A        
+  157  05:AB1F  81 5E             .byte swingDown, rest
   158                     
-  159  05:AAED  A9 00             .byte pitch_envelope, pe_none
-  160  05:AAEF  86 13             .byte d_sixteenth, E3
-  161  05:AAF1  80 13             .byte swingUp, E3
-  162  05:AAF3  86 07 13          .byte d_sixteenth, E2, E3, E2
-       05:AAF6  07        
-  163  05:AAF7  92 13             .byte five_thirtyseconds, E3
-  164  05:AAF9  86 04 06          .byte d_sixteenth, Cs2, Ds2
-  165  05:AAFC  86 13             .byte d_sixteenth, E3
-  166  05:AAFE  80 13             .byte swingUp, E3
-  167  05:AB00  86 07 13          .byte d_sixteenth, E2, E3, E2
-       05:AB03  07        
-  168  05:AB04  92 13             .byte five_thirtyseconds, E3
-  169  05:AB06  86 13 15          .byte d_sixteenth, E3, Fs3
-  170                     
-  171  05:AB09  86 0E             .byte d_sixteenth, B2
-  172  05:AB0B  80 0E             .byte swingUp, B2
-  173  05:AB0D  86 02 0E          .byte d_sixteenth, B1, B2, B1
-       05:AB10  02        
-  174  05:AB11  92 0E             .byte five_thirtyseconds, B2
-  175  05:AB13  86 00 01          .byte d_sixteenth, A1, As1
-  176  05:AB16  86 0E             .byte d_sixteenth, B2
-  177  05:AB18  80 0E             .byte swingUp, B2
-  178  05:AB1A  86 02 0E          .byte d_sixteenth, B1, B2, B1
-       05:AB1D  02        
-  179  05:AB1E  92 0E             .byte five_thirtyseconds, B2
-  180  05:AB20  86 00 01          .byte d_sixteenth, A1, As1
-  181                             
-  182  05:AB23  86 13             .byte d_sixteenth, E3
-  183  05:AB25  80 13             .byte swingUp, E3
-  184  05:AB27  86 07 13          .byte d_sixteenth, E2, E3, E2
+  159  05:AB21  A9 00             .byte pitch_envelope, me_none
+  160  05:AB23  86 13             .byte d_sixteenth, E3
+  161  05:AB25  80 13             .byte swingUp, E3
+  162  05:AB27  86 07 13          .byte d_sixteenth, E2, E3, E2
        05:AB2A  07        
-  185  05:AB2B  92 13             .byte five_thirtyseconds, E3
-  186  05:AB2D  86 04 06          .byte d_sixteenth, Cs2, Ds2
-  187  05:AB30  86 13             .byte d_sixteenth, E3
-  188  05:AB32  80 13             .byte swingUp, E3
-  189  05:AB34  86 07 13          .byte d_sixteenth, E2, E3, E2
+  163  05:AB2B  92 13             .byte five_thirtyseconds, E3
+  164  05:AB2D  86 04 06          .byte d_sixteenth, Cs2, Ds2
+  165  05:AB30  86 13             .byte d_sixteenth, E3
+  166  05:AB32  80 13             .byte swingUp, E3
+  167  05:AB34  86 07 13          .byte d_sixteenth, E2, E3, E2
        05:AB37  07        
-  190  05:AB38  92 13             .byte five_thirtyseconds, E3
-  191  05:AB3A  86 13 15          .byte d_sixteenth, E3, Fs3
-  192                     
-  193  05:AB3D  86 0E             .byte d_sixteenth, B2
-  194  05:AB3F  80 0E             .byte swingUp, B2
-  195  05:AB41  86 02 0E          .byte d_sixteenth, B1, B2, B1
+  168  05:AB38  92 13             .byte five_thirtyseconds, E3
+  169  05:AB3A  86 13 15          .byte d_sixteenth, E3, Fs3
+  170                     
+  171  05:AB3D  86 0E             .byte d_sixteenth, B2
+  172  05:AB3F  80 0E             .byte swingUp, B2
+  173  05:AB41  86 02 0E          .byte d_sixteenth, B1, B2, B1
        05:AB44  02        
-  196  05:AB45  92 0E             .byte five_thirtyseconds, B2
-  197  05:AB47  86 00 01          .byte d_sixteenth, A1, As1
-  198  05:AB4A  86 0E             .byte d_sixteenth, B2
-  199  05:AB4C  80 0E             .byte swingUp, B2
-  200  05:AB4E  86 02 0E          .byte d_sixteenth, B1, B2, B1
+  174  05:AB45  92 0E             .byte five_thirtyseconds, B2
+  175  05:AB47  86 00 01          .byte d_sixteenth, A1, As1
+  176  05:AB4A  86 0E             .byte d_sixteenth, B2
+  177  05:AB4C  80 0E             .byte swingUp, B2
+  178  05:AB4E  86 02 0E          .byte d_sixteenth, B1, B2, B1
        05:AB51  02        
+  179  05:AB52  92 0E             .byte five_thirtyseconds, B2
+  180  05:AB54  86 00 01          .byte d_sixteenth, A1, As1
+  181                             
+  182  05:AB57  86 13             .byte d_sixteenth, E3
+  183  05:AB59  80 13             .byte swingUp, E3
+  184  05:AB5B  86 07 13          .byte d_sixteenth, E2, E3, E2
+       05:AB5E  07        
+  185  05:AB5F  92 13             .byte five_thirtyseconds, E3
+  186  05:AB61  86 04 06          .byte d_sixteenth, Cs2, Ds2
+  187  05:AB64  86 13             .byte d_sixteenth, E3
+  188  05:AB66  80 13             .byte swingUp, E3
+  189  05:AB68  86 07 13          .byte d_sixteenth, E2, E3, E2
+       05:AB6B  07        
+  190  05:AB6C  92 13             .byte five_thirtyseconds, E3
+  191  05:AB6E  86 13 15          .byte d_sixteenth, E3, Fs3
+  192                     
+  193  05:AB71  86 0E             .byte d_sixteenth, B2
+  194  05:AB73  80 0E             .byte swingUp, B2
+  195  05:AB75  86 02 0E          .byte d_sixteenth, B1, B2, B1
+       05:AB78  02        
+  196  05:AB79  92 0E             .byte five_thirtyseconds, B2
+  197  05:AB7B  86 00 01          .byte d_sixteenth, A1, As1
+  198  05:AB7E  86 0E             .byte d_sixteenth, B2
+  199  05:AB80  80 0E             .byte swingUp, B2
+  200  05:AB82  86 02 0E          .byte d_sixteenth, B1, B2, B1
+       05:AB85  02        
   201                             
-  202  05:AB52  A5                .byte loop1
-  203  05:AB53  DE AA             .word bank2_triFirstLoop
+  202  05:AB86  A5                .byte loop1
+  203  05:AB87  12 AB             .word bank2_triFirstLoop
   204                             
-  205  05:AB55  A9 03             .byte pitch_envelope, pe_bassKick
-  206  05:AB57  80 26 26          .byte thirtysecond, B4, B4, B4, F4, F4, F4
-       05:AB5A  26 20 20  
-       05:AB5D  20        
-  207  05:AB5E  81 1D 80          .byte swingDown, D4, swingUp, B3
-       05:AB61  1A        
-  208  05:AB62  86 5E             .byte d_sixteenth, rest
+  205  05:AB89  A9 03             .byte pitch_envelope, me_bassKick
+  206  05:AB8B  80 26 26          .byte thirtysecond, B4, B4, B4, F4, F4, F4
+       05:AB8E  26 20 20  
+       05:AB91  20        
+  207  05:AB92  81 1D 80          .byte swingDown, D4, swingUp, B3
+       05:AB95  1A        
+  208  05:AB96  86 5E             .byte d_sixteenth, rest
   209                             
-  210  05:AB64  A9 00             .byte pitch_envelope, pe_none
-  211  05:AB66  86 0F 0F          .byte d_sixteenth, C3, C3
-  212  05:AB69  81 1B             .byte swingDown, C4
-  213  05:AB6B  82 0F             .byte eighth, C3
-  214  05:AB6D  81 0F             .byte swingDown, C3
-  215  05:AB6F  86 5E             .byte d_sixteenth, rest
-  216  05:AB71  80 0F             .byte swingUp, C3
-  217  05:AB73  81 1B             .byte swingDown, C4
-  218  05:AB75  86 0F             .byte d_sixteenth, C3
-  219  05:AB77  80 0F             .byte swingUp, C3
+  210  05:AB98  A9 00             .byte pitch_envelope, me_none
+  211  05:AB9A  86 0F 0F          .byte d_sixteenth, C3, C3
+  212  05:AB9D  81 1B             .byte swingDown, C4
+  213  05:AB9F  82 0F             .byte eighth, C3
+  214  05:ABA1  81 0F             .byte swingDown, C3
+  215  05:ABA3  86 5E             .byte d_sixteenth, rest
+  216  05:ABA5  80 0F             .byte swingUp, C3
+  217  05:ABA7  81 1B             .byte swingDown, C4
+  218  05:ABA9  86 0F             .byte d_sixteenth, C3
+  219  05:ABAB  80 0F             .byte swingUp, C3
   220                             
-  221  05:AB79  86 15 15          .byte d_sixteenth, Fs3, Fs3
-  222  05:AB7C  81 21             .byte swingDown, Fs4
-  223  05:AB7E  82 15             .byte eighth, Fs3
-  224  05:AB80  81 15             .byte swingDown, Fs3
-  225  05:AB82  86 5E             .byte d_sixteenth, rest
-  226  05:AB84  80 15             .byte swingUp, Fs3
-  227  05:AB86  81 21             .byte swingDown, Fs4
-  228  05:AB88  86 15             .byte d_sixteenth, Fs3
-  229  05:AB8A  80 15             .byte swingUp, Fs3
+  221  05:ABAD  86 15 15          .byte d_sixteenth, Fs3, Fs3
+  222  05:ABB0  81 21             .byte swingDown, Fs4
+  223  05:ABB2  82 15             .byte eighth, Fs3
+  224  05:ABB4  81 15             .byte swingDown, Fs3
+  225  05:ABB6  86 5E             .byte d_sixteenth, rest
+  226  05:ABB8  80 15             .byte swingUp, Fs3
+  227  05:ABBA  81 21             .byte swingDown, Fs4
+  228  05:ABBC  86 15             .byte d_sixteenth, Fs3
+  229  05:ABBE  80 15             .byte swingUp, Fs3
   230                             
-  231  05:AB8C  86 0E 0E          .byte d_sixteenth, B2, B2
-  232  05:AB8F  81 1A             .byte swingDown, B3
-  233  05:AB91  82 0E             .byte eighth, B2
-  234  05:AB93  81 0E             .byte swingDown, B2
-  235  05:AB95  86 5E             .byte d_sixteenth, rest
-  236  05:AB97  80 0E             .byte swingUp, B2
-  237  05:AB99  81 1A             .byte swingDown, B3
-  238  05:AB9B  86 0E             .byte d_sixteenth, B2
-  239  05:AB9D  80 0E             .byte swingUp, B2
+  231  05:ABC0  86 0E 0E          .byte d_sixteenth, B2, B2
+  232  05:ABC3  81 1A             .byte swingDown, B3
+  233  05:ABC5  82 0E             .byte eighth, B2
+  234  05:ABC7  81 0E             .byte swingDown, B2
+  235  05:ABC9  86 5E             .byte d_sixteenth, rest
+  236  05:ABCB  80 0E             .byte swingUp, B2
+  237  05:ABCD  81 1A             .byte swingDown, B3
+  238  05:ABCF  86 0E             .byte d_sixteenth, B2
+  239  05:ABD1  80 0E             .byte swingUp, B2
   240                             
-  241  05:AB9F  86 13 13          .byte d_sixteenth, E3, E3
-  242  05:ABA2  81 1F             .byte swingDown, E4
-  243  05:ABA4  82 13             .byte eighth, E3
-  244  05:ABA6  81 13             .byte swingDown, E3
-  245  05:ABA8  86 5E             .byte d_sixteenth, rest
-  246  05:ABAA  80 13             .byte swingUp, E3
-  247  05:ABAC  81 1F             .byte swingDown, E4
-  248  05:ABAE  86 13             .byte d_sixteenth, E3
-  249  05:ABB0  80 13             .byte swingUp, E3
+  241  05:ABD3  86 13 13          .byte d_sixteenth, E3, E3
+  242  05:ABD6  81 1F             .byte swingDown, E4
+  243  05:ABD8  82 13             .byte eighth, E3
+  244  05:ABDA  81 13             .byte swingDown, E3
+  245  05:ABDC  86 5E             .byte d_sixteenth, rest
+  246  05:ABDE  80 13             .byte swingUp, E3
+  247  05:ABE0  81 1F             .byte swingDown, E4
+  248  05:ABE2  86 13             .byte d_sixteenth, E3
+  249  05:ABE4  80 13             .byte swingUp, E3
   250                             
-  251  05:ABB2  A9 00             .byte pitch_envelope, pe_none
-  252  05:ABB4  86 0F 0F          .byte d_sixteenth, C3, C3
-  253  05:ABB7  81 1B             .byte swingDown, C4
-  254  05:ABB9  82 0F             .byte eighth, C3
-  255  05:ABBB  81 0F             .byte swingDown, C3
-  256  05:ABBD  86 5E             .byte d_sixteenth, rest
-  257  05:ABBF  80 0F             .byte swingUp, C3
-  258  05:ABC1  81 1B             .byte swingDown, C4
-  259  05:ABC3  86 0F             .byte d_sixteenth, C3
-  260  05:ABC5  80 0F             .byte swingUp, C3
+  251  05:ABE6  A9 00             .byte pitch_envelope, me_none
+  252  05:ABE8  86 0F 0F          .byte d_sixteenth, C3, C3
+  253  05:ABEB  81 1B             .byte swingDown, C4
+  254  05:ABED  82 0F             .byte eighth, C3
+  255  05:ABEF  81 0F             .byte swingDown, C3
+  256  05:ABF1  86 5E             .byte d_sixteenth, rest
+  257  05:ABF3  80 0F             .byte swingUp, C3
+  258  05:ABF5  81 1B             .byte swingDown, C4
+  259  05:ABF7  86 0F             .byte d_sixteenth, C3
+  260  05:ABF9  80 0F             .byte swingUp, C3
   261                             
-  262  05:ABC7  86 15 15          .byte d_sixteenth, Fs3, Fs3
-  263  05:ABCA  81 21             .byte swingDown, Fs4
-  264  05:ABCC  82 15             .byte eighth, Fs3
-  265  05:ABCE  81 15             .byte swingDown, Fs3
-  266  05:ABD0  86 5E             .byte d_sixteenth, rest
-  267  05:ABD2  80 15             .byte swingUp, Fs3
-  268  05:ABD4  81 21             .byte swingDown, Fs4
-  269  05:ABD6  86 15             .byte d_sixteenth, Fs3
-  270  05:ABD8  80 15             .byte swingUp, Fs3
+  262  05:ABFB  86 15 15          .byte d_sixteenth, Fs3, Fs3
+  263  05:ABFE  81 21             .byte swingDown, Fs4
+  264  05:AC00  82 15             .byte eighth, Fs3
+  265  05:AC02  81 15             .byte swingDown, Fs3
+  266  05:AC04  86 5E             .byte d_sixteenth, rest
+  267  05:AC06  80 15             .byte swingUp, Fs3
+  268  05:AC08  81 21             .byte swingDown, Fs4
+  269  05:AC0A  86 15             .byte d_sixteenth, Fs3
+  270  05:AC0C  80 15             .byte swingUp, Fs3
   271                             
-  272  05:ABDA  86 16 16          .byte d_sixteenth, G3, G3
-  273  05:ABDD  81 22             .byte swingDown, G4
-  274  05:ABDF  82 16             .byte eighth, G3
-  275  05:ABE1  81 16             .byte swingDown, G3
-  276  05:ABE3  86 5E             .byte d_sixteenth, rest
-  277  05:ABE5  80 16             .byte swingUp, G3
-  278  05:ABE7  81 22             .byte swingDown, G4
-  279  05:ABE9  86 16             .byte d_sixteenth, G3
-  280  05:ABEB  80 16             .byte swingUp, G3
+  272  05:AC0E  86 16 16          .byte d_sixteenth, G3, G3
+  273  05:AC11  81 22             .byte swingDown, G4
+  274  05:AC13  82 16             .byte eighth, G3
+  275  05:AC15  81 16             .byte swingDown, G3
+  276  05:AC17  86 5E             .byte d_sixteenth, rest
+  277  05:AC19  80 16             .byte swingUp, G3
+  278  05:AC1B  81 22             .byte swingDown, G4
+  279  05:AC1D  86 16             .byte d_sixteenth, G3
+  280  05:AC1F  80 16             .byte swingUp, G3
   281                             
-  282  05:ABED  86 13 13          .byte d_sixteenth, E3, E3
-  283  05:ABF0  81 1F             .byte swingDown, E4
-  284  05:ABF2  82 13             .byte eighth, E3
+  282  05:AC21  86 13 13          .byte d_sixteenth, E3, E3
+  283  05:AC24  81 1F             .byte swingDown, E4
+  284  05:AC26  82 13             .byte eighth, E3
   285                             
-  286  05:ABF4  A9 03             .byte pitch_envelope, pe_bassKick
-  287  05:ABF6  80 26 26          .byte thirtysecond, B4, B4, B4, F4, F4, F4
-       05:ABF9  26 20 20  
-       05:ABFC  20        
-  288  05:ABFD  81 1D 80          .byte swingDown, D4, swingUp, B3
-       05:AC00  1A        
-  289  05:AC01  86 5E             .byte d_sixteenth, rest
+  286  05:AC28  A9 03             .byte pitch_envelope, me_bassKick
+  287  05:AC2A  80 26 26          .byte thirtysecond, B4, B4, B4, F4, F4, F4
+       05:AC2D  26 20 20  
+       05:AC30  20        
+  288  05:AC31  81 1D 80          .byte swingDown, D4, swingUp, B3
+       05:AC34  1A        
+  289  05:AC35  86 5E             .byte d_sixteenth, rest
   290                             
-  291  05:AC03  A9 00             .byte pitch_envelope, pe_none
-  292  05:AC05  86 0F 0F          .byte d_sixteenth, C3, C3
-  293  05:AC08  81 1B             .byte swingDown, C4
-  294  05:AC0A  82 0F             .byte eighth, C3
-  295  05:AC0C  81 0F             .byte swingDown, C3
-  296  05:AC0E  86 5E             .byte d_sixteenth, rest
-  297  05:AC10  80 0F             .byte swingUp, C3
-  298  05:AC12  81 1B             .byte swingDown, C4
-  299  05:AC14  86 0F             .byte d_sixteenth, C3
-  300  05:AC16  80 0F             .byte swingUp, C3
+  291  05:AC37  A9 00             .byte pitch_envelope, me_none
+  292  05:AC39  86 0F 0F          .byte d_sixteenth, C3, C3
+  293  05:AC3C  81 1B             .byte swingDown, C4
+  294  05:AC3E  82 0F             .byte eighth, C3
+  295  05:AC40  81 0F             .byte swingDown, C3
+  296  05:AC42  86 5E             .byte d_sixteenth, rest
+  297  05:AC44  80 0F             .byte swingUp, C3
+  298  05:AC46  81 1B             .byte swingDown, C4
+  299  05:AC48  86 0F             .byte d_sixteenth, C3
+  300  05:AC4A  80 0F             .byte swingUp, C3
   301                             
-  302  05:AC18  86 15 15          .byte d_sixteenth, Fs3, Fs3
-  303  05:AC1B  81 21             .byte swingDown, Fs4
-  304  05:AC1D  82 15             .byte eighth, Fs3
-  305  05:AC1F  81 15             .byte swingDown, Fs3
-  306  05:AC21  86 5E             .byte d_sixteenth, rest
-  307  05:AC23  80 15             .byte swingUp, Fs3
-  308  05:AC25  81 21             .byte swingDown, Fs4
-  309  05:AC27  86 15             .byte d_sixteenth, Fs3
-  310  05:AC29  80 15             .byte swingUp, Fs3
+  302  05:AC4C  86 15 15          .byte d_sixteenth, Fs3, Fs3
+  303  05:AC4F  81 21             .byte swingDown, Fs4
+  304  05:AC51  82 15             .byte eighth, Fs3
+  305  05:AC53  81 15             .byte swingDown, Fs3
+  306  05:AC55  86 5E             .byte d_sixteenth, rest
+  307  05:AC57  80 15             .byte swingUp, Fs3
+  308  05:AC59  81 21             .byte swingDown, Fs4
+  309  05:AC5B  86 15             .byte d_sixteenth, Fs3
+  310  05:AC5D  80 15             .byte swingUp, Fs3
   311                             
-  312  05:AC2B  86 0E 0E          .byte d_sixteenth, B2, B2
-  313  05:AC2E  81 1A             .byte swingDown, B3
-  314  05:AC30  82 0E             .byte eighth, B2
-  315  05:AC32  81 0E             .byte swingDown, B2
-  316  05:AC34  86 5E             .byte d_sixteenth, rest
-  317  05:AC36  80 0E             .byte swingUp, B2
-  318  05:AC38  81 1A             .byte swingDown, B3
-  319  05:AC3A  86 0E             .byte d_sixteenth, B2
-  320  05:AC3C  80 0E             .byte swingUp, B2
+  312  05:AC5F  86 0E 0E          .byte d_sixteenth, B2, B2
+  313  05:AC62  81 1A             .byte swingDown, B3
+  314  05:AC64  82 0E             .byte eighth, B2
+  315  05:AC66  81 0E             .byte swingDown, B2
+  316  05:AC68  86 5E             .byte d_sixteenth, rest
+  317  05:AC6A  80 0E             .byte swingUp, B2
+  318  05:AC6C  81 1A             .byte swingDown, B3
+  319  05:AC6E  86 0E             .byte d_sixteenth, B2
+  320  05:AC70  80 0E             .byte swingUp, B2
   321                             
-  322  05:AC3E  86 13 13          .byte d_sixteenth, E3, E3
-  323  05:AC41  81 1F             .byte swingDown, E4
-  324  05:AC43  82 13             .byte eighth, E3
-  325  05:AC45  81 13             .byte swingDown, E3
-  326  05:AC47  86 5E             .byte d_sixteenth, rest
-  327  05:AC49  80 13             .byte swingUp, E3
-  328  05:AC4B  81 1F             .byte swingDown, E4
-  329  05:AC4D  86 13             .byte d_sixteenth, E3
-  330  05:AC4F  80 13             .byte swingUp, E3
+  322  05:AC72  86 13 13          .byte d_sixteenth, E3, E3
+  323  05:AC75  81 1F             .byte swingDown, E4
+  324  05:AC77  82 13             .byte eighth, E3
+  325  05:AC79  81 13             .byte swingDown, E3
+  326  05:AC7B  86 5E             .byte d_sixteenth, rest
+  327  05:AC7D  80 13             .byte swingUp, E3
+  328  05:AC7F  81 1F             .byte swingDown, E4
+  329  05:AC81  86 13             .byte d_sixteenth, E3
+  330  05:AC83  80 13             .byte swingUp, E3
   331                             
-  332  05:AC51  A9 00             .byte pitch_envelope, pe_none
-  333  05:AC53  86 0F 0F          .byte d_sixteenth, C3, C3
-  334  05:AC56  81 1B             .byte swingDown, C4
-  335  05:AC58  82 0F             .byte eighth, C3
-  336  05:AC5A  81 0F             .byte swingDown, C3
-  337  05:AC5C  86 5E             .byte d_sixteenth, rest
-  338  05:AC5E  80 0F             .byte swingUp, C3
-  339  05:AC60  81 1B             .byte swingDown, C4
-  340  05:AC62  86 0F             .byte d_sixteenth, C3
-  341  05:AC64  80 0F             .byte swingUp, C3
+  332  05:AC85  A9 00             .byte pitch_envelope, me_none
+  333  05:AC87  86 0F 0F          .byte d_sixteenth, C3, C3
+  334  05:AC8A  81 1B             .byte swingDown, C4
+  335  05:AC8C  82 0F             .byte eighth, C3
+  336  05:AC8E  81 0F             .byte swingDown, C3
+  337  05:AC90  86 5E             .byte d_sixteenth, rest
+  338  05:AC92  80 0F             .byte swingUp, C3
+  339  05:AC94  81 1B             .byte swingDown, C4
+  340  05:AC96  86 0F             .byte d_sixteenth, C3
+  341  05:AC98  80 0F             .byte swingUp, C3
   342                             
-  343  05:AC66  86 15 15          .byte d_sixteenth, Fs3, Fs3
-  344  05:AC69  81 21             .byte swingDown, Fs4
-  345  05:AC6B  82 15             .byte eighth, Fs3
-  346  05:AC6D  81 15             .byte swingDown, Fs3
-  347  05:AC6F  86 5E             .byte d_sixteenth, rest
-  348  05:AC71  80 15             .byte swingUp, Fs3
-  349  05:AC73  81 21             .byte swingDown, Fs4
-  350  05:AC75  86 15             .byte d_sixteenth, Fs3
-  351  05:AC77  80 15             .byte swingUp, Fs3
+  343  05:AC9A  86 15 15          .byte d_sixteenth, Fs3, Fs3
+  344  05:AC9D  81 21             .byte swingDown, Fs4
+  345  05:AC9F  82 15             .byte eighth, Fs3
+  346  05:ACA1  81 15             .byte swingDown, Fs3
+  347  05:ACA3  86 5E             .byte d_sixteenth, rest
+  348  05:ACA5  80 15             .byte swingUp, Fs3
+  349  05:ACA7  81 21             .byte swingDown, Fs4
+  350  05:ACA9  86 15             .byte d_sixteenth, Fs3
+  351  05:ACAB  80 15             .byte swingUp, Fs3
   352                             
-  353  05:AC79  86 12 12          .byte d_sixteenth, Ds3, Ds3
-  354  05:AC7C  81 1E             .byte swingDown, Ds4
-  355  05:AC7E  82 12             .byte eighth, Ds3
-  356  05:AC80  81 12             .byte swingDown, Ds3
-  357  05:AC82  86 5E             .byte d_sixteenth, rest
-  358  05:AC84  80 12             .byte swingUp, Ds3
-  359  05:AC86  81 1E             .byte swingDown, Ds4
-  360  05:AC88  86 12             .byte d_sixteenth, Ds3
-  361  05:AC8A  80 12             .byte swingUp, Ds3
+  353  05:ACAD  86 12 12          .byte d_sixteenth, Ds3, Ds3
+  354  05:ACB0  81 1E             .byte swingDown, Ds4
+  355  05:ACB2  82 12             .byte eighth, Ds3
+  356  05:ACB4  81 12             .byte swingDown, Ds3
+  357  05:ACB6  86 5E             .byte d_sixteenth, rest
+  358  05:ACB8  80 12             .byte swingUp, Ds3
+  359  05:ACBA  81 1E             .byte swingDown, Ds4
+  360  05:ACBC  86 12             .byte d_sixteenth, Ds3
+  361  05:ACBE  80 12             .byte swingUp, Ds3
   362                             
-  363  05:AC8C  A1                .byte loop
-  364  05:AC8D  D8 AA         .word bank2_tri
+  363  05:ACC0  A1                .byte loop
+  364  05:ACC1  0C AB         .word bank2_tri
   365                        
   366                        
   367                        
-  368  05:AC8F            bank2_noise:
+  368  05:ACC3            bank2_noise:
   369                             
-  370  05:AC8F  A2 09             .byte volume_envelope, ve_drum_decay
-  371  05:AC91  87 04 04      .byte quarterSwing, $04, $04, $04, $04
-       05:AC94  04 04     
+  370  05:ACC3  A2 09             .byte volume_envelope, ve_drum_decay
+  371  05:ACC5  87 04 04      .byte quarterSwing, $04, $04, $04, $04
+       05:ACC8  04 04     
   372                              
-  373  05:AC96  A4 0E             .byte set_loop1_counter, 14                     ; repeat 14 times 
+  373  05:ACCA  A4 0E             .byte set_loop1_counter, 14                     ; repeat 14 times 
   374                             
-  375  05:AC98            bank2_noiseMainLoop:
+  375  05:ACCC            bank2_noiseMainLoop:
   376                     
-  377  05:AC98  A2 0A             .byte volume_envelope, ve_hiHat_decay
-  378  05:AC9A  81 04 80          .byte swingDown, $04, swingUp, $04, swingDown, $04, swingUp, $04        
-       05:AC9D  04 81 04  
-       05:ACA0  80 04     
-  379  05:ACA2  A2 09             .byte volume_envelope, ve_drum_decay
-  380  05:ACA4  81 04             .byte swingDown, $04
-  381  05:ACA6  A2 0A             .byte volume_envelope, ve_hiHat_decay
-  382  05:ACA8  80 04 81          .byte swingUp, $04, swingDown, $04, swingUp, $04
-       05:ACAB  04 80 04  
+  377  05:ACCC  A2 0A             .byte volume_envelope, ve_hiHat_decay
+  378  05:ACCE  81 04 80          .byte swingDown, $04, swingUp, $04, swingDown, $04, swingUp, $04        
+       05:ACD1  04 81 04  
+       05:ACD4  80 04     
+  379  05:ACD6  A2 09             .byte volume_envelope, ve_drum_decay
+  380  05:ACD8  81 04             .byte swingDown, $04
+  381  05:ACDA  A2 0A             .byte volume_envelope, ve_hiHat_decay
+  382  05:ACDC  80 04 81          .byte swingUp, $04, swingDown, $04, swingUp, $04
+       05:ACDF  04 80 04  
   383                             
-  384  05:ACAE  A5                .byte loop1                             
-  385  05:ACAF  98 AC         .word bank2_noiseMainLoop
-  386  05:ACB1  A1                .byte loop
-  387  05:ACB2  8F AC             .word bank2_noise
+  384  05:ACE2  A5                .byte loop1                             
+  385  05:ACE3  CC AC         .word bank2_noiseMainLoop
+  386  05:ACE5  A1                .byte loop
+  387  05:ACE6  C3 AC             .word bank2_noise
   388                     
-  389  05:ACB4            bank2_dpcm:
+  389  05:ACE8            bank2_dpcm:
   390                     
-  391  05:ACB4  87 0B 0B          .byte quarterSwing, $0B, $0B, $0B
-       05:ACB7  0B        
-  392  05:ACB8  81 1B 86          .byte swingDown, $1B, eighthSwing, $0B, swingUp, $01
-       05:ACBB  0B 80 01  
-  393  05:ACBE  A4 07             .byte set_loop1_counter, 7  
+  391  05:ACE8  87 0B 0B          .byte quarterSwing, $0B, $0B, $0B
+       05:ACEB  0B        
+  392  05:ACEC  81 1B 86          .byte swingDown, $1B, eighthSwing, $0B, swingUp, $01
+       05:ACEF  0B 80 01  
+  393  05:ACF2  A4 07             .byte set_loop1_counter, 7  
   394                     
-  395  05:ACC0            bank2_dpcmMainLoop:
+  395  05:ACF4            bank2_dpcmMainLoop:
   396                             
-  397  05:ACC0  87 0B 1B          .byte quarterSwing, $0B, $1B, $0B
-       05:ACC3  0B        
-  398  05:ACC4  81 1B 86          .byte swingDown, $1B, eighthSwing, $0B, swingUp, $01
-       05:ACC7  0B 80 01  
+  397  05:ACF4  87 0B 1B          .byte quarterSwing, $0B, $1B, $0B
+       05:ACF7  0B        
+  398  05:ACF8  81 1B 86          .byte swingDown, $1B, eighthSwing, $0B, swingUp, $01
+       05:ACFB  0B 80 01  
   399                             
-  400  05:ACCA  A5                .byte loop1
-  401  05:ACCB  C0 AC             .word bank2_dpcmMainLoop
-  402  05:ACCD  A1                .byte loop
-  403  05:ACCE  B4 AC             .word bank2_dpcm
+  400  05:ACFE  A5                .byte loop1
+  401  05:ACFF  F4 AC             .word bank2_dpcmMainLoop
+  402  05:AD01  A1                .byte loop
+  403  05:AD02  E8 AC             .word bank2_dpcm
 #[2]   Source/Banks/Bank2.asm
    41           BFFA        .org $BFFA     ;first of the three vectors starts here
    42  05:BFFA  09 D7       .dw NMI        ;when an NMI happens (once per frame if enabled) the 
@@ -5994,7 +6174,7 @@
    36  06:C107  A9 00       lda #$00
    37  06:C109  8D D6 00    sta current_song
    38  06:C10C  AD D6 00    lda current_song
-   39  06:C10F  20 0B A1    jsr sound_load
+   39  06:C10F  20 11 A1    jsr sound_load
    40                     
    41  06:C112  20 12 D2    JSR TurnOnSprites
    42                       
@@ -6181,7 +6361,7 @@
   208  06:C23D  A9 00       lda #$00
   209  06:C23F  8D D6 00    sta current_song
   210  06:C242  AD D6 00    lda current_song
-  211  06:C245  20 0B A1    jsr sound_load
+  211  06:C245  20 11 A1    jsr sound_load
   212                       
   213                       ;;reset screen scroll
   214  06:C248  A9 00       LDA #$00
@@ -6681,20 +6861,20 @@
   592                         
   593  06:C4FE  A9 05       LDA #$05
   594  06:C500  8D D6 00    STA current_song
-  595  06:C503  20 0B A1    JSR sound_load
+  595  06:C503  20 11 A1    JSR sound_load
   596  06:C506  60          RTS 
   597                     
   598  06:C507            PlayPuzzleCursorSound:
   599  06:C507  A9 06       LDA #$06
   600  06:C509  8D D6 00    STA current_song
-  601  06:C50C  20 0B A1    JSR sound_load
+  601  06:C50C  20 11 A1    JSR sound_load
   602  06:C50F  60          RTS 
   603                       
   604  06:C510            PlayNoiseBlipSound:
   605                      
   606  06:C510  A9 07       LDA #$07
   607  06:C512  8D D6 00    STA current_song
-  608  06:C515  20 0B A1    JSR sound_load
+  608  06:C515  20 11 A1    JSR sound_load
   609  06:C518  60          RTS 
   610                       
   611  06:C519            SetPuzzleDisplaySprite:
@@ -6786,7 +6966,7 @@
    48  06:C56A  A9 01       lda #$01
    49  06:C56C  8D D6 00    sta current_song
    50  06:C56F  AD D6 00    lda current_song
-   51  06:C572  20 0B A1    jsr sound_load
+   51  06:C572  20 11 A1    jsr sound_load
    52                       
    53                       ;; get the puzzle table in the puzzle address
    54                       MACROGetLabelPointer PUZZLE_TABLE, table_address
@@ -7267,7 +7447,7 @@
   440  06:C84F  A9 00       lda #$00
   441  06:C851  8D D6 00    sta current_song
   442  06:C854  AD D6 00    lda current_song
-  443  06:C857  20 0B A1    jsr sound_load
+  443  06:C857  20 11 A1    jsr sound_load
   444                       
   445                       ;;the puzzle is solved, store the time and solved bit in memory
   446                       ;;if the puzzle was solved before, only update the time
@@ -8146,7 +8326,7 @@
    30  06:CD57  A9 04       lda #$04
    31  06:CD59  8D D6 00    sta current_song
    32  06:CD5C  AD D6 00    lda current_song
-   33  06:CD5F  20 0B A1    jsr sound_load
+   33  06:CD5F  20 11 A1    jsr sound_load
    34                       
    35                       MACROGetLabelPointer EndScreens, table_address
                           
@@ -9965,7 +10145,7 @@
    45  06:D745  AD 20 00    LDA PPU_ScrollY
    46  06:D748  8D 05 20    STA PPU_SCROLL
    47                       
-   48  06:D74B  20 85 A1    jsr sound_play_frame 
+   48  06:D74B  20 8B A1    jsr sound_play_frame 
    49  06:D74E  4C 5D D7    JMP WakeUp
    50                     
    51  06:D751            StateNMIUpdate:

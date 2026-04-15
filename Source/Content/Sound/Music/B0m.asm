@@ -44,44 +44,44 @@ bank0_header:
     
 bank0_square1:
 
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte volume_envelope, ve_long_decay 
     .byte quarter, rest
 	.byte d_eighth, D5
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte d_half_d_eight, C5
 	.byte sixteenth, B4, C5
 	.byte eighth, B4
 	.byte sixteenth, Fs4
 	.byte eighth, G4,  A4
 	.byte sixteenth, B4
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte d_eighth, Fs4
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte whole_quarter_sixteenth, A4
 	.byte sixteenth, rest
 	.byte Fs3, G3, Gs3, A3, Gs3, G3, Fs3
 	
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte quarter, rest
 	.byte d_eighth, D5
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte d_half_d_eight, C5
 	.byte sixteenth, B4, C5
 	.byte eighth, B4
 	.byte sixteenth, Fs4
 	.byte eighth, G4,  E5
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte sixteenth, G5
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte d_whole, Fs5
 	.byte sixteenth, rest
 	.byte Fs3, G3, A3, G3, A3, D4, Fs4
     
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte quarter, rest
 	.byte d_eighth, G5
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte d_half_d_eight, F5
 	.byte sixteenth, E5, F5
 	.byte eighth, E5
@@ -90,28 +90,28 @@ bank0_square1:
 	.byte sixteenth, E5, D5 
 	.byte eighth, B4, C5, A4, B4, G4 
 	.byte sixteenth, C5, B4, G4, F4, D4
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte eighth, F4
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte sixteenth, A4
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte eighth, G4
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte sixteenth, C5
 	.byte five_eighths, B4
 	
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte quarter, rest
 	.byte d_eighth, D5
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte d_half_d_eight, C5
 	.byte sixteenth, B4, C5
 	.byte eighth, B4
 	.byte sixteenth, Fs4
 	.byte eighth, G4
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte A4
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte sixteenth, G4
 	.byte d_whole, Fs4
 	.byte sixteenth, rest
@@ -142,10 +142,10 @@ bank0_square1:
 	.byte sixteenth, Fs3, G3, A3, G3, A3, D4, Fs4
 
 	;; reach-around
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte volume_envelope, ve_long_decay 
 	.byte d_eighth, G4, G4
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte volume_envelope, ve_tgl_2
 	.byte eighth, A4
 	.byte volume_envelope, ve_tgl_1
@@ -160,10 +160,10 @@ bank0_square1:
 	.byte eighth, A5
 	.byte sixteenth, C5, G5, Fs5, C6, A5
 	
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte volume_envelope, ve_long_decay 
 	.byte d_eighth, G4, G4
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte volume_envelope, ve_tgl_2
 	.byte eighth, A4
 	.byte volume_envelope, ve_tgl_1
@@ -172,10 +172,10 @@ bank0_square1:
 	.byte sixteenth, C6, A5, E5, A4, F5, C5, Fs4
 	.byte sixteenth, G5, D5, A4, D5, A4, E4, G5, Fs5, C6, D6
 	
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte volume_envelope, ve_long_decay 
 	.byte d_eighth, G4, G4
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte volume_envelope, ve_tgl_2
 	.byte eighth, A4
 	.byte volume_envelope, ve_tgl_1
@@ -190,10 +190,10 @@ bank0_square1:
 	.byte eighth, A5
 	.byte sixteenth, C5, G5, Fs5, C6, A5
 	
-	.byte pitch_envelope, pe_sweep
+	.byte pitch_envelope, me_sweep
 	.byte volume_envelope, ve_long_decay 
 	.byte d_eighth, G4, G4
-	.byte pitch_envelope, pe_mod
+	.byte pitch_envelope, me_mod
 	.byte volume_envelope, ve_tgl_2
 	.byte eighth, A4
 	.byte volume_envelope, ve_long_decay 
