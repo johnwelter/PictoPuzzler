@@ -496,6 +496,23 @@ ApplyGameTimeToPPUString:
   
   RTS
   
+ApplyPuzzleLevelToPPUString:
+
+  STA temp1
+  STX temp2
+  
+  MACROAddPPUStringEntryRawData temp1, temp2, #DRAW_HORIZONTAL, #$03
+  LDA bank_index
+  JSR WriteToPPUString
+  LDA #$60
+  JSR WriteToPPUString
+  LDX puzzle_index
+  INX
+  TXA 
+  JSR WriteToPPUString
+  
+  RTS
+
 
 ClearLineDefs:
 

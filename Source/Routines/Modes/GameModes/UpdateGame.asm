@@ -98,16 +98,10 @@ UpdateGameInit:
  
   MACROGetLabelPointer VERT_CLUES, clue_start_address
   JSR ResetClueDrawAddress
-  
-  MACROAddPPUStringEntryRawData #HIGH(BANK_LEVEL), #LOW(BANK_LEVEL), #DRAW_HORIZONTAL, #$03
-  LDA bank_index
-  JSR WriteToPPUString
-  LDA #$60
-  JSR WriteToPPUString
-  LDX puzzle_index
-  INX
-  TXA 
-  JSR WriteToPPUString
+
+  LDA #HIGH(BANK_LEVEL)
+  LDX #LOW(BANK_LEVEL)
+  JSR ApplyPuzzleLevelToPPUString
   
   INC mode_state
 
@@ -151,17 +145,9 @@ UpdateDrawHoriClues:
   JSR TurnOnSprites
   
   ;;set the timer to 00
-  MACROAddPPUStringEntryRawData #HIGH(TIMER_LOC), #LOW(TIMER_LOC), #DRAW_HORIZONTAL, #$05
-  LDA GameTime+3
-  JSR WriteToPPUString
-  LDA GameTime+2
-  JSR WriteToPPUString
-  LDA #$61
-  JSR WriteToPPUString
-  LDA GameTime+1
-  JSR WriteToPPUString
-  LDA GameTime
-  JSR WriteToPPUString
+  LDA #HIGH(TIMER_LOC)
+  LDX #LOW(TIMER_LOC)
+  JSR ApplyGameTimeToPPUString
   
   ;;reset time
   LDA #$00
@@ -1106,17 +1092,23 @@ CheckNewBestTime:
   LDA GameTime+3
   CMP [table_address], y
   BCC .updateTime
+  BEQ .checkSingleMinutes
   BCS .leave
+.checkSingleMinutes:
   DEY
   LDA GameTime+2
   CMP [table_address], y
   BCC .updateTime
+  BEQ .checkTenSeconds
   BCS .leave
+.checkTenSeconds:
   DEY
   LDA GameTime+1
   CMP [table_address], y
   BCC .updateTime
+  BEQ .checkSingleSeconds
   BCS .leave
+.checkSingleSeconds:
   DEY
   LDA [table_address], y
   AND #$0F

@@ -43,6 +43,9 @@ UpdateTitleInit:
   LDA hasContinue
   BEQ .skipContinueText
   MACROAddPPUStringEntryTable #$2B, #$4D, #DRAW_HORIZONTAL, ContinueText
+  LDA #$2B
+  LDX #$52
+  JSR ApplyPuzzleLevelToPPUString
   
 .skipContinueText:
   
@@ -655,4 +658,4 @@ SetPuzzleDisplaySprite:
 
 ContinueText:
 
-  .db $08, $0C, $18, $17, $1D, $12, $17, $1E, $0E
+  .db $05, $0C, $18, $17, $1D, $24
