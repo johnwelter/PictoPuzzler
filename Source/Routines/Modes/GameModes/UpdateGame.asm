@@ -370,17 +370,20 @@ UpdateGamePlay:
   JMP .overwriteTile
   
 .getPuzzleTile:
+  LDA currentPaintTile
+  CMP #$60
+  BCC .leaveEarly
   JSR CheckAgainstSolution
   
 .overwriteTile:
   ;;overwrite tile
    
-  LDA temp3		;tile taken from current mouse location
+  LDA temp3					;tile taken from current mouse location
   AND #$F0
   CMP currentPaintTile
   BEQ .skipSound
   JSR PlayMenuCursorSound
-.skipSound:
+.skipSound:					
   LDA temp3
   AND #$0F
   ORA currentPaintTile

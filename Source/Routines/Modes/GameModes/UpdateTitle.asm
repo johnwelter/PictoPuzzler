@@ -356,6 +356,9 @@ GetSpriteData:
   LDA SPRITE_DATA, x
   RTS
   
+  
+DELTA_MOVE = temp1
+OPTIONS_MAX_IDX = temp2
 UpdateBankPointer:
  
   ;;bank pointer is 1D, will loop between 0->3
@@ -366,15 +369,15 @@ UpdateBankPointer:
   
 .continue:
   LDA #$00
-  STA temp1
+  STA DELTA_MOVE
   
   LDA #$02
-  STA temp2
+  STA OPTIONS_MAX_IDX
   
   LDA hasContinue
   BEQ .parseInputs
   LDA #$03
-  STA temp2
+  STA OPTIONS_MAX_IDX
   
 .parseInputs:
   LDA gamepadPressed
@@ -385,21 +388,25 @@ UpdateBankPointer:
 .checkDown:
   ASL A
   BCC .checkUp
-  INC temp1
+  INC DELTA_MOVE
 .checkUp:
   ASL A
   BCC .move
-  DEC temp1
+  DEC DELTA_MOVE
 .move:
   
   LDA mouse_index
   CLC
-  ADC temp1
-  CMP temp2
-  BEQ .skipMod
-  BCC .skipMod
+  ADC DELTA_MOVE
+  CMP OPTIONS_MAX_IDX
+  BEQ .setIndex
+  BCC .setIndex
+  BMI .setUnder
   LDA #$00
-.skipMod:
+  JMP .setIndex
+.setUnder:
+  LDA OPTIONS_MAX_IDX
+.setIndex:
   STA mouse_index
   ;; mult mouse_index by 16
 SetBankPointerFromIndex:
@@ -457,7 +464,11 @@ UpdatePuzzlePointer:
   CMP #$02
   BEQ .skipYMod
   BCC .skipYMod
+  BMI .setYUnder
   LDA #$00
+  JMP .skipYMod
+.setYUnder:
+  LDA #$02
 .skipYMod:
   STA mouse_index
   ;; mult mouse_index by 16
@@ -476,7 +487,11 @@ UpdatePuzzlePointer:
   CMP #$08
   BEQ .skipXMod
   BCC .skipXMod
+  BMI .setXUnder
   LDA #$00
+  JMP .skipXMod
+.setXUnder:
+  LDA #$08
 .skipXMod:
   STA mouse_index+1
   ;; we need to move 3 tiles each- so index * 3 * 8,
