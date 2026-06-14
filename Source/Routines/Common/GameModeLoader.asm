@@ -3,6 +3,7 @@ ChangeGameMode:
   ;X - high nibble: palette start flag, low nibble: screen index
   STA game_mode
   STX mode_loadFlags
+  MACROSetFlags mode_loadFlags, $80
   LDA #$00
   STA mode_state
   JSR ClearPPUString
@@ -38,48 +39,71 @@ LoadGameModeScreen:
   LDA gameModeInitCHRROMA, x
   ASL A
   JSR LoadCHRBankA
-  
-  
-  
+
   RTS
   
+GAMEMODE_WORDIDX = temp1
 LoadGameModeBackground:
 	
   MACROGetDoubleIndex game_mode
-  STY temp1
+  STY GAMEMODE_WORDIDX
 	
   MACROGetLabelPointer Palettes, table_address
   JSR GetTableAtIndex
 
   JSR LoadFullPaletteFromTable
 	
-  LDY temp1
+  LDY GAMEMODE_WORDIDX
   LDA mode_loadFlags
   AND #%01000000 ; copy from saved screen
-  BEQ .dontUseSaveCopy
+  BEQ .loadTable
   MACROGetLabelPointer SaveScreen_Copy, table_address
-  JMP .loadTable
+  MACROClearFlags mode_loadFlags, $80
   
-.dontUseSaveCopy:
-  MACROGetLabelPointer NameTables, table_address
-  JSR GetTableAtIndex
-  LDA mode_loadFlags
-  AND #$0F
-  ASL A
-  TAY
-  JSR GetTableAtIndex
-	
 .loadTable:
   LDA #$00
   JSR LoadFullBackgroundFromTable
-  
-  LDY temp1
-  MACROGetLabelPointer NameTables2, table_address
-  JSR GetTableAtIndex
+
+  MACROSetFlags mode_loadFlags, $80
   
   LDA #$01
   JSR LoadFullBackgroundFromTable
-  
+
+  LDA mode_loadFlags
+  AND #%01000000
+  BNE .finish
+
+  LDX game_mode
+  LDA ObjectCounts, x
+  BEQ .finish
+  PHA
+  MACROGetLabelPointer Objects, table_address
+  LDY GAMEMODE_WORDIDX
+  JSR GetTableAtIndex 
+  MACROGetPointer table_address, objectTable_address
+   
+.loadObjectLoop:
+
+	MACROGetPointer objectTable_address, table_address
+	PLA
+	TAY
+	PHA
+	DEY
+	TYA
+	ASL A
+	TAY
+	JSR GetTableAtIndex
+	JSR DrawObject
+	
+	PLA
+	TAY 
+	DEY
+	BEQ .finish
+	TYA
+	PHA
+	JMP .loadObjectLoop
+
+.finish:
   RTS
   
 LoadGameModeSprites:

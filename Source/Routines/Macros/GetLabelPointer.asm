@@ -20,3 +20,13 @@ MACROGetPointer .macro
 	STA \2+1
 
   .endm
+  
+MACROAdd32ToPointer .macro
+
+	LDA \1+1
+	LDX \1
+	JSR Add32ToAddress
+	STA \1+1
+	STX \1
+	
+	.endm

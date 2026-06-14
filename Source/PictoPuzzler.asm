@@ -182,6 +182,7 @@ GameLoopJumpTable:
   .include "Source/Routines/Utils/PPUUtils.asm"
   .include "Source/Routines/Utils/MapperUtils.asm"
   .include "Source/Routines/Common/DrawingRoutines.asm"
+  .include "Source/Routines/Utils/ObjectDrawingRoutines.asm"
   
   
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -224,6 +225,7 @@ SampleLength:
 
   .include "Source/Content/Graphics/NameTables/Tables.asm"
   .include "Source/Content/Graphics/Sprites/Sprites.asm"
+  .include "Source/External/SoundEngine/Source/sound_engine.asm"
 
   .org $FFFA     ;first of the three vectors starts here
   .dw NMI        ;when an NMI happens (once per frame if enabled) the 

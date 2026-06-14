@@ -38,7 +38,8 @@
   .db $00, $00, $00, $00
   .db $00, $00, $00, $00
   
-  .incbin "Source/SoundEnginePreComp.nes"
+  .org $A0D8
+  ;.incbin "Source/SoundEnginePreComp.nes"
   .include "Source/Content/Sound/Music/B0m.asm"  ;holds the data for bank song
 
   .org $BFFA     ;first of the three vectors starts here

@@ -20,8 +20,27 @@ MACROSetPPUAddress .macro
   STA PPU_ADDR           ; write the low byte of $2000 address
   
   .endm
-    
 
+MACROSetPPUAddressVariable .macro
+
+  LDA PPU_STATUS
+  LDA \1+1
+  STA PPU_ADDR
+  LDA \1
+  STA PPU_ADDR
+
+  .endm
+  
+MACROSAddXYOffset .macro
+
+  LDA \1+1
+  LDX \1
+  JSR GetAddressWithXYOffset
+  STA \1+1
+  STX \1
+	
+  .endm
+  
 MACROAddPPUStringEntryRawData .macro
 
   LDA #$01

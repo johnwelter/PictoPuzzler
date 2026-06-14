@@ -32,3 +32,23 @@ SetTableAddress:
 	STX table_address
 	STA table_address+1
 	RTS
+	
+Add32ToAddress:
+
+	;;A is hi, X is lo
+	STX temp_addAddress
+	STA temp_addAddress+1
+	
+	TXA
+	CLC
+	ADC #$20
+	TAX
+	LDA temp_addAddress+1
+	ADC #$00
+	STA temp_addAddress+1
+	
+	;;A is new hi, X is new low
+	RTS
+
+
+	

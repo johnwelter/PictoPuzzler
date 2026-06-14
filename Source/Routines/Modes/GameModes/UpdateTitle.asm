@@ -257,7 +257,6 @@ UpdateTitleExit:
   ORA temp1
   
   TAX
-  
 
   LDA #GAME_IDX
   JSR ChangeGameMode

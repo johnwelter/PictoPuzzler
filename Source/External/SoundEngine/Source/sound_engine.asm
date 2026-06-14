@@ -655,4 +655,3 @@ se_set_apu:
     .include "Source/External/SoundEngine/Tables/note_table.i" ;period lookup table for notes
 	.include "Source/External/SoundEngine/Tables/sound_EffectTables.asm"
 
-BankSong:	;;label for bank song

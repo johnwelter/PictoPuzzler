@@ -2,7 +2,7 @@
 song_headers:
 	
     .word song0_header
-	.word BankSong
+	.word $A0D8 ;;bank song
 	.word menu_header
     .word drawImg_header  
 	.word endScreen_header

@@ -51,10 +51,7 @@ UpdateGameInit:
   jsr sound_load
   
   ;; get the puzzle table in the puzzle address
-  MACROGetLabelPointer PUZZLE_TABLE, table_address
-  MACROGetDoubleIndex puzzle_index
-  JSR GetTableAtIndex
-  MACROGetPointer table_address, puzzle_address
+  JSR SetupPuzzleTable
   MACROGetLabelPointer MOUSE_START, mouse_location
 
   ;;for clues, we need to get past the header- for a 15x15 puzzle, that's 34 bytes ahead
@@ -1216,6 +1213,13 @@ CheckAgainstSolution:
   INC solutionCount
 .leave:
   RTS	
+
+SetupPuzzleTable:
+  MACROGetLabelPointer PUZZLE_TABLE, table_address
+  MACROGetDoubleIndex puzzle_index
+  JSR GetTableAtIndex
+  MACROGetPointer table_address, puzzle_address
+  RTS
 
 ;hori, vert
 MouseMinimums:

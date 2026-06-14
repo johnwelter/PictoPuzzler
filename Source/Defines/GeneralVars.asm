@@ -6,15 +6,18 @@ temp5			.rs 1
 temp6			.rs 1
 temp7			.rs 1
 temp8			.rs 1
+temp9			.rs 1
+temp10			.rs 1
 tempx 			.rs 1
 tempy 			.rs 1
 time 			.rs 1
 scaledTime		.rs 1
 sleeping 		.rs 1
 mode_loadFlags  .rs 1
-;;0rcb xxxx
+;;trcb xxxx
 ;;r = read from save copy 
 ;;c = write to save copy
+;;skip table read, use blank tile
 game_mode  		.rs 1
 mode_state		.rs 1
 NMI_locks 		.rs 1
@@ -22,7 +25,11 @@ game_locks 		.rs 1
 pointer_address .rs 2
 pointerB_address .rs 2
 table_address  	.rs 2
+objectTable_address .rs 2
 jump_address  	.rs 2
+ppu_startAddress .rs 2
+temp_addAddress .rs 2
+temp_offset .rs 2
 
 ;game modes
 TITLE_IDX = $00

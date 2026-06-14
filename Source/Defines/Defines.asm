@@ -30,6 +30,6 @@
 
 ;precompiled labels
 
-  .include "Source/SoundEnginePreComp.fns"
+  ;.include "Source/SoundEnginePreComp.fns"
   ;.include "Source/PictoPuzzler.fns"
   

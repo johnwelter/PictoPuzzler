@@ -35,13 +35,14 @@ LoadFullBackgroundFromTable:
 	BNE .copyScreenB
 	MACROGetLabelPointer Screen_Copy, pointer_address
 	MACROGetLabelPointer SaveScreen_Copy, pointerB_address
+	LDA #%00100000
+	STA temp2
 	JMP .setCounters
 	
 .copyScreenB:
 	MACROGetLabelPointer ScreenB_Copy, pointer_address
-	LDA mode_loadFlags
-	AND $%11011111
-	STA mode_loadFlags ;kill the copy flag, just in case
+	LDA #$00
+	STA temp2
 	
 	;;set pointer
 	;; set counters
@@ -55,13 +56,34 @@ LoadFullBackgroundFromTable:
 
 .innerloop:
 
+	LDA mode_loadFlags
+	AND #$80
+	BEQ .fromTable
+	;;if we're not in the att table, write a tile
+	;;else, write 0
+	CPX #$03
+	BCC .doTile
+	CPY #$C0
+	BCC .doTile 
+	LDA #$00
+	STA temp10
+	JMP .writeToScreen
+.doTile:
+	LDA #$24
+	STA temp10
+	JMP .writeToScreen
+.fromTable:
 	LDA [table_address], y
+	STA temp10
+.writeToScreen:
+	LDA temp10
 	STA PPU_DATA
 	STA [pointer_address],y
     LDA mode_loadFlags
-    AND #%00100000	;check copy flag
+    AND #%00100000	;check save flag
+	AND temp2
 	BEQ .skipSaveCopy
-    LDA [table_address], y
+    LDA temp10
 	STA [pointerB_address],y
 
 .skipSaveCopy:
@@ -76,12 +98,6 @@ LoadFullBackgroundFromTable:
 	INX
 	CPX #$04
 	BNE .outerloop
-	RTS
-	
-ClearBackground:
-
-	
-
 	RTS
 
 DATA_LEN = temp1
@@ -258,18 +274,71 @@ WaitScanline:
   bne WaitScanline
   RTS
 
+	
+StoreXYOffset:
+	;;A = Y offset, X = X offset
+	STX temp1
+	STA temp2
+	LDA #$00
+	STA temp3
+	
+	ASL temp2
+	ROL temp3
+	ASL temp2
+	ROL temp3
+	ASL temp2
+	ROL temp3
+	ASL temp2
+	ROL temp3
+	ASL temp2
+	ROL temp3
+	
+	;;add them together
+	LDA temp2
+	CLC
+	ADC temp1
+	STA temp_offset
+	LDA temp3
+	ADC #$00
+	STA temp_offset+1
+
+GetAddressWithXYOffset:
+
+	;;A is hi, X is lo
+	STX temp_addAddress
+	STA temp_addAddress+1
+	
+	LDA temp_addAddress
+	CLC
+	ADC temp_offset
+	TAX
+	LDA temp_addAddress+1
+	ADC temp_offset+1
+	;;A is new hi, X is new lo
+	
+	RTS
 
 SetNametableFromIndex:
 
-  PHA
-  LDA PPU_STATUS
-  PLA
-  ASL A
-  TAX
-  LDA NameTableMemList+1, x
-  STA PPU_ADDR
+  PHA						;; Store the index
+  LDA PPU_STATUS			;; load the PPU status to reset the write register
+  PLA						;; Retrieve index
+  ASL A						;; double it (indexing a 2 byte table)
+  TAX						;; put it in X
+  LDA NameTableMemList+1, x	;; get the nametable from the list, store it in the PPU Address
+  STA PPU_ADDR				
   LDA NameTableMemList, x
   STA PPU_ADDR
+  RTS
+
+GetNametableFromIndex:
+
+  ASL A						;; double it (indexing a 2 byte table)
+  TAX						;; put it in X
+  LDA NameTableMemList+1, x	;; get the nametable from the list, store it in the PPU Address
+  STA ppu_startAddress+1			
+  LDA NameTableMemList, x
+  STA ppu_startAddress
   RTS
   
 TurnOnSprites:

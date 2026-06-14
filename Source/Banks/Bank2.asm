@@ -35,8 +35,10 @@
   .db $00, $00, $00, $00
   .db $00, $00, $00, $00
   .db $00, $00, $00, $00
+  
+  .org $A0D8
 ;bank song, A0D8
-  .incbin "Source/SoundEnginePreComp.nes"
+  ;.incbin "Source/SoundEnginePreComp.nes"
   .include "Source/Content/Sound/Music/B2m.asm"  ;holds the data for bank song
   .org $BFFA     ;first of the three vectors starts here
   .dw NMI        ;when an NMI happens (once per frame if enabled) the 
