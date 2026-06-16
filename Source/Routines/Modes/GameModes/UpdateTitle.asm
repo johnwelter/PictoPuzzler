@@ -33,7 +33,7 @@ UpdateTitleJumpTable:
 
 UpdateTitleInit:
 
-  lda #$00
+  lda #$02
   sta current_song
   lda current_song
   jsr sound_load
