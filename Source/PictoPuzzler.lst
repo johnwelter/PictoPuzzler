@@ -11708,7 +11708,7 @@
   176  07:E542  29 7F         and #%01111111          ;chop off bit7
   177  07:E544  8C 02 03      sty sound_temp1         ;save Y because we are about to destroy it
   178  07:E547  A8            tay
-  179  07:E548  B9 1F EC      lda note_length_table, y    ;get the note length count value
+  179  07:E548  B9 29 EC      lda note_length_table, y    ;get the note length count value
   180  07:E54B  9D 8A 03      sta stream_note_length, x
   181  07:E54E  9D 82 03      sta stream_note_length_counter, x   ;stick it in our note length counter
   182  07:E551  AC 02 03      ldy sound_temp1         ;restore Y
@@ -11735,9 +11735,9 @@
   203  07:E57C  0A            asl a
   204  07:E57D  A8            tay
   205  07:E57E  9D 5A 03          sta stream_note_idx, x
-  206  07:E581  B9 61 EB      lda note_table, y
+  206  07:E581  B9 6B EB      lda note_table, y
   207  07:E584  9D 62 03      sta stream_note_LO, x
-  208  07:E587  B9 62 EB      lda note_table+1, y
+  208  07:E587  B9 6C EB      lda note_table+1, y
   209  07:E58A  9D 6A 03      sta stream_note_HI, x
   210  07:E58D  AC 02 03      ldy sound_temp1     ;restore data stream index
   211                         
@@ -11862,9 +11862,9 @@
   330  07:E644  E9 A0         sbc #$A0                ;turn our opcode byte into a table index by subtracting $A0
   331  07:E646  0A            asl a                   ;multiply by 2 because we index into a table of addresses (words)
   332  07:E647  A8            tay
-  333  07:E648  B9 AE EA      lda sound_opcodes, y    ;get low byte of subroutine address
+  333  07:E648  B9 B8 EA      lda sound_opcodes, y    ;get low byte of subroutine address
   334  07:E64B  8D DE 00      sta sound_ptr2
-  335  07:E64E  B9 AF EA      lda sound_opcodes+1, y  ;get high byte
+  335  07:E64E  B9 B9 EA      lda sound_opcodes+1, y  ;get high byte
   336  07:E651  8D DF 00      sta sound_ptr2+1
   337  07:E654  AC 02 03      ldy sound_temp1         ;restore our y register
   338  07:E657  C8            iny                     ;set to next position in data stream (assume an argument)
@@ -11920,9 +11920,9 @@
   388  07:E68C  BD 42 03      lda stream_ve, x            ;which volume envelope?
   389  07:E68F  0A            asl a                       ;multiply by 2 because we are indexing into a table of addresses (words)
   390  07:E690  A8            tay
-  391  07:E691  B9 3B EC      lda kVol, y     ;get the low byte of the address from the pointer table
+  391  07:E691  B9 45 EC      lda kVol, y     ;get the low byte of the address from the pointer table
   392  07:E694  8D DC 00      sta sound_ptr               ;put it into our pointer variable
-  393  07:E697  B9 3C EC      lda kVol+1, y   ;get the high byte of the address
+  393  07:E697  B9 46 EC      lda kVol+1, y   ;get the high byte of the address
   394  07:E69A  8D DD 00      sta sound_ptr+1
   395                         
   396  07:E69D            .read_ve:
@@ -11984,9 +11984,9 @@
   452  07:E6F0  BD C0 03      lda stream_arp, x            ;which volume envelope?
   453  07:E6F3  0A            asl a                       ;multiply by 2 because we are indexing into a table of addresses (words)
   454  07:E6F4  A8            tay
-  455  07:E6F5  B9 EF ED      lda kArp, y     ;get the low byte of the address from the pointer table
+  455  07:E6F5  B9 F9 ED      lda kArp, y     ;get the low byte of the address from the pointer table
   456  07:E6F8  8D DC 00      sta sound_ptr               ;put it into our pointer variable
-  457  07:E6FB  B9 F0 ED      lda kArp+1, y   ;get the high byte of the address
+  457  07:E6FB  B9 FA ED      lda kArp+1, y   ;get the high byte of the address
   458  07:E6FE  8D DD 00      sta sound_ptr+1
   459                         
   460  07:E701            .read_arp:
@@ -12012,9 +12012,9 @@
   480  07:E726  0A                ASL A
   481  07:E727  AA                TAX 
   482                     
-  483  07:E728  BD 61 EB          LDA note_table, x
+  483  07:E728  BD 6B EB          LDA note_table, x
   484  07:E72B  99 08 03          STA soft_apu_ports+2, y
-  485  07:E72E  BD 62 EB          LDA note_table+1, x
+  485  07:E72E  BD 6C EB          LDA note_table+1, x
   486  07:E731  99 09 03          STA soft_apu_ports+3, y
   487                             
   488  07:E734  AE 02 03          LDX sound_temp1
@@ -12033,9 +12033,9 @@
   501  07:E742  BD A0 03      lda stream_pe, x            ;which volume envelope?
   502  07:E745  0A            asl a                       ;multiply by 2 because we are indexing into a table of addresses (words)
   503  07:E746  A8            tay
-  504  07:E747  B9 A2 ED      lda kMod, y     ;get the low byte of the address from the pointer table
+  504  07:E747  B9 AC ED      lda kMod, y     ;get the low byte of the address from the pointer table
   505  07:E74A  8D DC 00      sta sound_ptr               ;put it into our pointer variable
-  506  07:E74D  B9 A3 ED      lda kMod+1, y   ;get the high byte of the address
+  506  07:E74D  B9 AD ED      lda kMod+1, y   ;get the high byte of the address
   507  07:E750  8D DD 00      sta sound_ptr+1
   508                             
   509  07:E753  BD B8 03          LDA stream_pe_delay, x
@@ -12189,11 +12189,11 @@
     4  07:E853  63 E8         .word song0_header
     5  07:E855  D8 A0             .word $A0D8 ;;bank song
     6  07:E857  74 E8             .word Title_header
-    7  07:E859  ED E9         .word drawImg_header  
-    8  07:E85B  F0 E9             .word endScreen_header
-    9  07:E85D  8A EA             .word menuCursor_header
-   10  07:E85F  96 EA             .word puzzleCursor_header
-   11  07:E861  A2 EA             .word noiseBlip_header
+    7  07:E859  F7 E9         .word drawImg_header  
+    8  07:E85B  FA E9             .word endScreen_header
+    9  07:E85D  94 EA             .word menuCursor_header
+   10  07:E85F  A0 EA             .word puzzleCursor_header
+   11  07:E861  AC EA             .word noiseBlip_header
    12                                     
 #[4]   Source/Content/Sound/Music/silence.i
    13                         .include "Source/Content/Sound/Music/silence.i"  ;holds the data for song 0 (header and data streams)
@@ -12268,7 +12268,7 @@
    38  07:E897  04            .byte DPMC
    39  07:E898  00            .byte $00
    40  07:E899  00            .byte $00
-   41  07:E89A  D3 E9         .word Title_dpmc
+   41  07:E89A  D0 E9         .word Title_dpmc
    42  07:E89C  3A            .byte $3A
    43                     
    44  07:E89D            Title_square_1:
@@ -12334,7 +12334,7 @@
    60  07:E931  E8 E8         .word Title_square_2
    61                     
    62  07:E933            Title_triangle:
-   63  07:E933  A4 04         .byte  $A4, $04
+   63  07:E933  A4 08         .byte  $A4, $08
    64  07:E935            Title_triangle_sublp_1:
    65  07:E935  85 A2 0F      .byte $85, $A2, $0F, $A9, $01, $5E, $85, $A2, $09, $5E
        07:E938  A9 01 5E  
@@ -12398,217 +12398,225 @@
    85  07:E9C7  33 E9         .word Title_triangle
    86                     
    87  07:E9C9            Title_noise:
-   88  07:E9C9  81 A2 0A      .byte $81, $A2, $0A, $04, $82, $20, $04
-       07:E9CC  04 82 20  
-       07:E9CF  04        
-   89  07:E9D0  A1            .byte $A1
-   90  07:E9D1  C9 E9         .word Title_noise
+   88  07:E9C9  83 A2 0A      .byte $83, $A2, $0A, $00
+       07:E9CC  00        
+   89  07:E9CD  A1            .byte $A1
+   90  07:E9CE  C9 E9         .word Title_noise
    91                     
-   92  07:E9D3            Title_dpmc:
-   93  07:E9D3  81 0E 0E      .byte $81, $0E, $0E, $82, $7E, $83, $1E, $0E, $1E, $81, $0E, $0E, $82, $7E, $87, $1E
-       07:E9D6  82 7E 83  
-       07:E9D9  1E 0E 1E  
-       07:E9DC  81 0E 0E  
-       07:E9DF  82 7E 87  
-       07:E9E2  1E        
-   94  07:E9E3  81 1E 82      .byte $81, $1E, $82, $0E, $0E, $83, $1E
-       07:E9E6  0E 0E 83  
+   92  07:E9D0            Title_dpmc:
+   93  07:E9D0  A4 04         .byte  $A4, $04
+   94  07:E9D2            Title_dpmc_sublp_1:
+   95  07:E9D2  85 7E 7E      .byte $85, $7E, $7E
+   96  07:E9D5  A5            .byte $A5
+   97  07:E9D6  D2 E9         .word Title_dpmc_sublp_1
+   98  07:E9D8  A4 08         .byte  $A4, $08
+   99  07:E9DA            Title_dpmc_sublp_2:
+  100  07:E9DA  81 0E 0E      .byte $81, $0E, $0E, $82, $7E, $83, $1E, $0E, $1E, $81, $0E, $0E, $82, $7E, $87, $1E
+       07:E9DD  82 7E 83  
+       07:E9E0  1E 0E 1E  
+       07:E9E3  81 0E 0E  
+       07:E9E6  82 7E 87  
        07:E9E9  1E        
-   95  07:E9EA  A1            .byte $A1
-   96  07:E9EB  D3 E9         .word Title_dpmc
-   97                     
+  101  07:E9EA  81 1E 82      .byte $81, $1E, $82, $0E, $0E, $83, $1E
+       07:E9ED  0E 0E 83  
+       07:E9F0  1E        
+  102  07:E9F1  A5            .byte $A5
+  103  07:E9F2  DA E9         .word Title_dpmc_sublp_2
+  104  07:E9F4  A1            .byte $A1
+  105  07:E9F5  D0 E9         .word Title_dpmc
+  106                     
 #[3]   Source/External/SoundEngine/Tables/sound_SongTable.asm
 #[4]   Source/Content/Sound/SFX/puzzleSolvedDrawImage.i
    15                         .include "Source/Content/Sound/SFX/puzzleSolvedDrawImage.i"  ;holds the data for song 1
-    1  07:E9ED            drawImg_header:
-    2  07:E9ED  01            .byte $01         ;1 streams
+    1  07:E9F7            drawImg_header:
+    2  07:E9F7  01            .byte $01         ;1 streams
     3                         
-    4  07:E9EE  00            .byte MUSIC_SQ1     ;which stream
-    5  07:E9EF  00            .byte $00           ;status byte (stream enabled)
+    4  07:E9F8  00            .byte MUSIC_SQ1     ;which stream
+    5  07:E9F9  00            .byte $00           ;status byte (stream enabled)
 #[3]   Source/External/SoundEngine/Tables/sound_SongTable.asm
 #[4]   Source/Content/Sound/Music/EndScreen.i
    16                             .include "Source/Content/Sound/Music/EndScreen.i"
-    1  07:E9F0            endScreen_header:
-    2  07:E9F0  05            .byte $05           ;5 streams
+    1  07:E9FA            endScreen_header:
+    2  07:E9FA  05            .byte $05           ;5 streams
     3                         
-    4  07:E9F1  00            .byte MUSIC_SQ1     ;which stream
-    5  07:E9F2  01            .byte $01           ;status byte (stream enabled)
-    6  07:E9F3  00            .byte SQUARE_1      ;which channel
-    7  07:E9F4  70            .byte $70           ;initial duty (01)
-    8  07:E9F5  02            .byte ve_blip_echo  ;volume envelope
-    9  07:E9F6  13 EA         .word endScreen_square1 ;pointer to stream
-   10  07:E9F8  3A            .byte $3A           ;tempo
+    4  07:E9FB  00            .byte MUSIC_SQ1     ;which stream
+    5  07:E9FC  01            .byte $01           ;status byte (stream enabled)
+    6  07:E9FD  00            .byte SQUARE_1      ;which channel
+    7  07:E9FE  70            .byte $70           ;initial duty (01)
+    8  07:E9FF  02            .byte ve_blip_echo  ;volume envelope
+    9  07:EA00  1D EA         .word endScreen_square1 ;pointer to stream
+   10  07:EA02  3A            .byte $3A           ;tempo
    11                         
-   12  07:E9F9  01            .byte MUSIC_SQ2     ;which stream
-   13  07:E9FA  01            .byte $01           ;status byte (stream enabled)
-   14  07:E9FB  01            .byte SQUARE_2      ;which channel
-   15  07:E9FC  B0            .byte $B0           ;initial duty (10)
-   16  07:E9FD  02            .byte ve_blip_echo  ;volume envelope
-   17  07:E9FE  34 EA         .word endScreen_square2 ;pointer to stream
-   18  07:EA00  3A            .byte $3A           ;tempo
+   12  07:EA03  01            .byte MUSIC_SQ2     ;which stream
+   13  07:EA04  01            .byte $01           ;status byte (stream enabled)
+   14  07:EA05  01            .byte SQUARE_2      ;which channel
+   15  07:EA06  B0            .byte $B0           ;initial duty (10)
+   16  07:EA07  02            .byte ve_blip_echo  ;volume envelope
+   17  07:EA08  3E EA         .word endScreen_square2 ;pointer to stream
+   18  07:EA0A  3A            .byte $3A           ;tempo
    19                         
-   20  07:EA01  02            .byte MUSIC_TRI     ;which stream
-   21  07:EA02  01            .byte $01           ;status byte (stream enabled)
-   22  07:EA03  02            .byte TRIANGLE      ;which channel
-   23  07:EA04  80            .byte $80           ;initial volume (on)
-   24  07:EA05  03            .byte ve_tgl_1      ;volume envelope
-   25  07:EA06  55 EA         .word endScreen_tri     ;pointer to stream
-   26  07:EA08  3A            .byte $3A           ;tempo
+   20  07:EA0B  02            .byte MUSIC_TRI     ;which stream
+   21  07:EA0C  01            .byte $01           ;status byte (stream enabled)
+   22  07:EA0D  02            .byte TRIANGLE      ;which channel
+   23  07:EA0E  80            .byte $80           ;initial volume (on)
+   24  07:EA0F  03            .byte ve_tgl_1      ;volume envelope
+   25  07:EA10  5F EA         .word endScreen_tri     ;pointer to stream
+   26  07:EA12  3A            .byte $3A           ;tempo
    27                         
-   28  07:EA09  03            .byte MUSIC_NOI     ;which stream
-   29  07:EA0A  01            .byte $01           ;enabled
-   30  07:EA0B  03            .byte NOISE     
-   31  07:EA0C  30            .byte $30           ;initial duty_vol
-   32  07:EA0D  0A            .byte ve_hiHat_decay ;volume envelope
-   33  07:EA0E  7C EA         .word endScreen_noise   ;pointer to stream
-   34  07:EA10  3A            .byte $3A           ;tempo
+   28  07:EA13  03            .byte MUSIC_NOI     ;which stream
+   29  07:EA14  01            .byte $01           ;enabled
+   30  07:EA15  03            .byte NOISE     
+   31  07:EA16  30            .byte $30           ;initial duty_vol
+   32  07:EA17  0A            .byte ve_hiHat_decay ;volume envelope
+   33  07:EA18  86 EA         .word endScreen_noise   ;pointer to stream
+   34  07:EA1A  3A            .byte $3A           ;tempo
    35                             
-   36  07:EA11  06                .byte MUSIC_DPMC
-   37  07:EA12  00                .byte $00
+   36  07:EA1B  06                .byte MUSIC_DPMC
+   37  07:EA1C  00                .byte $00
    38                     
    39                         
-   40  07:EA13            endScreen_square1:
+   40  07:EA1D            endScreen_square1:
    41                     
-   42  07:EA13  83            .byte quarter
-   43  07:EA14  23                .byte Gs4
-   44  07:EA15  82                .byte eighth
-   45  07:EA16  23 21             .byte Gs4, Fs4
-   46  07:EA18  84 5E             .byte half, rest
-   47  07:EA1A  83                .byte quarter
-   48  07:EA1B  1F                .byte E4
-   49  07:EA1C  82                .byte eighth
-   50  07:EA1D  1F 21             .byte E4, Fs4
-   51  07:EA1F  84 5E             .byte half, rest
+   42  07:EA1D  83            .byte quarter
+   43  07:EA1E  23                .byte Gs4
+   44  07:EA1F  82                .byte eighth
+   45  07:EA20  23 21             .byte Gs4, Fs4
+   46  07:EA22  84 5E             .byte half, rest
+   47  07:EA24  83                .byte quarter
+   48  07:EA25  1F                .byte E4
+   49  07:EA26  82                .byte eighth
+   50  07:EA27  1F 21             .byte E4, Fs4
+   51  07:EA29  84 5E             .byte half, rest
    52                             
-   53  07:EA21  83                .byte quarter
-   54  07:EA22  25                .byte As4
-   55  07:EA23  82                .byte eighth
-   56  07:EA24  25 23             .byte As4, Gs4
-   57  07:EA26  84 5E             .byte half, rest
-   58  07:EA28  82                .byte eighth
-   59  07:EA29  21 23 21          .byte Fs4, Gs4, Fs4, F4
-       07:EA2C  20        
-   60  07:EA2D  10 17 20          .byte Cs3, Gs3, F4, Gs4
-       07:EA30  23        
+   53  07:EA2B  83                .byte quarter
+   54  07:EA2C  25                .byte As4
+   55  07:EA2D  82                .byte eighth
+   56  07:EA2E  25 23             .byte As4, Gs4
+   57  07:EA30  84 5E             .byte half, rest
+   58  07:EA32  82                .byte eighth
+   59  07:EA33  21 23 21          .byte Fs4, Gs4, Fs4, F4
+       07:EA36  20        
+   60  07:EA37  10 17 20          .byte Cs3, Gs3, F4, Gs4
+       07:EA3A  23        
    61                             
    62                         
-   63  07:EA31  A1            .byte loop                              ;infinite loop
-   64  07:EA32  13 EA         .word endScreen_square1
+   63  07:EA3B  A1            .byte loop                              ;infinite loop
+   64  07:EA3C  1D EA         .word endScreen_square1
    65                     
    66                         
-   67  07:EA34            endScreen_square2:
+   67  07:EA3E            endScreen_square2:
    68                     
-   69  07:EA34  82            .byte eighth
-   70  07:EA35  20 17 20          .byte F4, Gs3, F4, Ds4
-       07:EA38  1E        
-   71  07:EA39  84 5E             .byte half, rest
-   72  07:EA3B  82                .byte eighth
-   73  07:EA3C  1C 15 1C          .byte Cs4, Fs3, Cs4, Ds4
-       07:EA3F  1E        
-   74  07:EA40  84 5E             .byte half, rest
+   69  07:EA3E  82            .byte eighth
+   70  07:EA3F  20 17 20          .byte F4, Gs3, F4, Ds4
+       07:EA42  1E        
+   71  07:EA43  84 5E             .byte half, rest
+   72  07:EA45  82                .byte eighth
+   73  07:EA46  1C 15 1C          .byte Cs4, Fs3, Cs4, Ds4
+       07:EA49  1E        
+   74  07:EA4A  84 5E             .byte half, rest
    75                     
-   76  07:EA42  82                .byte eighth
-   77  07:EA43  28 21 28          .byte Cs5, Fs4, Cs5, B4
-       07:EA46  26        
-   78  07:EA47  84 5E             .byte half, rest
-   79  07:EA49  82                .byte eighth
-   80  07:EA4A  24 26 24          .byte A4, B4, A4, Gs4
-       07:EA4D  23        
-   81  07:EA4E  17 1E 23          .byte Gs3, Ds4, Gs4, C5
-       07:EA51  27        
-   82  07:EA52  A1            .byte loop
-   83  07:EA53  34 EA         .word endScreen_square2
+   76  07:EA4C  82                .byte eighth
+   77  07:EA4D  28 21 28          .byte Cs5, Fs4, Cs5, B4
+       07:EA50  26        
+   78  07:EA51  84 5E             .byte half, rest
+   79  07:EA53  82                .byte eighth
+   80  07:EA54  24 26 24          .byte A4, B4, A4, Gs4
+       07:EA57  23        
+   81  07:EA58  17 1E 23          .byte Gs3, Ds4, Gs4, C5
+       07:EA5B  27        
+   82  07:EA5C  A1            .byte loop
+   83  07:EA5D  3E EA         .word endScreen_square2
    84                         
-   85  07:EA55            endScreen_tri:
+   85  07:EA5F            endScreen_tri:
    86                     
-   87  07:EA55  83                .byte quarter
-   88  07:EA56  1C                .byte Cs4
-   89  07:EA57  82                .byte eighth
-   90  07:EA58  1C 1A 5E          .byte Cs4, B3, rest
-   91  07:EA5B  0E 1A 0E          .byte B2, B3, B2
-   92  07:EA5E  83                .byte quarter
-   93  07:EA5F  18                .byte A3
-   94  07:EA60  82                .byte eighth
-   95  07:EA61  18 1A 5E          .byte A3, B3, rest
-   96  07:EA64  0E 1A 0E          .byte B2, B3, B2
+   87  07:EA5F  83                .byte quarter
+   88  07:EA60  1C                .byte Cs4
+   89  07:EA61  82                .byte eighth
+   90  07:EA62  1C 1A 5E          .byte Cs4, B3, rest
+   91  07:EA65  0E 1A 0E          .byte B2, B3, B2
+   92  07:EA68  83                .byte quarter
+   93  07:EA69  18                .byte A3
+   94  07:EA6A  82                .byte eighth
+   95  07:EA6B  18 1A 5E          .byte A3, B3, rest
+   96  07:EA6E  0E 1A 0E          .byte B2, B3, B2
    97                             
-   98  07:EA67  83                .byte quarter
-   99  07:EA68  1E                .byte Ds4
-  100  07:EA69  82                .byte eighth
-  101  07:EA6A  1E 1C 5E          .byte Ds4, Cs4, rest
-  102  07:EA6D  10 1C 10          .byte Cs3, Cs4, Cs3
-  103  07:EA70  83                .byte quarter
-  104  07:EA71  1A                .byte B3
-  105  07:EA72  82                .byte eighth
-  106  07:EA73  1A 1C 5E          .byte B3, Cs4, rest
-  107  07:EA76  10 1C 10          .byte Cs3, Cs4, Cs3
+   98  07:EA71  83                .byte quarter
+   99  07:EA72  1E                .byte Ds4
+  100  07:EA73  82                .byte eighth
+  101  07:EA74  1E 1C 5E          .byte Ds4, Cs4, rest
+  102  07:EA77  10 1C 10          .byte Cs3, Cs4, Cs3
+  103  07:EA7A  83                .byte quarter
+  104  07:EA7B  1A                .byte B3
+  105  07:EA7C  82                .byte eighth
+  106  07:EA7D  1A 1C 5E          .byte B3, Cs4, rest
+  107  07:EA80  10 1C 10          .byte Cs3, Cs4, Cs3
   108                             
-  109  07:EA79  A1                .byte loop
-  110  07:EA7A  55 EA         .word endScreen_tri
+  109  07:EA83  A1                .byte loop
+  110  07:EA84  5F EA         .word endScreen_tri
   111                         
-  112  07:EA7C            endScreen_noise:
+  112  07:EA86            endScreen_noise:
   113                     
-  114  07:EA7C  82 04 04      .byte eighth, $04, $04
-  115  07:EA7F  A2 09             .byte volume_envelope, ve_drum_decay 
-  116  07:EA81  82 04         .byte eighth, $04
-  117  07:EA83  A2 0A             .byte volume_envelope, ve_hiHat_decay
-  118  07:EA85  82 04             .byte eighth, $04
+  114  07:EA86  82 04 04      .byte eighth, $04, $04
+  115  07:EA89  A2 09             .byte volume_envelope, ve_drum_decay 
+  116  07:EA8B  82 04         .byte eighth, $04
+  117  07:EA8D  A2 0A             .byte volume_envelope, ve_hiHat_decay
+  118  07:EA8F  82 04             .byte eighth, $04
   119                     
-  120  07:EA87  A1            .byte loop
-  121  07:EA88  7C EA         .word endScreen_noise
+  120  07:EA91  A1            .byte loop
+  121  07:EA92  86 EA         .word endScreen_noise
 #[3]   Source/External/SoundEngine/Tables/sound_SongTable.asm
 #[4]   Source/Content/Sound/SFX/menuCursor.i
    17                             .include "Source/Content/Sound/SFX/menuCursor.i"  ;holds the data for song 1
-    1  07:EA8A            menuCursor_header:
-    2  07:EA8A  01            .byte $01           ;1 stream
+    1  07:EA94            menuCursor_header:
+    2  07:EA94  01            .byte $01           ;1 stream
     3                         
-    4  07:EA8B  04            .byte SFX_1         ;which stream
-    5  07:EA8C  01            .byte $01           ;status byte (stream enabled)
-    6  07:EA8D  01            .byte SQUARE_2      ;which channel
-    7  07:EA8E  70            .byte $70           ;duty (01)
-    8  07:EA8F  0A            .byte ve_hiHat_decay  ;volume envelope
-    9  07:EA90  93 EA         .word menuCursor_square2 ;pointer to stream
-   10  07:EA92  80            .byte $80           ;tempo
+    4  07:EA95  04            .byte SFX_1         ;which stream
+    5  07:EA96  01            .byte $01           ;status byte (stream enabled)
+    6  07:EA97  01            .byte SQUARE_2      ;which channel
+    7  07:EA98  70            .byte $70           ;duty (01)
+    8  07:EA99  0A            .byte ve_hiHat_decay  ;volume envelope
+    9  07:EA9A  9D EA         .word menuCursor_square2 ;pointer to stream
+   10  07:EA9C  80            .byte $80           ;tempo
    11                         
    12                         
-   13  07:EA93            menuCursor_square2:
-   14  07:EA93  81 33         .byte sixteenth, C6
-   15  07:EA95  A0            .byte endsound
+   13  07:EA9D            menuCursor_square2:
+   14  07:EA9D  81 33         .byte sixteenth, C6
+   15  07:EA9F  A0            .byte endsound
 #[3]   Source/External/SoundEngine/Tables/sound_SongTable.asm
 #[4]   Source/Content/Sound/SFX/puzzleCursor.i
    18                             .include "Source/Content/Sound/SFX/puzzleCursor.i"  ;holds the data for song 1
-    1  07:EA96            puzzleCursor_header:
-    2  07:EA96  01            .byte $01           ;1 stream
+    1  07:EAA0            puzzleCursor_header:
+    2  07:EAA0  01            .byte $01           ;1 stream
     3                         
-    4  07:EA97  05            .byte SFX_2         ;which stream
-    5  07:EA98  01            .byte $01           ;status byte (stream enabled)
-    6  07:EA99  02            .byte TRIANGLE      ;which channel
-    7  07:EA9A  80            .byte $80           ;on
-    8  07:EA9B  0A            .byte ve_hiHat_decay  ;volume envelope
-    9  07:EA9C  9F EA         .word puzzleCursor_square2 ;pointer to stream
-   10  07:EA9E  80            .byte $80           ;tempo
+    4  07:EAA1  05            .byte SFX_2         ;which stream
+    5  07:EAA2  01            .byte $01           ;status byte (stream enabled)
+    6  07:EAA3  02            .byte TRIANGLE      ;which channel
+    7  07:EAA4  80            .byte $80           ;on
+    8  07:EAA5  0A            .byte ve_hiHat_decay  ;volume envelope
+    9  07:EAA6  A9 EA         .word puzzleCursor_square2 ;pointer to stream
+   10  07:EAA8  80            .byte $80           ;tempo
    11                         
    12                         
-   13  07:EA9F            puzzleCursor_square2:
-   14  07:EA9F  81 33         .byte sixteenth, C6
-   15  07:EAA1  A0            .byte endsound
+   13  07:EAA9            puzzleCursor_square2:
+   14  07:EAA9  81 33         .byte sixteenth, C6
+   15  07:EAAB  A0            .byte endsound
 #[3]   Source/External/SoundEngine/Tables/sound_SongTable.asm
 #[4]   Source/Content/Sound/SFX/noiseBlip.i
    19                             .include "Source/Content/Sound/SFX/noiseBlip.i" 
-    1  07:EAA2            noiseBlip_header:
-    2  07:EAA2  01            .byte $01           ;1 stream
+    1  07:EAAC            noiseBlip_header:
+    2  07:EAAC  01            .byte $01           ;1 stream
     3                         
-    4  07:EAA3  05                .byte SFX_2     ;which stream
-    5  07:EAA4  01            .byte $01           ;enabled
-    6  07:EAA5  03            .byte NOISE     
-    7  07:EAA6  30            .byte $30           ;initial duty_vol
-    8  07:EAA7  0C            .byte ve_tinyDecy ;volume envelope
-    9  07:EAA8  AB EA         .word noiseBlip_noise   ;pointer to stream
-   10  07:EAAA  80            .byte $80           ;tempo
+    4  07:EAAD  05                .byte SFX_2     ;which stream
+    5  07:EAAE  01            .byte $01           ;enabled
+    6  07:EAAF  03            .byte NOISE     
+    7  07:EAB0  30            .byte $30           ;initial duty_vol
+    8  07:EAB1  0C            .byte ve_tinyDecy ;volume envelope
+    9  07:EAB2  B5 EA         .word noiseBlip_noise   ;pointer to stream
+   10  07:EAB4  80            .byte $80           ;tempo
    11                         
-   12  07:EAAB            noiseBlip_noise:
-   13  07:EAAB  81 04         .byte sixteenth, $04
-   14  07:EAAD  A0            .byte endsound
+   12  07:EAB5            noiseBlip_noise:
+   13  07:EAB5  81 04         .byte sixteenth, $04
+   14  07:EAB7  A0            .byte endsound
 #[3]   Source/External/SoundEngine/Tables/sound_SongTable.asm
 #[2]   Source/External/SoundEngine/Source/sound_engine.asm
   653                         
@@ -12629,229 +12637,229 @@
    13                     
    14                     ;-----------------------------------------------------------------------
    15                     ;this is our JUMP TABLE!
-   16  07:EAAE            sound_opcodes:
-   17  07:EAAE  C4 EA         .word se_op_endsound            ;$A0
-   18  07:EAB0  DD EA         .word se_op_infinite_loop       ;$A1
-   19  07:EAB2  F4 EA         .word se_op_change_ve           ;$A2
-   20  07:EAB4  FF EA         .word se_op_duty                ;$A3
-   21  07:EAB6  05 EB         .word se_op_set_loop1_counter   ;$A4
-   22  07:EAB8  0B EB         .word se_op_loop1               ;$A5
-   23  07:EABA  18 EB         .word se_op_set_note_offset     ;$A6
-   24  07:EABC  1E EB         .word se_op_adjust_note_offset  ;$A7
-   25  07:EABE  28 EB         .word se_op_transpose           ;$A8
-   26  07:EAC0  48 EB             .word se_op_change_pe                   ;$A9
-   27  07:EAC2  56 EB             .word se_op_change_arp
+   16  07:EAB8            sound_opcodes:
+   17  07:EAB8  CE EA         .word se_op_endsound            ;$A0
+   18  07:EABA  E7 EA         .word se_op_infinite_loop       ;$A1
+   19  07:EABC  FE EA         .word se_op_change_ve           ;$A2
+   20  07:EABE  09 EB         .word se_op_duty                ;$A3
+   21  07:EAC0  0F EB         .word se_op_set_loop1_counter   ;$A4
+   22  07:EAC2  15 EB         .word se_op_loop1               ;$A5
+   23  07:EAC4  22 EB         .word se_op_set_note_offset     ;$A6
+   24  07:EAC6  28 EB         .word se_op_adjust_note_offset  ;$A7
+   25  07:EAC8  32 EB         .word se_op_transpose           ;$A8
+   26  07:EACA  52 EB             .word se_op_change_pe                   ;$A9
+   27  07:EACC  60 EB             .word se_op_change_arp
    28                         ;etc, 1 entry per subroutine
    29                     
    30                         
    31                     ;-----------------------------------------------------------------
    32                     ; these are the actual opcode subroutines
-   33  07:EAC4            se_op_endsound:
-   34  07:EAC4  BD 22 03      lda stream_status, x    ;end of stream, so disable it and silence
-   35  07:EAC7  29 FE         and #%11111110
-   36  07:EAC9  9D 22 03      sta stream_status, x    ;clear enable flag in status byte
+   33  07:EACE            se_op_endsound:
+   34  07:EACE  BD 22 03      lda stream_status, x    ;end of stream, so disable it and silence
+   35  07:EAD1  29 FE         and #%11111110
+   36  07:EAD3  9D 22 03      sta stream_status, x    ;clear enable flag in status byte
    37                         
-   38  07:EACC  BD 2A 03      lda stream_channel, x
-   39  07:EACF  C9 02         cmp #TRIANGLE
-   40  07:EAD1  F0 04         beq .silence_tri        ;triangle is silenced differently from squares and noise
-   41  07:EAD3  A9 30         lda #$30                ;squares and noise silenced with #$30
-   42  07:EAD5  D0 02         bne .silence            ; (this will always branch.  bne is cheaper than a jmp)
-   43  07:EAD7            .silence_tri:
-   44  07:EAD7  A9 80         lda #$80                ;triangle silenced with #$80
-   45  07:EAD9            .silence:
-   46  07:EAD9  9D 52 03      sta stream_vol_duty, x  ;store silence value in the stream's volume variable.
+   38  07:EAD6  BD 2A 03      lda stream_channel, x
+   39  07:EAD9  C9 02         cmp #TRIANGLE
+   40  07:EADB  F0 04         beq .silence_tri        ;triangle is silenced differently from squares and noise
+   41  07:EADD  A9 30         lda #$30                ;squares and noise silenced with #$30
+   42  07:EADF  D0 02         bne .silence            ; (this will always branch.  bne is cheaper than a jmp)
+   43  07:EAE1            .silence_tri:
+   44  07:EAE1  A9 80         lda #$80                ;triangle silenced with #$80
+   45  07:EAE3            .silence:
+   46  07:EAE3  9D 52 03      sta stream_vol_duty, x  ;store silence value in the stream's volume variable.
    47                     
-   48  07:EADC  60            rts
+   48  07:EAE6  60            rts
    49                         
-   50  07:EADD            se_op_infinite_loop:
-   51  07:EADD  B1 DC         lda [sound_ptr], y      ;read ptr LO from the data stream
-   52  07:EADF  9D 32 03      sta stream_ptr_LO, x    ;update our data stream position
-   53  07:EAE2  C8            iny
-   54  07:EAE3  B1 DC         lda [sound_ptr], y      ;read ptr HI from the data stream
-   55  07:EAE5  9D 3A 03      sta stream_ptr_HI, x    ;update our data stream position
+   50  07:EAE7            se_op_infinite_loop:
+   51  07:EAE7  B1 DC         lda [sound_ptr], y      ;read ptr LO from the data stream
+   52  07:EAE9  9D 32 03      sta stream_ptr_LO, x    ;update our data stream position
+   53  07:EAEC  C8            iny
+   54  07:EAED  B1 DC         lda [sound_ptr], y      ;read ptr HI from the data stream
+   55  07:EAEF  9D 3A 03      sta stream_ptr_HI, x    ;update our data stream position
    56                         
-   57  07:EAE8  8D DD 00      sta sound_ptr+1         ;update the pointer to reflect the new position.
-   58  07:EAEB  BD 32 03      lda stream_ptr_LO, x
-   59  07:EAEE  8D DC 00      sta sound_ptr
-   60  07:EAF1  A0 FF         ldy #$FF                ;after opcodes return, we do an iny.  Since we reset  
+   57  07:EAF2  8D DD 00      sta sound_ptr+1         ;update the pointer to reflect the new position.
+   58  07:EAF5  BD 32 03      lda stream_ptr_LO, x
+   59  07:EAF8  8D DC 00      sta sound_ptr
+   60  07:EAFB  A0 FF         ldy #$FF                ;after opcodes return, we do an iny.  Since we reset  
    61                                                 ;the stream buffer position, we will want y to start out at 0 again.
-   62  07:EAF3  60            rts
+   62  07:EAFD  60            rts
    63                         
-   64  07:EAF4            se_op_change_ve:
-   65  07:EAF4  B1 DC         lda [sound_ptr], y      ;read the argument
-   66  07:EAF6  9D 42 03      sta stream_ve, x        ;store it in our volume envelope variable
-   67  07:EAF9  A9 00         lda #$00
-   68  07:EAFB  9D 4A 03      sta stream_ve_index, x  ;reset volume envelope index to the beginning
-   69  07:EAFE  60            rts
+   64  07:EAFE            se_op_change_ve:
+   65  07:EAFE  B1 DC         lda [sound_ptr], y      ;read the argument
+   66  07:EB00  9D 42 03      sta stream_ve, x        ;store it in our volume envelope variable
+   67  07:EB03  A9 00         lda #$00
+   68  07:EB05  9D 4A 03      sta stream_ve_index, x  ;reset volume envelope index to the beginning
+   69  07:EB08  60            rts
    70                         
-   71  07:EAFF            se_op_duty:
-   72  07:EAFF  B1 DC         lda [sound_ptr], y
-   73  07:EB01  9D 52 03      sta stream_vol_duty, x
-   74  07:EB04  60            rts
+   71  07:EB09            se_op_duty:
+   72  07:EB09  B1 DC         lda [sound_ptr], y
+   73  07:EB0B  9D 52 03      sta stream_vol_duty, x
+   74  07:EB0E  60            rts
    75                         
-   76  07:EB05            se_op_set_loop1_counter:
-   77  07:EB05  B1 DC         lda [sound_ptr], y      ;read the argument (# times to loop)
-   78  07:EB07  9D 92 03      sta stream_loop1, x     ;store it in the loop counter variable
-   79  07:EB0A  60            rts
+   76  07:EB0F            se_op_set_loop1_counter:
+   77  07:EB0F  B1 DC         lda [sound_ptr], y      ;read the argument (# times to loop)
+   78  07:EB11  9D 92 03      sta stream_loop1, x     ;store it in the loop counter variable
+   79  07:EB14  60            rts
    80                         
-   81  07:EB0B            se_op_loop1:
-   82  07:EB0B  DE 92 03      dec stream_loop1, x     ;decrement the counter
-   83  07:EB0E  BD 92 03      lda stream_loop1, x
-   84  07:EB11  F0 03         beq .last_iteration     ;if zero, we are done looping
-   85  07:EB13  4C DD EA      jmp se_op_infinite_loop ;if not zero, jump back
-   86  07:EB16            .last_iteration:
-   87  07:EB16  C8            iny                     ;skip the first byte of the address argument
+   81  07:EB15            se_op_loop1:
+   82  07:EB15  DE 92 03      dec stream_loop1, x     ;decrement the counter
+   83  07:EB18  BD 92 03      lda stream_loop1, x
+   84  07:EB1B  F0 03         beq .last_iteration     ;if zero, we are done looping
+   85  07:EB1D  4C E7 EA      jmp se_op_infinite_loop ;if not zero, jump back
+   86  07:EB20            .last_iteration:
+   87  07:EB20  C8            iny                     ;skip the first byte of the address argument
    88                                                 ; the second byte will be skipped automatically upon return
    89                                                 ; (see se_fetch_byte after "jsr se_opcode_launcher")
-   90  07:EB17  60            rts
+   90  07:EB21  60            rts
    91                         
-   92  07:EB18            se_op_set_note_offset:
-   93  07:EB18  B1 DC         lda [sound_ptr], y          ;read the argument
-   94  07:EB1A  9D 9A 03      sta stream_note_offset, x      ;set the note offset.
-   95  07:EB1D  60            rts
+   92  07:EB22            se_op_set_note_offset:
+   93  07:EB22  B1 DC         lda [sound_ptr], y          ;read the argument
+   94  07:EB24  9D 9A 03      sta stream_note_offset, x      ;set the note offset.
+   95  07:EB27  60            rts
    96                         
-   97  07:EB1E            se_op_adjust_note_offset:
-   98  07:EB1E  B1 DC         lda [sound_ptr], y          ;read the argument (what value to add)
-   99  07:EB20  18            clc
-  100  07:EB21  7D 9A 03      adc stream_note_offset, x   ;add it to the current offset
-  101  07:EB24  9D 9A 03      sta stream_note_offset, x   ;and save.
-  102  07:EB27  60            rts
+   97  07:EB28            se_op_adjust_note_offset:
+   98  07:EB28  B1 DC         lda [sound_ptr], y          ;read the argument (what value to add)
+   99  07:EB2A  18            clc
+  100  07:EB2B  7D 9A 03      adc stream_note_offset, x   ;add it to the current offset
+  101  07:EB2E  9D 9A 03      sta stream_note_offset, x   ;and save.
+  102  07:EB31  60            rts
   103                         
-  104  07:EB28            se_op_transpose:
-  105  07:EB28  B1 DC         lda [sound_ptr], y          ;read low byte of the pointer to our lookup table
-  106  07:EB2A  8D DE 00      sta sound_ptr2              ;store it in a new pointer variable
-  107  07:EB2D  C8            iny
-  108  07:EB2E  B1 DC         lda [sound_ptr], y          ;read high byte of pointer to table
-  109  07:EB30  8D DF 00      sta sound_ptr2+1
+  104  07:EB32            se_op_transpose:
+  105  07:EB32  B1 DC         lda [sound_ptr], y          ;read low byte of the pointer to our lookup table
+  106  07:EB34  8D DE 00      sta sound_ptr2              ;store it in a new pointer variable
+  107  07:EB37  C8            iny
+  108  07:EB38  B1 DC         lda [sound_ptr], y          ;read high byte of pointer to table
+  109  07:EB3A  8D DF 00      sta sound_ptr2+1
   110                         
-  111  07:EB33  8C 02 03      sty sound_temp1             ;save y because we are about to destroy it
-  112  07:EB36  BD 92 03      lda stream_loop1, x         ;get loop counter, put it in Y
-  113  07:EB39  A8            tay                         ;   this will be our index into the lookup table
-  114  07:EB3A  88            dey                         ;subtract 1 because indexes start from 0.
+  111  07:EB3D  8C 02 03      sty sound_temp1             ;save y because we are about to destroy it
+  112  07:EB40  BD 92 03      lda stream_loop1, x         ;get loop counter, put it in Y
+  113  07:EB43  A8            tay                         ;   this will be our index into the lookup table
+  114  07:EB44  88            dey                         ;subtract 1 because indexes start from 0.
   115                         
-  116  07:EB3B  B1 DE         lda [sound_ptr2], y         ;read a value from the table.
-  117  07:EB3D  18            clc
-  118  07:EB3E  7D 9A 03      adc stream_note_offset, x   ;add it to the note offset
-  119  07:EB41  9D 9A 03      sta stream_note_offset, x
+  116  07:EB45  B1 DE         lda [sound_ptr2], y         ;read a value from the table.
+  117  07:EB47  18            clc
+  118  07:EB48  7D 9A 03      adc stream_note_offset, x   ;add it to the note offset
+  119  07:EB4B  9D 9A 03      sta stream_note_offset, x
   120                         
-  121  07:EB44  AC 02 03      ldy sound_temp1             ;restore Y
-  122  07:EB47  60            rts
+  121  07:EB4E  AC 02 03      ldy sound_temp1             ;restore Y
+  122  07:EB51  60            rts
   123                             
-  124  07:EB48            se_op_change_pe:
-  125  07:EB48  B1 DC         lda [sound_ptr], y      ;read the argument
-  126  07:EB4A  9D A0 03      sta stream_pe, x        ;store it in our volume envelope variable
-  127  07:EB4D  A9 00         lda #$00
-  128  07:EB4F  9D A8 03      sta stream_pe_index, x  ;reset volume envelope index to the beginning
-  129  07:EB52  9D B8 03          sta stream_pe_delay, x
-  130  07:EB55  60            rts
+  124  07:EB52            se_op_change_pe:
+  125  07:EB52  B1 DC         lda [sound_ptr], y      ;read the argument
+  126  07:EB54  9D A0 03      sta stream_pe, x        ;store it in our volume envelope variable
+  127  07:EB57  A9 00         lda #$00
+  128  07:EB59  9D A8 03      sta stream_pe_index, x  ;reset volume envelope index to the beginning
+  129  07:EB5C  9D B8 03          sta stream_pe_delay, x
+  130  07:EB5F  60            rts
   131                             
-  132  07:EB56            se_op_change_arp:
-  133  07:EB56  B1 DC             lda [sound_ptr], y
-  134  07:EB58  9D C0 03          sta stream_arp, x
-  135  07:EB5B  A9 00             lda #$00
-  136  07:EB5D  9D C8 03          sta stream_arp_index, x
-  137  07:EB60  60                rts
+  132  07:EB60            se_op_change_arp:
+  133  07:EB60  B1 DC             lda [sound_ptr], y
+  134  07:EB62  9D C0 03          sta stream_arp, x
+  135  07:EB65  A9 00             lda #$00
+  136  07:EB67  9D C8 03          sta stream_arp_index, x
+  137  07:EB6A  60                rts
 #[2]   Source/External/SoundEngine/Source/sound_engine.asm
 #[3]   Source/External/SoundEngine/Tables/note_table.i
   655                         .include "Source/External/SoundEngine/Tables/note_table.i" ;period lookup table for notes
     1                     ;NTSC Period Lookup Table.  Thanks Celius!
     2                     ;http://www.freewebs.com/the_bott/NotesTableNTSC.txt
-    3  07:EB61            note_table:
-    4  07:EB61  F1 07         .word                                                                $07F1, $0780, $0713 ; A1-B1 ($00-$02)
-       07:EB63  80 07     
-       07:EB65  13 07     
-    5  07:EB67  AD 06         .word $06AD, $064D, $05F3, $059D, $054D, $0500, $04B8, $0475, $0435, $03F8, $03BF, $0389 ; C2-B2 ($03-$0E)
-       07:EB69  4D 06     
-       07:EB6B  F3 05     
-       07:EB6D  9D 05     
-       07:EB6F  4D 05     
-       07:EB71  00 05     
-       07:EB73  B8 04     
-       07:EB75  75 04     
-       07:EB77  35 04     
-       07:EB79  F8 03     
-       07:EB7B  BF 03     
-       07:EB7D  89 03     
-    6  07:EB7F  56 03         .word $0356, $0326, $02F9, $02CE, $02A6, $027F, $025C, $023A, $021A, $01FB, $01DF, $01C4 ; C3-B3 ($0F-$1A)
-       07:EB81  26 03     
-       07:EB83  F9 02     
-       07:EB85  CE 02     
-       07:EB87  A6 02     
-       07:EB89  7F 02     
-       07:EB8B  5C 02     
-       07:EB8D  3A 02     
-       07:EB8F  1A 02     
-       07:EB91  FB 01     
-       07:EB93  DF 01     
-       07:EB95  C4 01     
-    7  07:EB97  AB 01         .word $01AB, $0193, $017C, $0167, $0151, $013F, $012D, $011C, $010C, $00FD, $00EF, $00E2 ; C4-B4 ($1B-$26)
-       07:EB99  93 01     
-       07:EB9B  7C 01     
-       07:EB9D  67 01     
-       07:EB9F  51 01     
-       07:EBA1  3F 01     
-       07:EBA3  2D 01     
-       07:EBA5  1C 01     
-       07:EBA7  0C 01     
-       07:EBA9  FD 00     
-       07:EBAB  EF 00     
-       07:EBAD  E2 00     
-    8  07:EBAF  D2 00         .word $00D2, $00C9, $00BD, $00B3, $00A9, $009F, $0096, $008E, $0086, $007E, $0077, $0070 ; C5-B5 ($27-$32)
-       07:EBB1  C9 00     
-       07:EBB3  BD 00     
-       07:EBB5  B3 00     
-       07:EBB7  A9 00     
-       07:EBB9  9F 00     
-       07:EBBB  96 00     
-       07:EBBD  8E 00     
-       07:EBBF  86 00     
-       07:EBC1  7E 00     
-       07:EBC3  77 00     
-       07:EBC5  70 00     
-    9  07:EBC7  6A 00         .word $006A, $0064, $005E, $0059, $0054, $004F, $004B, $0046, $0042, $003F, $003B, $0038 ; C6-B6 ($33-$3E)
-       07:EBC9  64 00     
-       07:EBCB  5E 00     
-       07:EBCD  59 00     
-       07:EBCF  54 00     
-       07:EBD1  4F 00     
-       07:EBD3  4B 00     
-       07:EBD5  46 00     
-       07:EBD7  42 00     
-       07:EBD9  3F 00     
-       07:EBDB  3B 00     
-       07:EBDD  38 00     
-   10  07:EBDF  34 00         .word $0034, $0031, $002F, $002C, $0029, $0027, $0025, $0023, $0021, $001F, $001D, $001B ; C7-B7 ($3F-$4A)
-       07:EBE1  31 00     
-       07:EBE3  2F 00     
-       07:EBE5  2C 00     
-       07:EBE7  29 00     
-       07:EBE9  27 00     
-       07:EBEB  25 00     
-       07:EBED  23 00     
-       07:EBEF  21 00     
-       07:EBF1  1F 00     
-       07:EBF3  1D 00     
-       07:EBF5  1B 00     
-   11  07:EBF7  1A 00         .word $001A, $0018, $0017, $0015, $0014, $0013, $0012, $0011, $0010, $000F, $000E, $000D ; C8-B8 ($4B-$56)
-       07:EBF9  18 00     
-       07:EBFB  17 00     
-       07:EBFD  15 00     
-       07:EBFF  14 00     
-       07:EC01  13 00     
-       07:EC03  12 00     
-       07:EC05  11 00     
-       07:EC07  10 00     
-       07:EC09  0F 00     
-       07:EC0B  0E 00     
-       07:EC0D  0D 00     
-   12  07:EC0F  0C 00         .word $000C, $000C, $000B, $000A, $000A, $0009, $0008                                    ; C9-F#9 ($57-$5D)
-       07:EC11  0C 00     
-       07:EC13  0B 00     
-       07:EC15  0A 00     
-       07:EC17  0A 00     
-       07:EC19  09 00     
-       07:EC1B  08 00     
-   13  07:EC1D  00 00         .word $0000 ;rest
+    3  07:EB6B            note_table:
+    4  07:EB6B  F1 07         .word                                                                $07F1, $0780, $0713 ; A1-B1 ($00-$02)
+       07:EB6D  80 07     
+       07:EB6F  13 07     
+    5  07:EB71  AD 06         .word $06AD, $064D, $05F3, $059D, $054D, $0500, $04B8, $0475, $0435, $03F8, $03BF, $0389 ; C2-B2 ($03-$0E)
+       07:EB73  4D 06     
+       07:EB75  F3 05     
+       07:EB77  9D 05     
+       07:EB79  4D 05     
+       07:EB7B  00 05     
+       07:EB7D  B8 04     
+       07:EB7F  75 04     
+       07:EB81  35 04     
+       07:EB83  F8 03     
+       07:EB85  BF 03     
+       07:EB87  89 03     
+    6  07:EB89  56 03         .word $0356, $0326, $02F9, $02CE, $02A6, $027F, $025C, $023A, $021A, $01FB, $01DF, $01C4 ; C3-B3 ($0F-$1A)
+       07:EB8B  26 03     
+       07:EB8D  F9 02     
+       07:EB8F  CE 02     
+       07:EB91  A6 02     
+       07:EB93  7F 02     
+       07:EB95  5C 02     
+       07:EB97  3A 02     
+       07:EB99  1A 02     
+       07:EB9B  FB 01     
+       07:EB9D  DF 01     
+       07:EB9F  C4 01     
+    7  07:EBA1  AB 01         .word $01AB, $0193, $017C, $0167, $0151, $013F, $012D, $011C, $010C, $00FD, $00EF, $00E2 ; C4-B4 ($1B-$26)
+       07:EBA3  93 01     
+       07:EBA5  7C 01     
+       07:EBA7  67 01     
+       07:EBA9  51 01     
+       07:EBAB  3F 01     
+       07:EBAD  2D 01     
+       07:EBAF  1C 01     
+       07:EBB1  0C 01     
+       07:EBB3  FD 00     
+       07:EBB5  EF 00     
+       07:EBB7  E2 00     
+    8  07:EBB9  D2 00         .word $00D2, $00C9, $00BD, $00B3, $00A9, $009F, $0096, $008E, $0086, $007E, $0077, $0070 ; C5-B5 ($27-$32)
+       07:EBBB  C9 00     
+       07:EBBD  BD 00     
+       07:EBBF  B3 00     
+       07:EBC1  A9 00     
+       07:EBC3  9F 00     
+       07:EBC5  96 00     
+       07:EBC7  8E 00     
+       07:EBC9  86 00     
+       07:EBCB  7E 00     
+       07:EBCD  77 00     
+       07:EBCF  70 00     
+    9  07:EBD1  6A 00         .word $006A, $0064, $005E, $0059, $0054, $004F, $004B, $0046, $0042, $003F, $003B, $0038 ; C6-B6 ($33-$3E)
+       07:EBD3  64 00     
+       07:EBD5  5E 00     
+       07:EBD7  59 00     
+       07:EBD9  54 00     
+       07:EBDB  4F 00     
+       07:EBDD  4B 00     
+       07:EBDF  46 00     
+       07:EBE1  42 00     
+       07:EBE3  3F 00     
+       07:EBE5  3B 00     
+       07:EBE7  38 00     
+   10  07:EBE9  34 00         .word $0034, $0031, $002F, $002C, $0029, $0027, $0025, $0023, $0021, $001F, $001D, $001B ; C7-B7 ($3F-$4A)
+       07:EBEB  31 00     
+       07:EBED  2F 00     
+       07:EBEF  2C 00     
+       07:EBF1  29 00     
+       07:EBF3  27 00     
+       07:EBF5  25 00     
+       07:EBF7  23 00     
+       07:EBF9  21 00     
+       07:EBFB  1F 00     
+       07:EBFD  1D 00     
+       07:EBFF  1B 00     
+   11  07:EC01  1A 00         .word $001A, $0018, $0017, $0015, $0014, $0013, $0012, $0011, $0010, $000F, $000E, $000D ; C8-B8 ($4B-$56)
+       07:EC03  18 00     
+       07:EC05  17 00     
+       07:EC07  15 00     
+       07:EC09  14 00     
+       07:EC0B  13 00     
+       07:EC0D  12 00     
+       07:EC0F  11 00     
+       07:EC11  10 00     
+       07:EC13  0F 00     
+       07:EC15  0E 00     
+       07:EC17  0D 00     
+   12  07:EC19  0C 00         .word $000C, $000C, $000B, $000A, $000A, $0009, $0008                                    ; C9-F#9 ($57-$5D)
+       07:EC1B  0C 00     
+       07:EC1D  0B 00     
+       07:EC1F  0A 00     
+       07:EC21  0A 00     
+       07:EC23  09 00     
+       07:EC25  08 00     
+   13  07:EC27  00 00         .word $0000 ;rest
    14                     
 #[2]   Source/External/SoundEngine/Source/sound_engine.asm
 #[3]   Source/External/SoundEngine/Tables/sound_EffectTables.asm
@@ -12897,257 +12905,257 @@
    36           009B      wholeSwing_m1 = $9B
    37                     
    38                     
-   39  07:EC1F            note_length_table:
-   40  07:EC1F  01            .byte $01   ;32nd note
-   41  07:EC20  02            .byte $02   ;16th note
-   42  07:EC21  04            .byte $04   ;8th note
-   43  07:EC22  08            .byte $08   ;quarter note
-   44  07:EC23  10            .byte $10   ;half note
-   45  07:EC24  20            .byte $20   ;whole note
+   39  07:EC29            note_length_table:
+   40  07:EC29  01            .byte $01   ;32nd note
+   41  07:EC2A  02            .byte $02   ;16th note
+   42  07:EC2B  04            .byte $04   ;8th note
+   43  07:EC2C  08            .byte $08   ;quarter note
+   44  07:EC2D  10            .byte $10   ;half note
+   45  07:EC2E  20            .byte $20   ;whole note
    46                                   ;---dotted notes
-   47  07:EC25  03            .byte $03   ;dotted 16th note
-   48  07:EC26  06            .byte $06   ;dotted 8th note
-   49  07:EC27  0C            .byte $0C   ;dotted quarter note
-   50  07:EC28  18            .byte $18   ;dotted half note
-   51  07:EC29  30            .byte $30   ;dotted whole note?
+   47  07:EC2F  03            .byte $03   ;dotted 16th note
+   48  07:EC30  06            .byte $06   ;dotted 8th note
+   49  07:EC31  0C            .byte $0C   ;dotted quarter note
+   50  07:EC32  18            .byte $18   ;dotted half note
+   51  07:EC33  30            .byte $30   ;dotted whole note?
    52                                   ;---other
-   53  07:EC2A  07            .byte $07   ;modified quarter to fit after d_sixteenth triplets
-   54  07:EC2B  14            .byte $14   ;2 quarters plus an 8th
-   55  07:EC2C  0A            .byte $0A   
-   56  07:EC2D  1E                .byte $1E       ;dotted half + dotted eighth
-   57  07:EC2E  2A                .byte $2A
-   58  07:EC2F  1C                .byte $1C
-   59  07:EC30  22                .byte $22
-   60  07:EC31  05                .byte $05
-   61  07:EC32  13                .byte $13       ;dotted half swing with pick up swing
-   62  07:EC33  0D                .byte $0D       ;half swing with pick up swig
-   63  07:EC34  0F                .byte $0F       ;half swing with extra d_sixteenth
-   64  07:EC35  0B                .byte $0B       ;half swing minus one sixteenth
-   65  07:EC36  19                .byte $19       ;whole swing with pick up swing
-   66  07:EC37  07                .byte $07       ;quarter swing with pick up sixteenth
-   67  07:EC38  09                .byte $09       ;dotted quarter swing
-   68  07:EC39  12                .byte $12       ;dotted half swing
-   69  07:EC3A  17                .byte $17       ;whole swing minus one ts
+   53  07:EC34  07            .byte $07   ;modified quarter to fit after d_sixteenth triplets
+   54  07:EC35  14            .byte $14   ;2 quarters plus an 8th
+   55  07:EC36  0A            .byte $0A   
+   56  07:EC37  1E                .byte $1E       ;dotted half + dotted eighth
+   57  07:EC38  2A                .byte $2A
+   58  07:EC39  1C                .byte $1C
+   59  07:EC3A  22                .byte $22
+   60  07:EC3B  05                .byte $05
+   61  07:EC3C  13                .byte $13       ;dotted half swing with pick up swing
+   62  07:EC3D  0D                .byte $0D       ;half swing with pick up swig
+   63  07:EC3E  0F                .byte $0F       ;half swing with extra d_sixteenth
+   64  07:EC3F  0B                .byte $0B       ;half swing minus one sixteenth
+   65  07:EC40  19                .byte $19       ;whole swing with pick up swing
+   66  07:EC41  07                .byte $07       ;quarter swing with pick up sixteenth
+   67  07:EC42  09                .byte $09       ;dotted quarter swing
+   68  07:EC43  12                .byte $12       ;dotted half swing
+   69  07:EC44  17                .byte $17       ;whole swing minus one ts
 #[3]   Source/External/SoundEngine/Tables/sound_EffectTables.asm
 #[4]   Source/External/SoundEngine/Tables/FX/kVol.asm
     3                         .include "Source/External/SoundEngine/Tables/FX/kVol.asm"
-    1  07:EC3B            kVol:
-    2  07:EC3B  5B EC         .word se_ve_short_staccato
-    3  07:EC3D  63 EC         .word se_ve_fade_in
-    4  07:EC3F  7A EC         .word se_ve_blip_echo
-    5  07:EC41  9D EC         .word se_ve_tgl_1
-    6  07:EC43  A5 EC         .word se_ve_tgl_2
-    7  07:EC45  B0 EC         .word se_ve_battlekid_1
-    8  07:EC47  B6 EC         .word se_ve_battlekid_1b
-    9  07:EC49  BC EC         .word se_ve_battlekid_2
-   10  07:EC4B  C2 EC         .word se_ve_battlekid_2b
-   11  07:EC4D  C8 EC         .word se_ve_drum_decay
-   12  07:EC4F  D2 EC         .word se_ve_hiHat_decay
-   13  07:EC51  D7 EC         .word se_ve_long_decay
-   14  07:EC53  0A ED         .word se_ve_tinyDecy
-   15  07:EC55  0D ED         .word se_ve_noDecay
-   16  07:EC57  0F ED         .word se_ve_long_tremelo
-   17  07:EC59  3F ED         .word se_ve_veryLong_decay
+    1  07:EC45            kVol:
+    2  07:EC45  65 EC         .word se_ve_short_staccato
+    3  07:EC47  6D EC         .word se_ve_fade_in
+    4  07:EC49  84 EC         .word se_ve_blip_echo
+    5  07:EC4B  A7 EC         .word se_ve_tgl_1
+    6  07:EC4D  AF EC         .word se_ve_tgl_2
+    7  07:EC4F  BA EC         .word se_ve_battlekid_1
+    8  07:EC51  C0 EC         .word se_ve_battlekid_1b
+    9  07:EC53  C6 EC         .word se_ve_battlekid_2
+   10  07:EC55  CC EC         .word se_ve_battlekid_2b
+   11  07:EC57  D2 EC         .word se_ve_drum_decay
+   12  07:EC59  DC EC         .word se_ve_hiHat_decay
+   13  07:EC5B  E1 EC         .word se_ve_long_decay
+   14  07:EC5D  14 ED         .word se_ve_tinyDecy
+   15  07:EC5F  17 ED         .word se_ve_noDecay
+   16  07:EC61  19 ED         .word se_ve_long_tremelo
+   17  07:EC63  49 ED         .word se_ve_veryLong_decay
    18                     
-   19  07:EC5B            se_ve_short_staccato:
-   20  07:EC5B  0F 0E 0D      .byte $0F, $0E, $0D, $0C, $09, $05, $00, $FF
-       07:EC5E  0C 09 05  
-       07:EC61  00 FF     
+   19  07:EC65            se_ve_short_staccato:
+   20  07:EC65  0F 0E 0D      .byte $0F, $0E, $0D, $0C, $09, $05, $00, $FF
+       07:EC68  0C 09 05  
+       07:EC6B  00 FF     
    21                     
-   22  07:EC63            se_ve_fade_in:
-   23  07:EC63  01 01 02      .byte $01, $01, $02, $02, $03, $03, $04, $04, $07, $07, $08, $08, $0A, $0A, $0C, $0C
-       07:EC66  02 03 03  
-       07:EC69  04 04 07  
-       07:EC6C  07 08 08  
-       07:EC6F  0A 0A 0C  
-       07:EC72  0C        
-   24  07:EC73  0D 0D 0E      .byte $0D, $0D, $0E, $0E, $0F, $0F, $FF
-       07:EC76  0E 0F 0F  
-       07:EC79  FF        
+   22  07:EC6D            se_ve_fade_in:
+   23  07:EC6D  01 01 02      .byte $01, $01, $02, $02, $03, $03, $04, $04, $07, $07, $08, $08, $0A, $0A, $0C, $0C
+       07:EC70  02 03 03  
+       07:EC73  04 04 07  
+       07:EC76  07 08 08  
+       07:EC79  0A 0A 0C  
+       07:EC7C  0C        
+   24  07:EC7D  0D 0D 0E      .byte $0D, $0D, $0E, $0E, $0F, $0F, $FF
+       07:EC80  0E 0F 0F  
+       07:EC83  FF        
    25                     
-   26  07:EC7A            se_ve_blip_echo:
-   27  07:EC7A  0D 0D 0D      .byte $0D, $0D, $0D, $0C, $0B, $00, $00, $00, $00, $00, $00, $00, $00, $00, $06, $06
-       07:EC7D  0C 0B 00  
-       07:EC80  00 00 00  
-       07:EC83  00 00 00  
-       07:EC86  00 00 06  
-       07:EC89  06        
-   28  07:EC8A  06 05 04      .byte $06, $05, $04, $00, $00, $00, $00, $00, $00, $00, $00, $00, $03, $03, $03, $02
+   26  07:EC84            se_ve_blip_echo:
+   27  07:EC84  0D 0D 0D      .byte $0D, $0D, $0D, $0C, $0B, $00, $00, $00, $00, $00, $00, $00, $00, $00, $06, $06
+       07:EC87  0C 0B 00  
+       07:EC8A  00 00 00  
        07:EC8D  00 00 00  
-       07:EC90  00 00 00  
-       07:EC93  00 00 00  
-       07:EC96  03 03 03  
-       07:EC99  02        
-   29  07:EC9A  01 00 FF      .byte $01, $00, $FF
+       07:EC90  00 00 06  
+       07:EC93  06        
+   28  07:EC94  06 05 04      .byte $06, $05, $04, $00, $00, $00, $00, $00, $00, $00, $00, $00, $03, $03, $03, $02
+       07:EC97  00 00 00  
+       07:EC9A  00 00 00  
+       07:EC9D  00 00 00  
+       07:ECA0  03 03 03  
+       07:ECA3  02        
+   29  07:ECA4  01 00 FF      .byte $01, $00, $FF
    30                     
-   31  07:EC9D            se_ve_tgl_1:
-   32  07:EC9D  0F 0B 09      .byte $0F, $0B, $09, $08, $07, $06, $00, $FF
-       07:ECA0  08 07 06  
-       07:ECA3  00 FF     
+   31  07:ECA7            se_ve_tgl_1:
+   32  07:ECA7  0F 0B 09      .byte $0F, $0B, $09, $08, $07, $06, $00, $FF
+       07:ECAA  08 07 06  
+       07:ECAD  00 FF     
    33                     
-   34  07:ECA5            se_ve_tgl_2:
-   35  07:ECA5  0B 0B 0A      .byte $0B, $0B, $0A, $09, $08, $07, $06, $06, $06, $05, $FF
-       07:ECA8  09 08 07  
-       07:ECAB  06 06 06  
-       07:ECAE  05 FF     
+   34  07:ECAF            se_ve_tgl_2:
+   35  07:ECAF  0B 0B 0A      .byte $0B, $0B, $0A, $09, $08, $07, $06, $06, $06, $05, $FF
+       07:ECB2  09 08 07  
+       07:ECB5  06 06 06  
+       07:ECB8  05 FF     
    36                     
-   37  07:ECB0            se_ve_battlekid_1:
-   38  07:ECB0  0F 0E 0C      .byte $0F, $0E, $0C, $0A, $00, $FF
-       07:ECB3  0A 00 FF  
+   37  07:ECBA            se_ve_battlekid_1:
+   38  07:ECBA  0F 0E 0C      .byte $0F, $0E, $0C, $0A, $00, $FF
+       07:ECBD  0A 00 FF  
    39                     
-   40  07:ECB6            se_ve_battlekid_1b:
-   41  07:ECB6  0F 0E 0C      .byte $0F, $0E, $0C, $0A, $09, $FF
-       07:ECB9  0A 09 FF  
+   40  07:ECC0            se_ve_battlekid_1b:
+   41  07:ECC0  0F 0E 0C      .byte $0F, $0E, $0C, $0A, $09, $FF
+       07:ECC3  0A 09 FF  
    42                     
-   43  07:ECBC            se_ve_battlekid_2:
-   44  07:ECBC  09 08 06      .byte $09, $08, $06, $04, $00, $FF
-       07:ECBF  04 00 FF  
+   43  07:ECC6            se_ve_battlekid_2:
+   44  07:ECC6  09 08 06      .byte $09, $08, $06, $04, $00, $FF
+       07:ECC9  04 00 FF  
    45                     
-   46  07:ECC2            se_ve_battlekid_2b:
-   47  07:ECC2  09 08 06      .byte $09, $08, $06, $04, $03, $FF
-       07:ECC5  04 03 FF  
+   46  07:ECCC            se_ve_battlekid_2b:
+   47  07:ECCC  09 08 06      .byte $09, $08, $06, $04, $03, $FF
+       07:ECCF  04 03 FF  
    48                     
-   49  07:ECC8            se_ve_drum_decay:
-   50  07:ECC8  0E 09 08      .byte $0E, $09, $08, $06, $04, $03, $02, $01, $00, $FF
-       07:ECCB  06 04 03  
-       07:ECCE  02 01 00  
-       07:ECD1  FF        
+   49  07:ECD2            se_ve_drum_decay:
+   50  07:ECD2  0E 09 08      .byte $0E, $09, $08, $06, $04, $03, $02, $01, $00, $FF
+       07:ECD5  06 04 03  
+       07:ECD8  02 01 00  
+       07:ECDB  FF        
    51                     
-   52  07:ECD2            se_ve_hiHat_decay:
-   53  07:ECD2  0E 06 02      .byte $0E, $06, $02, $00, $FF
-       07:ECD5  00 FF     
+   52  07:ECDC            se_ve_hiHat_decay:
+   53  07:ECDC  0E 06 02      .byte $0E, $06, $02, $00, $FF
+       07:ECDF  00 FF     
    54                     
-   55  07:ECD7            se_ve_long_decay:
-   56  07:ECD7  0E 0F 0F      .byte $0E, $0F, $0F, $0F, $0E, $0E, $0E, $0D, $0D, $0D, $0C, $0C, $0C, $0B, $0B, $0B
-       07:ECDA  0F 0E 0E  
-       07:ECDD  0E 0D 0D  
-       07:ECE0  0D 0C 0C  
-       07:ECE3  0C 0B 0B  
-       07:ECE6  0B        
-   57  07:ECE7  0A 0A 0A      .byte $0A, $0A, $0A, $0A, $0A, $0A, $09, $09, $09, $08, $08, $08, $07, $07, $07, $06
-       07:ECEA  0A 0A 0A  
-       07:ECED  09 09 09  
-       07:ECF0  08 08 08  
-       07:ECF3  07 07 07  
-       07:ECF6  06        
-   58  07:ECF7  06 06 05      .byte $06, $06, $05, $05, $05, $04, $04, $04, $03, $03, $03, $02, $02, $02, $01, $01
-       07:ECFA  05 05 04  
-       07:ECFD  04 04 03  
-       07:ED00  03 03 02  
-       07:ED03  02 02 01  
-       07:ED06  01        
-   59  07:ED07  01 00 FF      .byte $01, $00, $FF
+   55  07:ECE1            se_ve_long_decay:
+   56  07:ECE1  0E 0F 0F      .byte $0E, $0F, $0F, $0F, $0E, $0E, $0E, $0D, $0D, $0D, $0C, $0C, $0C, $0B, $0B, $0B
+       07:ECE4  0F 0E 0E  
+       07:ECE7  0E 0D 0D  
+       07:ECEA  0D 0C 0C  
+       07:ECED  0C 0B 0B  
+       07:ECF0  0B        
+   57  07:ECF1  0A 0A 0A      .byte $0A, $0A, $0A, $0A, $0A, $0A, $09, $09, $09, $08, $08, $08, $07, $07, $07, $06
+       07:ECF4  0A 0A 0A  
+       07:ECF7  09 09 09  
+       07:ECFA  08 08 08  
+       07:ECFD  07 07 07  
+       07:ED00  06        
+   58  07:ED01  06 06 05      .byte $06, $06, $05, $05, $05, $04, $04, $04, $03, $03, $03, $02, $02, $02, $01, $01
+       07:ED04  05 05 04  
+       07:ED07  04 04 03  
+       07:ED0A  03 03 02  
+       07:ED0D  02 02 01  
+       07:ED10  01        
+   59  07:ED11  01 00 FF      .byte $01, $00, $FF
    60                     
-   61  07:ED0A            se_ve_tinyDecy:
-   62  07:ED0A  0F 00 FF      .byte $0F, $00, $FF
+   61  07:ED14            se_ve_tinyDecy:
+   62  07:ED14  0F 00 FF      .byte $0F, $00, $FF
    63                     
-   64  07:ED0D            se_ve_noDecay:
-   65  07:ED0D  0F FF         .byte $0F, $FF
+   64  07:ED17            se_ve_noDecay:
+   65  07:ED17  0F FF         .byte $0F, $FF
    66                     
-   67  07:ED0F            se_ve_long_tremelo:
-   68  07:ED0F  0E 0F 0F      .byte $0E, $0F, $0F, $0F, $09, $09, $09, $0E, $0E, $0E, $08, $08, $08, $0D, $0D, $0D
-       07:ED12  0F 09 09  
-       07:ED15  09 0E 0E  
-       07:ED18  0E 08 08  
-       07:ED1B  08 0D 0D  
-       07:ED1E  0D        
-   69  07:ED1F  07 07 07      .byte $07, $07, $07, $0C, $0C, $0C, $06, $06, $06, $0B, $0B, $0B, $05, $05, $05, $0A
-       07:ED22  0C 0C 0C  
-       07:ED25  06 06 06  
-       07:ED28  0B 0B 0B  
-       07:ED2B  05 05 05  
-       07:ED2E  0A        
-   70  07:ED2F  0A 0A 04      .byte $0A, $0A, $04, $04, $04, $09, $09, $09, $03, $03, $03, $08, $08, $08, $00, $FF
-       07:ED32  04 04 09  
-       07:ED35  09 09 03  
-       07:ED38  03 03 08  
-       07:ED3B  08 08 00  
-       07:ED3E  FF        
+   67  07:ED19            se_ve_long_tremelo:
+   68  07:ED19  0E 0F 0F      .byte $0E, $0F, $0F, $0F, $09, $09, $09, $0E, $0E, $0E, $08, $08, $08, $0D, $0D, $0D
+       07:ED1C  0F 09 09  
+       07:ED1F  09 0E 0E  
+       07:ED22  0E 08 08  
+       07:ED25  08 0D 0D  
+       07:ED28  0D        
+   69  07:ED29  07 07 07      .byte $07, $07, $07, $0C, $0C, $0C, $06, $06, $06, $0B, $0B, $0B, $05, $05, $05, $0A
+       07:ED2C  0C 0C 0C  
+       07:ED2F  06 06 06  
+       07:ED32  0B 0B 0B  
+       07:ED35  05 05 05  
+       07:ED38  0A        
+   70  07:ED39  0A 0A 04      .byte $0A, $0A, $04, $04, $04, $09, $09, $09, $03, $03, $03, $08, $08, $08, $00, $FF
+       07:ED3C  04 04 09  
+       07:ED3F  09 09 03  
+       07:ED42  03 03 08  
+       07:ED45  08 08 00  
+       07:ED48  FF        
    71                     
    72                     
-   73  07:ED3F            se_ve_veryLong_decay:
-   74  07:ED3F  08 09 0A      .byte $08, $09, $0A, $0B, $0C, $0D, $0E, $0F, $0F, $0F, $0F, $0F, $0F, $0E, $0E, $0E
-       07:ED42  0B 0C 0D  
-       07:ED45  0E 0F 0F  
-       07:ED48  0F 0F 0F  
-       07:ED4B  0F 0E 0E  
-       07:ED4E  0E        
-   75  07:ED4F  0E 0E 0E      .byte $0E, $0E, $0E, $0D, $0D, $0D, $0D, $0D, $0D, $0C, $0C, $0C, $0C, $0C, $0C, $0B
-       07:ED52  0D 0D 0D  
-       07:ED55  0D 0D 0D  
-       07:ED58  0C 0C 0C  
-       07:ED5B  0C 0C 0C  
-       07:ED5E  0B        
-   76  07:ED5F  0B 0B 0B      .byte $0B, $0B, $0B, $0B, $0B, $0A, $0A, $0A, $0A, $0A, $0A, $09, $09, $09, $09, $09
-       07:ED62  0B 0B 0A  
-       07:ED65  0A 0A 0A  
-       07:ED68  0A 0A 09  
-       07:ED6B  09 09 09  
-       07:ED6E  09        
-   77  07:ED6F  09 08 08      .byte $09, $08, $08, $08, $08, $08, $08, $07, $07, $07, $07, $07, $07, $06, $06, $06
-       07:ED72  08 08 08  
-       07:ED75  08 07 07  
-       07:ED78  07 07 07  
-       07:ED7B  07 06 06  
-       07:ED7E  06        
-   78  07:ED7F  06 06 06      .byte $06, $06, $06, $05, $05, $05, $05, $05, $05, $04, $04, $04, $04, $04, $04, $03
-       07:ED82  05 05 05  
-       07:ED85  05 05 05  
-       07:ED88  04 04 04  
-       07:ED8B  04 04 04  
-       07:ED8E  03        
-   79  07:ED8F  03 03 03      .byte $03, $03, $03, $03, $03, $02, $02, $02, $02, $02, $02, $01, $01, $01, $01, $01
-       07:ED92  03 03 02  
-       07:ED95  02 02 02  
-       07:ED98  02 02 01  
-       07:ED9B  01 01 01  
-       07:ED9E  01        
-   80  07:ED9F  01 00 FF      .byte $01, $00, $FF
+   73  07:ED49            se_ve_veryLong_decay:
+   74  07:ED49  08 09 0A      .byte $08, $09, $0A, $0B, $0C, $0D, $0E, $0F, $0F, $0F, $0F, $0F, $0F, $0E, $0E, $0E
+       07:ED4C  0B 0C 0D  
+       07:ED4F  0E 0F 0F  
+       07:ED52  0F 0F 0F  
+       07:ED55  0F 0E 0E  
+       07:ED58  0E        
+   75  07:ED59  0E 0E 0E      .byte $0E, $0E, $0E, $0D, $0D, $0D, $0D, $0D, $0D, $0C, $0C, $0C, $0C, $0C, $0C, $0B
+       07:ED5C  0D 0D 0D  
+       07:ED5F  0D 0D 0D  
+       07:ED62  0C 0C 0C  
+       07:ED65  0C 0C 0C  
+       07:ED68  0B        
+   76  07:ED69  0B 0B 0B      .byte $0B, $0B, $0B, $0B, $0B, $0A, $0A, $0A, $0A, $0A, $0A, $09, $09, $09, $09, $09
+       07:ED6C  0B 0B 0A  
+       07:ED6F  0A 0A 0A  
+       07:ED72  0A 0A 09  
+       07:ED75  09 09 09  
+       07:ED78  09        
+   77  07:ED79  09 08 08      .byte $09, $08, $08, $08, $08, $08, $08, $07, $07, $07, $07, $07, $07, $06, $06, $06
+       07:ED7C  08 08 08  
+       07:ED7F  08 07 07  
+       07:ED82  07 07 07  
+       07:ED85  07 06 06  
+       07:ED88  06        
+   78  07:ED89  06 06 06      .byte $06, $06, $06, $05, $05, $05, $05, $05, $05, $04, $04, $04, $04, $04, $04, $03
+       07:ED8C  05 05 05  
+       07:ED8F  05 05 05  
+       07:ED92  04 04 04  
+       07:ED95  04 04 04  
+       07:ED98  03        
+   79  07:ED99  03 03 03      .byte $03, $03, $03, $03, $03, $02, $02, $02, $02, $02, $02, $01, $01, $01, $01, $01
+       07:ED9C  03 03 02  
+       07:ED9F  02 02 02  
+       07:EDA2  02 02 01  
+       07:EDA5  01 01 01  
+       07:EDA8  01        
+   80  07:EDA9  01 00 FF      .byte $01, $00, $FF
    81                     
    82                     
    83                     
 #[3]   Source/External/SoundEngine/Tables/sound_EffectTables.asm
 #[4]   Source/External/SoundEngine/Tables/FX/kMod.asm
     4                             .include "Source/External/SoundEngine/Tables/FX/kMod.asm"
-    1  07:EDA2            kMod:
-    2  07:EDA2  AA ED         .word se_me_none
-    3  07:EDA4  AC ED         .word se_me_mod
-    4  07:EDA6  C9 ED         .word se_me_sweep
-    5  07:EDA8  DF ED         .word se_me_bassKick
+    1  07:EDAC            kMod:
+    2  07:EDAC  B4 ED         .word se_me_none
+    3  07:EDAE  B6 ED         .word se_me_mod
+    4  07:EDB0  D3 ED         .word se_me_sweep
+    5  07:EDB2  E9 ED         .word se_me_bassKick
     6                     
-    7  07:EDAA            se_me_none:
-    8  07:EDAA  00 81         .byte $00, $81
+    7  07:EDB4            se_me_none:
+    8  07:EDB4  00 81         .byte $00, $81
     9                     
-   10  07:EDAC            se_me_mod:
-   11  07:EDAC  00 00 00      .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FE, $FE, $FC
-       07:EDAF  00 00 00  
-       07:EDB2  00 00 00  
-       07:EDB5  00 00 00  
-       07:EDB8  00 FE FE  
-       07:EDBB  FC        
-   12  07:EDBC  FC FE FE      .byte $FC, $FE, $FE, $00, $00, $02, $02, $04, $04, $02, $02, $82, $10
-       07:EDBF  00 00 02  
-       07:EDC2  02 04 04  
-       07:EDC5  02 02 82  
-       07:EDC8  10        
+   10  07:EDB6            se_me_mod:
+   11  07:EDB6  00 00 00      .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FE, $FE, $FC
+       07:EDB9  00 00 00  
+       07:EDBC  00 00 00  
+       07:EDBF  00 00 00  
+       07:EDC2  00 FE FE  
+       07:EDC5  FC        
+   12  07:EDC6  FC FE FE      .byte $FC, $FE, $FE, $00, $00, $02, $02, $04, $04, $02, $02, $82, $10
+       07:EDC9  00 00 02  
+       07:EDCC  02 04 04  
+       07:EDCF  02 02 82  
+       07:EDD2  10        
    13                     
-   14  07:EDC9            se_me_sweep:
-   15  07:EDC9  10 0C 08      .byte $10, $0C, $08, $04, $00, $00, $FE, $FE, $FC, $FC, $FE, $FE, $00, $00, $02, $02
-       07:EDCC  04 00 00  
-       07:EDCF  FE FE FC  
-       07:EDD2  FC FE FE  
-       07:EDD5  00 00 02  
-       07:EDD8  02        
-   16  07:EDD9  04 04 02      .byte $04, $04, $02, $02, $82, $10
-       07:EDDC  02 82 10  
+   14  07:EDD3            se_me_sweep:
+   15  07:EDD3  10 0C 08      .byte $10, $0C, $08, $04, $00, $00, $FE, $FE, $FC, $FC, $FE, $FE, $00, $00, $02, $02
+       07:EDD6  04 00 00  
+       07:EDD9  FE FE FC  
+       07:EDDC  FC FE FE  
+       07:EDDF  00 00 02  
+       07:EDE2  02        
+   16  07:EDE3  04 04 02      .byte $04, $04, $02, $02, $82, $10
+       07:EDE6  02 82 10  
    17                     
-   18  07:EDDF            se_me_bassKick:
-   19  07:EDDF  90 A0 B0      .byte $90, $A0, $B0, $C0, $D0, $E0, $F0, $00, $10, $20, $30, $40, $50, $60, $70, $80
-       07:EDE2  C0 D0 E0  
-       07:EDE5  F0 00 10  
-       07:EDE8  20 30 40  
-       07:EDEB  50 60 70  
-       07:EDEE  80        
+   18  07:EDE9            se_me_bassKick:
+   19  07:EDE9  90 A0 B0      .byte $90, $A0, $B0, $C0, $D0, $E0, $F0, $00, $10, $20, $30, $40, $50, $60, $70, $80
+       07:EDEC  C0 D0 E0  
+       07:EDEF  F0 00 10  
+       07:EDF2  20 30 40  
+       07:EDF5  50 60 70  
+       07:EDF8  80        
    20                     
    21                     
    22                     
@@ -13155,71 +13163,71 @@
 #[3]   Source/External/SoundEngine/Tables/sound_EffectTables.asm
 #[4]   Source/External/SoundEngine/Tables/FX/kArp.asm
     5                             .include "Source/External/SoundEngine/Tables/FX/kArp.asm"
-    1  07:EDEF            kArp:
-    2  07:EDEF  09 EE         .word se_arp_none
-    3  07:EDF1  0B EE         .word se_arp_lowerThird
-    4  07:EDF3  10 EE         .word se_arp_dimTriad
-    5  07:EDF5  14 EE         .word se_arp_minInvn1
-    6  07:EDF7  18 EE         .word se_arp_sharp5
-    7  07:EDF9  1C EE         .word se_arp_maj7
-    8  07:EDFB  21 EE         .word se_arp_min7
-    9  07:EDFD  26 EE         .word se_arp_minFlat6
-   10  07:EDFF  2B EE         .word se_arp_spread5thlowerThird
-   11  07:EE01  30 EE         .word se_arp_min7Invn1
-   12  07:EE03  35 EE         .word se_arp_dom7Invn2
-   13  07:EE05  3A EE         .word se_arp_dim7
-   14  07:EE07  3F EE         .word se_arp_majPlusOct
+    1  07:EDF9            kArp:
+    2  07:EDF9  13 EE         .word se_arp_none
+    3  07:EDFB  15 EE         .word se_arp_lowerThird
+    4  07:EDFD  1A EE         .word se_arp_dimTriad
+    5  07:EDFF  1E EE         .word se_arp_minInvn1
+    6  07:EE01  22 EE         .word se_arp_sharp5
+    7  07:EE03  26 EE         .word se_arp_maj7
+    8  07:EE05  2B EE         .word se_arp_min7
+    9  07:EE07  30 EE         .word se_arp_minFlat6
+   10  07:EE09  35 EE         .word se_arp_spread5thlowerThird
+   11  07:EE0B  3A EE         .word se_arp_min7Invn1
+   12  07:EE0D  3F EE         .word se_arp_dom7Invn2
+   13  07:EE0F  44 EE         .word se_arp_dim7
+   14  07:EE11  49 EE         .word se_arp_majPlusOct
    15                     
-   16  07:EE09            se_arp_none:
-   17  07:EE09  00 81         .byte $00, $81
+   16  07:EE13            se_arp_none:
+   17  07:EE13  00 81         .byte $00, $81
    18                     
-   19  07:EE0B            se_arp_lowerThird:
-   20  07:EE0B  00 00 F8      .byte $00, $00, $F8, $F8, $81
-       07:EE0E  F8 81     
+   19  07:EE15            se_arp_lowerThird:
+   20  07:EE15  00 00 F8      .byte $00, $00, $F8, $F8, $81
+       07:EE18  F8 81     
    21                     
-   22  07:EE10            se_arp_dimTriad:
-   23  07:EE10  00 03 06      .byte $00, $03, $06, $81
-       07:EE13  81        
+   22  07:EE1A            se_arp_dimTriad:
+   23  07:EE1A  00 03 06      .byte $00, $03, $06, $81
+       07:EE1D  81        
    24                     
-   25  07:EE14            se_arp_minInvn1:
-   26  07:EE14  FB 00 03      .byte $FB, $00, $03, $81
-       07:EE17  81        
+   25  07:EE1E            se_arp_minInvn1:
+   26  07:EE1E  FB 00 03      .byte $FB, $00, $03, $81
+       07:EE21  81        
    27                     
-   28  07:EE18            se_arp_sharp5:
-   29  07:EE18  00 04 08      .byte $00, $04, $08, $81
-       07:EE1B  81        
+   28  07:EE22            se_arp_sharp5:
+   29  07:EE22  00 04 08      .byte $00, $04, $08, $81
+       07:EE25  81        
    30                     
-   31  07:EE1C            se_arp_maj7:
-   32  07:EE1C  00 04 07      .byte $00, $04, $07, $0B, $81
-       07:EE1F  0B 81     
+   31  07:EE26            se_arp_maj7:
+   32  07:EE26  00 04 07      .byte $00, $04, $07, $0B, $81
+       07:EE29  0B 81     
    33                     
-   34  07:EE21            se_arp_min7:
-   35  07:EE21  00 03 07      .byte $00, $03, $07, $0A, $81
-       07:EE24  0A 81     
+   34  07:EE2B            se_arp_min7:
+   35  07:EE2B  00 03 07      .byte $00, $03, $07, $0A, $81
+       07:EE2E  0A 81     
    36                     
-   37  07:EE26            se_arp_minFlat6:
-   38  07:EE26  00 03 07      .byte $00, $03, $07, $08, $81
-       07:EE29  08 81     
+   37  07:EE30            se_arp_minFlat6:
+   38  07:EE30  00 03 07      .byte $00, $03, $07, $08, $81
+       07:EE33  08 81     
    39                     
-   40  07:EE2B            se_arp_spread5thlowerThird:
-   41  07:EE2B  F8 00 07      .byte $F8, $00, $07, $0C, $81
-       07:EE2E  0C 81     
+   40  07:EE35            se_arp_spread5thlowerThird:
+   41  07:EE35  F8 00 07      .byte $F8, $00, $07, $0C, $81
+       07:EE38  0C 81     
    42                     
-   43  07:EE30            se_arp_min7Invn1:
-   44  07:EE30  FE 00 03      .byte $FE, $00, $03, $07, $81
-       07:EE33  07 81     
+   43  07:EE3A            se_arp_min7Invn1:
+   44  07:EE3A  FE 00 03      .byte $FE, $00, $03, $07, $81
+       07:EE3D  07 81     
    45                     
-   46  07:EE35            se_arp_dom7Invn2:
-   47  07:EE35  FB FE 00      .byte $FB, $FE, $00, $04, $81
-       07:EE38  04 81     
+   46  07:EE3F            se_arp_dom7Invn2:
+   47  07:EE3F  FB FE 00      .byte $FB, $FE, $00, $04, $81
+       07:EE42  04 81     
    48                     
-   49  07:EE3A            se_arp_dim7:
-   50  07:EE3A  00 03 06      .byte $00, $03, $06, $09, $81
-       07:EE3D  09 81     
+   49  07:EE44            se_arp_dim7:
+   50  07:EE44  00 03 06      .byte $00, $03, $06, $09, $81
+       07:EE47  09 81     
    51                     
-   52  07:EE3F            se_arp_majPlusOct:
-   53  07:EE3F  00 04 07      .byte $00, $04, $07, $0C, $81
-       07:EE42  0C 81     
+   52  07:EE49            se_arp_majPlusOct:
+   53  07:EE49  00 04 07      .byte $00, $04, $07, $0C, $81
+       07:EE4C  0C 81     
    54                     
    55                     
    56                     

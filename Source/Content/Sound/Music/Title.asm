@@ -60,7 +60,7 @@ Title_square_2:
     .word Title_square_2
 
 Title_triangle:
-    .byte  $A4, $04
+    .byte  $A4, $08
 Title_triangle_sublp_1:
     .byte $85, $A2, $0F, $A9, $01, $5E, $85, $A2, $09, $5E
     .byte $A5
@@ -85,13 +85,22 @@ Title_triangle_sublp_3:
     .word Title_triangle
 
 Title_noise:
-    .byte $81, $A2, $0A, $04, $82, $20, $04
+    .byte $83, $A2, $0A, $00
     .byte $A1
     .word Title_noise
 
 Title_dpmc:
+    .byte  $A4, $04
+Title_dpmc_sublp_1:
+    .byte $85, $7E, $7E
+    .byte $A5
+    .word Title_dpmc_sublp_1
+    .byte  $A4, $08
+Title_dpmc_sublp_2:
     .byte $81, $0E, $0E, $82, $7E, $83, $1E, $0E, $1E, $81, $0E, $0E, $82, $7E, $87, $1E
     .byte $81, $1E, $82, $0E, $0E, $83, $1E
+    .byte $A5
+    .word Title_dpmc_sublp_2
     .byte $A1
     .word Title_dpmc
 
