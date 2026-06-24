@@ -33,11 +33,6 @@ UpdateTitleJumpTable:
 
 UpdateTitleInit:
 
-  lda #$02
-  sta current_song
-  lda current_song
-  jsr sound_load
-
   JSR TurnOnSprites
   
   LDA hasContinue
@@ -57,6 +52,7 @@ UpdateTitleInit:
 .changeModeState:
 
   INC mode_state
+    
 .leave:
   RTS
   

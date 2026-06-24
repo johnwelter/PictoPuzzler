@@ -121,6 +121,12 @@ ValidateContinue:
 .finishValidation:
   
 ;;Init title
+
+  lda #$00
+  sta current_song
+  lda current_song
+  jsr sound_load
+
   LDA #TITLE_IDX
   LDX #$00
   JSR ChangeGameMode
@@ -255,7 +261,7 @@ SampleLength:
   .bank 10
   .org $0000
   .incbin "Source/Content/Graphics/CHRROM/FirstSixteenSprites.chr"
-  .incbin "Source/Content/Graphics/CHRROM/B1Sprites.chr"  
+  .incbin "Source/Content/Graphics/CHRROM/B2Sprites.chr"  
   .incbin "Source/Content/Graphics/CHRROM/BGTiles.chr"
   
   .bank 11

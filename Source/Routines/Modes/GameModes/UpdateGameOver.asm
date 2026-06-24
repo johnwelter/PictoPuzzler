@@ -238,6 +238,11 @@ UpdateGameOverExit:
   LDX targetScreenLoad
   JSR ChangeGameMode
   
+  lda #$02
+  sta current_song
+  lda current_song
+  jsr sound_load
+  
 .leave:
   RTS
   
