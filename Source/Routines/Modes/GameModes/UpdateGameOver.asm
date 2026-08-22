@@ -1,12 +1,5 @@
 UpdateGameOver:
 
-  LDA NMI_locks
-  BEQ .unlocked
-  
-  RTS
-  
-.unlocked:
-
   JSR DoUpdateGameOver 
   RTS
   
@@ -58,7 +51,9 @@ UpdateGameOverInit:
   LDA #$00
   STA clueLineIndex
   ;;table address is now at the first string to draw
-    
+  
+  MACROSetFlags PPU_Mask, #%00011000
+  
   INC mode_state
 
 ;no RTS, just update a line immediately
@@ -234,17 +229,21 @@ UpdateGameOverExit:
   AND #$0F
   BNE .leave
 
+  LDA #$01
+  STA startOnBankTable
+
+  LDA targetScreenLoad
+  ORA #%00001000
+  TAX
   LDA targetGameMode
-  LDX targetScreenLoad
+
+  
   JSR ChangeGameMode
   
   lda #$02
   sta current_song
   lda current_song
   jsr sound_load
-  
-  LDA #$01
-  STA startOnBankTable
   
 .leave:
   RTS

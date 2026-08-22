@@ -258,6 +258,11 @@ ClearPPUString:
 	RTS
 
 DetectSprite0:
+
+  LDA PPU_MASK
+  AND #%00011000
+  BEQ LeaveDetect
+
 WaitNotSprite0:
   lda PPU_STATUS
   and #SPRITE_0_MASK
@@ -272,6 +277,8 @@ WaitSprite0:
 WaitScanline:
   dex
   bne WaitScanline
+  
+LeaveDetect:
   RTS
 
 	
@@ -355,12 +362,29 @@ TurnOffSprites:
   STA PPU_Mask
   RTS
 
+DisableRendering:
+
+  LDA PPU_Mask
+  AND #%11100111
+  STA PPU_Mask
+  RTS
+  
+EnableRendering:
+
+  LDA PPU_Mask
+  ORA #%00011000
+  STA PPU_Mask
+  RTS
+
 UpdatePPUControl:
 
   LDA PPU_Control
   AND #$FC
   ORA PPU_NT
   STA PPU_CTRL
+  RTS
+  
+UpdatePPUMask:
   LDA PPU_Mask
   STA PPU_MASK
   RTS
@@ -373,7 +397,7 @@ InitPPUControl:
   STA PPU_CTRL
   STA PPU_Control
   LDA #%00011110
-  ;STA PPU_MASK	;; the NMI update will handle loading stuff for this one
+  ;;STA PPU_MASK
   STA PPU_Mask
   RTS
   

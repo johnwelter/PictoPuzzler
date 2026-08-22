@@ -1,12 +1,5 @@
 UpdateTitle:
 
-  LDA NMI_locks
-  BEQ .unlocked
-  
-  RTS
-  
-.unlocked:
-
   JSR DoUpdateTitle  
   RTS
   
@@ -33,8 +26,10 @@ UpdateTitleJumpTable:
 
 UpdateTitleInit:
 
-  JSR TurnOnSprites
-  
+  MACROClearFlags PPU_CTRL, #%10000000
+  LDA #$00
+  STA PPU_MASK
+
   LDA hasContinue
   BEQ .skipContinueText
   MACROAddPPUStringEntryTable #$2B, #$4D, #DRAW_HORIZONTAL, ContinueText
@@ -55,6 +50,17 @@ UpdateTitleInit:
   
   LDA startOnBankTable
   BEQ .leave
+   
+  LDA bank_index
+  
+  JSR ResetMapper
+  LDA bank_index
+  JSR LoadPRGBank
+  JSR ResetMapper
+  LDA bank_index
+  ASL A
+  JSR LoadCHRBankA
+  
   INC mode_state
   INC mode_state
   LDA PPU_ScrollNT
@@ -64,6 +70,8 @@ UpdateTitleInit:
   JSR ConvertPuzzleToMouse
   LDA puzzle_index
   STA tempPuzz
+  LDA bank_index
+  STA tempBank
   LDA #$00
   STA temp1
   STA temp2
@@ -71,6 +79,9 @@ UpdateTitleInit:
   JSR UpdatePuzzleInfo
   
 .leave:
+  JSR ProcessPPUString
+  MACROSetFlags PPU_Mask, #%00011000
+  MACROSetFlags PPU_CTRL, #%10000000
   RTS
   
 UpdateBankSelection:
@@ -272,11 +283,17 @@ UpdateTitleExit:
   LDA #%00100000
   STA temp1
   
+  LDA hasContinue
+  BEQ .loadPuzzle
+  
   LDA mouse_index
   CMP #$03
   BEQ .setToLoad
   
 .checkPuzzleIndex:
+  LDA bank_index
+  CMP tempBank
+  BNE .loadPuzzle
   LDA puzzle_index
   CMP tempPuzz
   BNE .loadPuzzle
@@ -593,6 +610,9 @@ UpdatePuzzleInfo:
 
   LDA hasContinue
   BEQ .drawBlank
+  LDA bank_index
+  CMP tempBank
+  BNE .drawBlank
   LDA puzzle_index
   CMP tempPuzz
   BNE .drawBlank
@@ -738,4 +758,6 @@ SetPuzzleDisplaySprite:
 ContinueText:
 
   .db $05, $0C, $18, $17, $1D, $24
+  
+
   

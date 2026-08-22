@@ -21,14 +21,13 @@ update_controllers:
   
   JSR ReadControllersSafe
   JSR ProcessPPUString
-  
-  
+
+  ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+  ; enable sprites, enable background, no clipping on left side	
   LDA #$00        ;;tell the ppu there is no background scrolling
   STA PPU_SCROLL
   STA PPU_SCROLL
-  
-  ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
-  ; enable sprites, enable background, no clipping on left side	
+  JSR UpdatePPUMask
   JSR UpdatePPUControl
 
 NMIUpdate:

@@ -12,16 +12,22 @@ ChangeGameMode:
   
 LoadGameModeScreen:
 
-  MACROSetFlags NMI_locks, BGLOAD_NMI_LOCK
-  
+  MACROClearFlags PPU_CTRL, #%10000000	;; disable NMI
   LDA #$00
   STA PPU_MASK    ; disable rendering- reenable on NMI when not updating
 
   JSR LoadGameModeBackground
   JSR LoadGameModeSprites
+  
+  LDA mode_loadFlags
+  AND #%00001000
+  BNE .skipRenderDeactivate
 
-  MACROClearFlags NMI_locks, BGLOAD_NMI_LOCK
+  MACROSetFlags PPU_Mask, #%00011000
 
+.skipRenderDeactivate:
+
+  MACROSetFlags PPU_CTRL, #%10000000   ;;enable NMI
   
   ;; load the CHR bank for this mode
   JSR ResetMapper

@@ -13,13 +13,6 @@ HOLD_FREQ = $04
 
 UpdateGame:
 
-  LDA NMI_locks
-  BEQ .unlocked
-  
-  RTS
-  
-.unlocked:
-
   JSR DoUpdateGame
   RTS
   
@@ -102,6 +95,8 @@ UpdateGameInit:
   LDA #HIGH(BANK_LEVEL)
   LDX #LOW(BANK_LEVEL)
   JSR ApplyPuzzleLevelToPPUString
+  
+  MACROSetFlags PPU_Mask, #%00011000
   
   INC mode_state
 
@@ -671,7 +666,7 @@ UpdateGameExit:
   BNE .changeMode
   LDY #$00
   LDA [puzzle_address], y
-  ORA #%00100000
+  ORA #%00101000
   TAX
  
   LDA targetGameMode

@@ -14,10 +14,12 @@ time 			.rs 1
 scaledTime		.rs 1
 sleeping 		.rs 1
 mode_loadFlags  .rs 1
-;;trcb xxxx
+;;trcb nxss
 ;;r = read from save copy 
 ;;c = write to save copy
 ;;skip table read, use blank tile
+;;ss = puzzle size
+;;n = don't auto allow nmi
 game_mode  		.rs 1
 mode_state		.rs 1
 NMI_locks 		.rs 1
