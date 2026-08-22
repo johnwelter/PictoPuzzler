@@ -207,7 +207,7 @@ LoadPauseScreen:
 ;;pause_address has the table we want
 ;;pause_draw_address will be the draw location
 
-  MACROAddPPUStringEntryRawData pause_draw_address+1, pause_draw_address, #DRAW_HORIZONTAL, #13
+  MACROAddPPUStringEntryRawData pause_draw_address+1, pause_draw_address, #DRAW_HORIZONTAL, pause_draw_width
 
   LDX #$00
   LDY clueLineIndex
@@ -221,7 +221,7 @@ LoadPauseScreen:
   TAX
   INY
   INX 
-  CPX #13
+  CPX pause_draw_width
   BNE .loop
   
   STY clueLineIndex
@@ -242,7 +242,7 @@ LoadPauseScreen:
 
 ClearPauseScreen:  
 
-  MACROAddPPUStringEntryRawData pause_draw_address+1, pause_draw_address, #DRAW_HORIZONTAL, #13
+  MACROAddPPUStringEntryRawData pause_draw_address+1, pause_draw_address, #DRAW_HORIZONTAL, pause_draw_width
 
   LDX #$00
   LDY #$00
@@ -256,7 +256,7 @@ ClearPauseScreen:
   TAX
   INY
   INX 
-  CPX #13
+  CPX pause_draw_width
   BNE .loop
   
   

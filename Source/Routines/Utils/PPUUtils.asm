@@ -373,7 +373,7 @@ InitPPUControl:
   STA PPU_CTRL
   STA PPU_Control
   LDA #%00011110
-  STA PPU_MASK
+  ;STA PPU_MASK	;; the NMI update will handle loading stuff for this one
   STA PPU_Mask
   RTS
   

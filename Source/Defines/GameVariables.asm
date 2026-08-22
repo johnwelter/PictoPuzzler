@@ -10,6 +10,8 @@ title_address		.rs 2
 pause_address		.rs 2
 copy_address	    .rs 2
 pause_draw_address  .rs 2
+pause_draw_height	.rs 1
+pause_draw_width	.rs 1
 title_draw_address	.rs 2
 clue_start_address	.rs 2
 clue_draw_address 	.rs 2
@@ -29,4 +31,5 @@ holdTimer			.rs 1
 targetGameMode		.rs 1
 targetScreenLoad	.rs 1
 recordSet			.rs 1
+startOnBankTable	.rs 1
 

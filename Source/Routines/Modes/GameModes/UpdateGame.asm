@@ -186,8 +186,12 @@ UpdateGamePlay:
   JSR SetSpriteImage
 
   ;;we need the pause screen table loaded
-  MACROGetLabelPointer Pause_Menu, pause_address
+  MACROGetLabelPointer Pause_Window, pause_address
   MACROGetLabelPointer $210A, pause_draw_address
+  LDA #$06 
+  STA pause_draw_height
+  LDA #13
+  STA pause_draw_width
   
   
   RTS
@@ -663,7 +667,16 @@ UpdateGameExit:
   STA PPU_ScrollNT
   
   LDA targetGameMode
-  LDX #$00
+  CMP #GAME_IDX
+  BNE .changeMode
+  LDY #$00
+  LDA [puzzle_address], y
+  ORA #%00100000
+  TAX
+ 
+  LDA targetGameMode
+  
+.changeMode:
   JSR ChangeGameMode
 .leave:
   RTS
@@ -927,6 +940,9 @@ UpdateTimeDisplay:
 .leave: 
   RTS  
   
+PAUSE_CURSOR_POS = temp5  
+PAUSE_CURSOR_DELTA = temp9
+
 UpdatePause:
 
 ;;load screen
@@ -940,14 +956,124 @@ UpdatePauseJumpTable:
 
   .word ExitPause			;fail safe
   .word UpdateLoadPauseScreen
-  .word UpdatePauseScreen
+  .word UpdateLoadMenu
+  .word UpdateMenu
+  .word UpdateLoadQuit
+  .word UpdateQuit
   .word UpdateUnloadPauseScreen
   
 UpdateLoadPauseScreen:
   
   JSR LoadPauseScreen
   LDA clueOffsetShift
-  CMP #$06
+  CMP pause_draw_height
+  BNE .leave
+  
+.changePauseState:
+
+  ;;we need the pause screen table loaded
+  MACROGetLabelPointer Pause_Menu, pause_address
+  MACROGetLabelPointer $212B, pause_draw_address
+  LDA #$04
+  STA pause_draw_height
+  LDA #11
+  STA pause_draw_width
+    
+  LDA #$00
+  STA clueLineIndex
+  STA clueOffsetShift
+  
+  INC pauseState
+.leave:
+  RTS
+  
+UpdateLoadMenu:
+  
+  JSR LoadPauseScreen
+  LDA clueOffsetShift
+  CMP pause_draw_height
+  BNE .leave
+  
+.changePauseState:
+
+  LDA #PAUSE_MENUX
+  LDX #$01
+  JSR SetSpriteXPosition  
+  LDA #PAUSE_RESUME
+  LDX #$01
+  JSR SetSpriteYPosition
+  LDA #$01
+  LDX #$01
+  JSR SetSpriteImage
+  
+  LDA #$00
+  STA PAUSE_CURSOR_POS
+  STA PAUSE_CURSOR_DELTA
+  
+  INC pauseState
+	  
+.leave:
+RTS
+
+UpdateMenu:
+  LDA gamepadPressed
+  CMP #GAMEPAD_START
+  BEQ .unPause
+  CMP #GAMEPAD_B
+  BEQ .unPause
+  CMP #GAMEPAD_A
+  BEQ .checkA
+
+  LDA gamepadPressed
+  AND #GAMEPAD_VERT
+  BEQ .leave
+  ;; need to handle up, down, and looping... unfortch.
+  CMP #GAMEPAD_UP
+  BEQ .upPressed
+  LDA #$01
+  JMP .moveCursor
+  ;;down pressed
+.upPressed:
+  LDA #$FF
+  
+.moveCursor:
+  
+  ;; add cursor delta to cursor position
+  CLC
+  ADC PAUSE_CURSOR_POS
+  CMP #3
+  BNE .checkUnder
+  LDA #$00
+  
+  JMP .updateCursor
+.checkUnder:
+  CMP #$FF
+  BNE .updateCursor
+  LDA #2
+.updateCursor:
+  STA PAUSE_CURSOR_POS
+  ;; we have the index, move to x
+  TAX
+  LDA PauseMenuPosition, x
+  LDX #$01
+  JSR SetSpriteYPosition  
+  
+  JSR PlayMenuCursorSound
+ 
+.leave:
+  RTS
+  
+.unPause:
+  JMP UnPause
+  
+.checkA:
+  JMP CheckA
+  
+UpdateLoadQuit:
+  
+  JSR LoadPauseScreen
+  LDA clueOffsetShift
+  CMP #$04
   BNE .leave
   
 .changePauseState:
@@ -955,6 +1081,9 @@ UpdateLoadPauseScreen:
   LDA #PAUSE_YES
   LDX #$01
   JSR SetSpriteXPosition  
+  LDA #PAUSE_RESET
+  LDX #$01
+  JSR SetSpriteYPosition
   LDA #$01
   LDX #$01
   JSR SetSpriteImage
@@ -962,8 +1091,8 @@ UpdateLoadPauseScreen:
   INC pauseState
 .leave:
   RTS
-  
-UpdatePauseScreen:
+    
+UpdateQuit:
   
   LDA gamepadPressed
   CMP #GAMEPAD_START
@@ -1000,13 +1129,15 @@ UpdatePauseScreen:
   LDX #$01
   JSR SetSpriteXPosition  
 
-  JMP .leave 
+.leave:
+  RTS
 
+.checkA:
+  JMP CheckA
+  
 .unPause:
-
-  LDA #$00
-  STA clueLineIndex
-  STA clueOffsetShift
+  
+UnPause:
   
   LDA #$FF
   LDX #$01
@@ -1014,40 +1145,96 @@ UpdatePauseScreen:
 
   MACROGetLabelPointer $610A, pause_address
   MACROGetLabelPointer $210A, pause_draw_address
-    
-  INC pauseState
-  JMP .leave
+  LDA #$06
+  STA pause_draw_height
+  LDA #13
+  STA pause_draw_width
+  
+  LDA #$00
+  STA clueLineIndex
+  STA clueOffsetShift
+
+  LDA #$06
+  STA pauseState
+  RTS
  
-.checkA:
+CheckA:
   
   LDA #SPRITE_XPOS
   LDX #$01
   JSR GetSpriteData
   
   CMP #PAUSE_NO
-  BEQ .unPause
-   
+  BEQ UnPause
+  
+  LDA pauseState 
+  CMP #$03
+  BNE .quit
+  
+  LDA #SPRITE_YPOS
+  LDX #$01
+  JSR GetSpriteData
+  
+  CMP #PAUSE_RESUME
+  BEQ UnPause
+  
+  CMP #PAUSE_RESET
+  BEQ .reset
+  
+  CMP #PAUSE_QUIT
+  BEQ .openQuit
+ 
+;;TODO: make this not so copy/paste
 .quit:
 	
   LDA #$01
   STA hasContinue
   LDA #$00
   STA pauseState
-  LDA #$00
   STA time
   LDA #GAMEOVER_IDX
   STA targetGameMode
   LDA #$08
   STA mode_state
+  JMP .leave
+
+.reset:
+  LDA #$00
+  STA hasContinue
+  LDA #$00
+  STA pauseState
+  STA time
+  LDA #GAME_IDX
+  STA targetGameMode
+  LDA #$08
+  STA mode_state
+ 
+  JMP .leave
+
+.openQuit:
+
+  MACROGetLabelPointer Pause_Quit, pause_address
+  MACROGetLabelPointer $212B, pause_draw_address
+  LDA #$04
+  STA pause_draw_height
+  LDA #11
+  STA pause_draw_width 
   
+  LDA #$00
+  STA clueLineIndex
+  STA clueOffsetShift
+
+  INC pauseState
+
 .leave:
   RTS
+
   
 UpdateUnloadPauseScreen:
   
   JSR ClearPauseScreen
   LDA clueOffsetShift
-  CMP #$06
+  CMP pause_draw_height
   BNE .leave
 .changePauseState:
 
@@ -1243,8 +1430,14 @@ PuzzleHeaderSkips:
 PuzzleSaveLocations:
   .word puzzle_clear_bank0, puzzle_clear_bank1, puzzle_clear_bank2
 
+PauseMenuPosition:
+  .db PAUSE_RESUME, PAUSE_QUIT, PAUSE_RESET
   
 PAUSE_YES = $60
 PAUSE_NO = $88
+PAUSE_MENUX = $60
+PAUSE_RESUME = $4F
+PAUSE_QUIT = $57
+PAUSE_RESET = $5F
 
   

@@ -52,7 +52,24 @@ UpdateTitleInit:
 .changeModeState:
 
   INC mode_state
-    
+  
+  LDA startOnBankTable
+  BEQ .leave
+  INC mode_state
+  INC mode_state
+  LDA PPU_ScrollNT
+  ORA #%00000001
+  STA PPU_ScrollNT
+  JSR ActivatePuzzlePointer
+  JSR ConvertPuzzleToMouse
+  LDA puzzle_index
+  STA tempPuzz
+  LDA #$00
+  STA temp1
+  STA temp2
+  JSR UpdatePuzzlePointerSprite
+  JSR UpdatePuzzleInfo
+  
 .leave:
   RTS
   
@@ -114,19 +131,24 @@ UpdateScroll:
   STA PPU_ScrollNT
   
 .changeModeState:
+
+  JSR ActivatePuzzlePointer
+  INC mode_state
+
+.leave:
+  RTS
+
+ActivatePuzzlePointer:
+
   LDA #$01
   LDX #$01
   JSR SetSpriteImage
   JSR InitPuzzlePointer
-  INC mode_state
   LDA #$FF
   STA tempPuzz
-.leave:
   RTS
-  
-UpdatePuzzleSelection:
 
-  JSR UpdatePuzzlePointer
+ConvertMouseToPuzzle:
   
   LDA mouse_index
   ASL A
@@ -135,6 +157,39 @@ UpdatePuzzleSelection:
   CLC
   ADC mouse_index
   ADC mouse_index+1
+  RTS
+
+ConvertPuzzleToMouse:
+
+  LDA #$00
+  STA mouse_index
+  STA mouse_index+1
+  STA temp10
+
+  LDA puzzle_index
+  STA temp9
+  
+.loop:
+  CMP #9
+  BCC .populateMouse
+  INC temp10
+  SEC 
+  SBC #9
+  STA temp9
+  JMP .loop
+
+.populateMouse:
+
+  LDA temp9
+  STA mouse_index+1
+  LDA temp10
+  STA mouse_index
+  RTS
+
+UpdatePuzzleSelection:
+
+  JSR UpdatePuzzlePointer
+  JSR ConvertMouseToPuzzle
   CMP tempPuzz
   BEQ .checkButtonPresses	;no change
   STA tempPuzz
@@ -219,8 +274,14 @@ UpdateTitleExit:
   
   LDA mouse_index
   CMP #$03
+  BEQ .setToLoad
+  
+.checkPuzzleIndex:
+  LDA puzzle_index
+  CMP tempPuzz
   BNE .loadPuzzle
   
+.setToLoad:
   ASL temp1
   JMP .setupPuzzle
     
@@ -454,8 +515,15 @@ UpdatePuzzlePointer:
   ASL A
   BCC .move
   DEC temp2
+
+  JMP .move
+
+.leave:
+  RTS
   
 .move:
+
+UpdatePuzzlePointerSprite:
 
   LDA mouse_index
   CLC
@@ -521,6 +589,21 @@ LoadBank:
   
 UpdatePuzzleInfo:
 
+.drawCont:
+
+  LDA hasContinue
+  BEQ .drawBlank
+  LDA puzzle_index
+  CMP tempPuzz
+  BNE .drawBlank
+  
+  MACROAddPPUStringEntryTable #$26, #$97, #DRAW_HORIZONTAL, ContinueText
+  JMP .drawLabel
+.drawBlank:
+
+  MACROAddPPUStringEntryRepeat #$26, #$97, #DRAW_HORIZONTAL, #$05, #$24
+ 
+.drawLabel:
 
   MACROGetLabelPointer PuzzleSaveLocations, table_address
   LDA tempBank
@@ -597,7 +680,7 @@ UpdatePuzzleInfo:
   CLC 
   ADC #$10
   JSR SetPuzzleDisplaySprite
- 
+  
 .leave:
   RTS
 
@@ -655,3 +738,4 @@ SetPuzzleDisplaySprite:
 ContinueText:
 
   .db $05, $0C, $18, $17, $1D, $24
+  

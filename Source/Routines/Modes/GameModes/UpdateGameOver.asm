@@ -243,6 +243,9 @@ UpdateGameOverExit:
   lda current_song
   jsr sound_load
   
+  LDA #$01
+  STA startOnBankTable
+  
 .leave:
   RTS
   
