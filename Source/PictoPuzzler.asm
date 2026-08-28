@@ -169,6 +169,7 @@ GameLoopJumpTable:
   .word UpdateTitle
   .word UpdateGame
   .word UpdateGameOver
+  .word UpdateCredits
   
 
   ;;RTS is called in the subroutine
@@ -177,6 +178,7 @@ GameLoopJumpTable:
   .include "Source/Routines/Modes/GameModes/UpdateTitle.asm"
   .include "Source/Routines/Modes/GameModes/UpdateGame.asm"
   .include "Source/Routines/Modes/GameModes/UpdateGameOver.asm"
+  .include "Source/Routines/Modes/GameModes/UpdateCredits.asm"
   
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;     Routines             ;;

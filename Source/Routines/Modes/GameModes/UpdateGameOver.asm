@@ -50,6 +50,22 @@ UpdateGameOverInit:
   
   LDA #$00
   STA clueLineIndex
+  
+  LDA bank_index
+  CMP #$02
+  BNE .notFinal
+  LDA puzzle_index
+  CMP #26
+  BNE .notFinal
+  LDA #$02
+  JMP .finishInit
+  
+.notFinal:
+  LDA #$04
+  
+.finishInit:
+
+  STA temp10
   ;;table address is now at the first string to draw
   
   MACROSetFlags PPU_Mask, #%00011000
@@ -79,6 +95,9 @@ UpdateDrawMessage:
 
   LDA hasContinue
   BNE .skipSpriteSet
+  LDA temp10
+  CMP #$02
+  BEQ .skipSpriteSet
   
   LDA #$01
   LDX #$00
@@ -101,8 +120,16 @@ UpdateGameOverWaitInput:
 
 .updateWait:
   LDA hasContinue
-  BEQ .checkOption
+  BNE .simpleWait
   
+  LDA temp10
+  CMP #$02
+  BNE .checkOption
+  LDA gamepadPressed
+  BNE .loadNext
+  JMP .leaveEarly
+  
+.simpleWait:
   LDA gamepadPressed
   BNE .loadTitle
 .leaveEarly:
@@ -160,6 +187,15 @@ UpdateGameOverWaitInput:
   LDA #$00
   STA targetScreenLoad
   JMP .changeModeState
+  
+.loadCredits:
+  LDA #$01
+  STA creditsViewed
+  LDA #CREDITS_IDX
+  STA targetGameMode
+  LDA #$00
+  STA targetScreenLoad
+  JMP .changeModeState
  
 .loadNext:  
 
@@ -172,8 +208,17 @@ UpdateGameOverWaitInput:
   INC bank_index
   LDA bank_index
   CMP #03
-  BEQ .loadTitle
+  BNE .goToNextBank
+  ;; check for all puzzles done
+  LDA creditsViewed
+  BNE .loadTitle
   
+  JSR CheckAllPuzzlesCleared
+  BCS .loadCredits
+  JMP .loadTitle
+  
+.goToNextBank:
+
   LDA #$00
   STA puzzle_index
   JSR LoadBank
@@ -229,7 +274,16 @@ UpdateGameOverExit:
   AND #$0F
   BNE .leave
 
+  LDA bank_index
+  CMP #3
+  BNE .loadBankSelected
+  DEC bank_index
+  LDA #$00
+  JMP .setTitleDestination
+
+.loadBankSelected:
   LDA #$01
+.setTitleDestination:
   STA startOnBankTable
 
   LDA targetScreenLoad
@@ -257,7 +311,7 @@ DrawClearText:
   LDA clueLineIndex
   CMP #$02
   BEQ .printTime
-  CMP #$04
+  CMP temp10
   BEQ .finish
   JMP .updateClueAddress
   
@@ -287,6 +341,11 @@ DrawClearText:
   LDA clues_address+1
   ADC #$00
   STA clues_address+1
+  
+  ;;TODO: this is... a rough way of fixing this. not a fan, but it should fix my issue
+  LDA clueLineIndex
+  CMP temp10
+  BEQ .finish
   
   CLC
   JMP .leave
@@ -320,11 +379,43 @@ FlashTime:
 .leave
   RTS 
 
+CheckAllPuzzlesCleared:
+
+  MACROGetLabelPointer PuzzleSaveLocations, table_address
+  LDA #$00
+  ASL A
+  TAY
+  JSR GetTableAtIndex
+  
+  LDY #$00
+  LDX #$00
+.loop:
+  LDA [table_address], y
+  AND #$80
+  BEQ .foundUnfinished
+  LDA table_address
+  CLC
+  ADC #$04
+  STA table_address
+  LDA #$00
+  ADC table_address+1
+  STA table_address+1
+  INX
+  CPX #81
+  BEQ .allCleared
+  JMP .loop
+  
+.foundUnfinished:
+  CLC
+  JMP .leave
+.allCleared:  
+  SEC
+.leave:
+  RTS
+
 FlashColors:
 
   .db $2C, $16
-
-   
 
 GO_YES = $58
 GO_NO = $80

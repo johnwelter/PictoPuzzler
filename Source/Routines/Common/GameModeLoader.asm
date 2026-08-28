@@ -125,7 +125,7 @@ LoadGameModeSprites:
   RTS
   
 gameModeInitCHRROMB:
-	.db $00, $02, $02
+	.db $00, $02, $02, $00
 gameModeInitCHRROMA:
-	.db $00, $02, $02
+	.db $00, $02, $02, $00
 	

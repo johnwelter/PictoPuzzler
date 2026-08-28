@@ -37,6 +37,7 @@ temp_offset .rs 2
 TITLE_IDX = $00
 GAME_IDX = $01
 GAMEOVER_IDX = $02
+CREDITS_IDX = $03
 
 ;locks for input and rendering
 BGLOAD_NMI_LOCK = %00000001

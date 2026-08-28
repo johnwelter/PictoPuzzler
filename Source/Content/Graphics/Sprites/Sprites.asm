@@ -35,7 +35,7 @@
 ;;It is not possible to have a sprite partially visible on the left edge. 
 ;;Instead, left-clipping through PPUMASK ($2001) can be used to simulate this effect.
 Sprites:
-	.word Title_Sprites, Game_Sprites, GameOver_Sprites
+	.word Title_Sprites, Game_Sprites, GameOver_Sprites, Credits_Sprites
 
 Title_Sprites:
     .db $06
@@ -50,5 +50,8 @@ Game_Sprites:
 	.db $62,$02,$03,$72
 	.db $5F,$FF,$00,$60
 GameOver_Sprites:
+	.db $01
+	.db $67,$FF,$00,$58
+Credits_Sprites:
 	.db $01
 	.db $67,$FF,$00,$58

@@ -1,6 +1,6 @@
 Palettes:
 
-  .word Title_Palette, Game_Palette, GameOver_Palette
+  .word Title_Palette, Game_Palette, GameOver_Palette, Title_Palette
 
 Title_Palette:
 
@@ -21,11 +21,11 @@ GameOver_Palette:
 ;;;;; GameMode Object Tables
 Objects:
 
-	.word Title_Objects, Game_Objects, GameOver_Objects
+	.word Title_Objects, Game_Objects, GameOver_Objects, Credits_Objects
 	
 ObjectCounts:
 	
-	.db 5, 3, 2
+	.db 5, 3, 2, 1
 	
 	
 ;;;;;; Object Tables
@@ -48,6 +48,10 @@ GameOver_Objects:
 
 	.word GameOverWindow	;; window
 	.word Reminder			;; raw table
+	
+Credits_Objects:
+
+	.word TitleLogo
 
 ;;;;;; Objects
 
@@ -138,7 +142,6 @@ Reminder:
 	.db $1c,$22,$1c,$1d,$0e,$16,$24,$1d,$18,$24,$0a,$1f,$18,$12,$0d,$24,$15,$18,$1c,$12,$17,$10,WRAP_LINE
 	.db $24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,$24,WRAP_LINE
 	.db $22,$18,$1e,$1b,$24,$1c,$0a,$1f,$0e,$0d,$24,$19,$1b,$18,$10,$1b,$0e,$1c,$1c,$24,$24,$24,END_OBJECT
-
 
 WindowRows:
   .db $28, $2a, $29

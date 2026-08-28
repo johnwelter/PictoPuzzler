@@ -56,6 +56,7 @@ NMIJumpTable:
   .word UpdateTitleNMI
   .word UpdateGameNMI
   .word UpdateGameOverNMI
+  .word UpdateCreditsNMI
 
 WakeUp:
   LDA #$00
@@ -72,4 +73,5 @@ WakeUp:
   .include "Source/Routines/Modes/NMIModes/UpdateTitleNMI.asm"
   .include "Source/Routines/Modes/NMIModes/UpdateGameNMI.asm"
   .include "Source/Routines/Modes/NMIModes/UpdateGameOverNMI.asm"
+  .include "Source/Routines/Modes/NMIModes/UpdateCreditsNMI.asm"
   .include "Source/Routines/Common/ReadControllers.asm"

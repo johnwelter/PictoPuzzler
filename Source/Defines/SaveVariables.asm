@@ -12,4 +12,5 @@ image_table_offset .rs 1
 puzzle_clear_bank0 .rs 108
 puzzle_clear_bank1 .rs 108
 puzzle_clear_bank2 .rs 108
+creditsViewed		.rs 1	;;have we seen the credits already?
 
