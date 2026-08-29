@@ -10182,19 +10182,21 @@
   425                       ;;STA PPU_MASK
   426  06:D692  8D 28 00    STA PPU_Mask
   427  06:D695  60          RTS
-  428                       
-  429           0000      STEP_RESULT = temp1
-  430  06:D696            FadeOutPalettes:
-  431                     
-  432                     ;;take the current values, and decrement the lower nibbles
-  433                     ;;we can access from the palette copy 
-  434                     ;;we'll make this fade out one level per call
-  435                     ;;once all the palettes are blacked out we'll return true, so we'll keep the carry flag as a return result
-  436                     
-  437                     ;;go through the palette copy, decrement, make a raw data PPU string and add all the bytes into it
-  438                     ;;for any palette color already in the 0x range, change it to 0f to get black
-  439                     
-  440                       MACROGetLabelPointer Palette_Copy, table_address
+  428                     
+  429                     ;;------------------------;;
+  430                       
+  431           0000      STEP_RESULT = temp1
+  432  06:D696            FadeOutPalettes:
+  433                     
+  434                     ;;take the current values, and decrement the lower nibbles
+  435                     ;;we can access from the palette copy 
+  436                     ;;we'll make this fade out one level per call
+  437                     ;;once all the palettes are blacked out we'll return true, so we'll keep the carry flag as a return result
+  438                     
+  439                     ;;go through the palette copy, decrement, make a raw data PPU string and add all the bytes into it
+  440                     ;;for any palette color already in the 0x range, change it to 0f to get black
+  441                     
+  442                       MACROGetLabelPointer Palette_Copy, table_address
                           
        06:D696  A9 6C             LDA #HIGH(Palette_Copy)
        06:D698  A2 00             LDX #LOW(Palette_Copy)
@@ -10202,10 +10204,10 @@
        06:D69A  8E 18 00          STX table_address
        06:D69D  8D 19 00          STA table_address+1
                                   
-  441                     ;;palette copy address is now X accessable
-  442                     
-  443  06:D6A0  A0 00       LDY #$00
-  444                       MACROAddPPUStringEntryRawData #$3F, #$00, #DRAW_HORIZONTAL, #$20  
+  443                     ;;palette copy address is now X accessable
+  444                     
+  445  06:D6A0  A0 00       LDY #$00
+  446                       MACROAddPPUStringEntryRawData #$3F, #$00, #DRAW_HORIZONTAL, #$20  
                           
        06:D6A2  A9 01       LDA #$01
        06:D6A4  8D 2D 00    STA PPU_PendingWrite
@@ -10218,69 +10220,69 @@
        06:D6B6  A9 20       LDA #$20 
        06:D6B8  20 A1 D5    JSR WriteToPPUString
                             
-  445                     
-  446  06:D6BB  A9 00       LDA #$00
-  447  06:D6BD  8D 00 00    STA STEP_RESULT
-  448                       
-  449  06:D6C0            .loop:
-  450                     
-  451  06:D6C0  B1 18       LDA [table_address], y
-  452  06:D6C2  C9 0F       CMP #$0F
-  453  06:D6C4  F0 15       BEQ .addToString
-  454  06:D6C6  C9 10       CMP #$10
-  455  06:D6C8  90 0D       BCC .setBlack
-  456                       
-  457  06:D6CA  A9 80       LDA #$80
-  458  06:D6CC  8D 00 00    STA STEP_RESULT
-  459                       
-  460  06:D6CF  B1 18       LDA [table_address], y
-  461  06:D6D1  38          SEC
-  462  06:D6D2  E9 10       SBC #$10
-  463  06:D6D4  4C D9 D6    JMP .setColor
-  464                     
-  465  06:D6D7            .setBlack:
+  447                     
+  448  06:D6BB  A9 00       LDA #$00
+  449  06:D6BD  8D 00 00    STA STEP_RESULT
+  450                       
+  451  06:D6C0            .loop:
+  452                     
+  453  06:D6C0  B1 18       LDA [table_address], y
+  454  06:D6C2  C9 0F       CMP #$0F
+  455  06:D6C4  F0 15       BEQ .addToString
+  456  06:D6C6  C9 10       CMP #$10
+  457  06:D6C8  90 0D       BCC .setBlack
+  458                       
+  459  06:D6CA  A9 80       LDA #$80
+  460  06:D6CC  8D 00 00    STA STEP_RESULT
+  461                       
+  462  06:D6CF  B1 18       LDA [table_address], y
+  463  06:D6D1  38          SEC
+  464  06:D6D2  E9 10       SBC #$10
+  465  06:D6D4  4C D9 D6    JMP .setColor
   466                     
-  467  06:D6D7  A9 0F       LDA #$0F
+  467  06:D6D7            .setBlack:
   468                     
-  469  06:D6D9            .setColor:
-  470  06:D6D9  91 18       STA [table_address], y
-  471                     
-  472  06:D6DB            .addToString:
+  469  06:D6D7  A9 0F       LDA #$0F
+  470                     
+  471  06:D6D9            .setColor:
+  472  06:D6D9  91 18       STA [table_address], y
   473                     
-  474  06:D6DB  20 A1 D5    JSR WriteToPPUString
+  474  06:D6DB            .addToString:
   475                     
-  476  06:D6DE            .incY:
-  477                       
-  478  06:D6DE  C8          INY
-  479  06:D6DF  C0 20       CPY #$20
-  480  06:D6E1  D0 DD       BNE .loop
-  481                     
-  482  06:D6E3  0E 00 00    ASL STEP_RESULT       ;get carry out, if we have one
+  476  06:D6DB  20 A1 D5    JSR WriteToPPUString
+  477                     
+  478  06:D6DE            .incY:
+  479                       
+  480  06:D6DE  C8          INY
+  481  06:D6DF  C0 20       CPY #$20
+  482  06:D6E1  D0 DD       BNE .loop
   483                     
-  484  06:D6E6  60          RTS
-  485                       
-  486  06:D6E7            FadeInPalettes:
-  487                     
-  488                     ;;need to be able to store off a target palette first
-  489                     ;;we can use the palette copy we make during the game mode change as the target
-  490  06:D6E7  60          RTS
-  491                     
-  492  06:D6E8            NameTableMemList:
-  493  06:D6E8  00 20       .word $2000, $2400, $2800, $2C00
+  484  06:D6E3  0E 00 00    ASL STEP_RESULT       ;get carry out, if we have one
+  485                     
+  486  06:D6E6  60          RTS
+  487                       
+  488  06:D6E7            FadeInPalettes:
+  489                     
+  490                     ;;need to be able to store off a target palette first
+  491                     ;;we can use the palette copy we make during the game mode change as the target
+  492  06:D6E7  60          RTS
+  493                     
+  494  06:D6E8            NameTableMemList:
+  495  06:D6E8  00 20       .word $2000, $2400, $2800, $2C00
        06:D6EA  00 24     
        06:D6EC  00 28     
        06:D6EE  00 2C     
-  494  06:D6F0            PalettesMemList:
-  495  06:D6F0  00 3F       .word $3F00, $3F04, $3F08, $3F0C
+  496  06:D6F0            PalettesMemList:
+  497  06:D6F0  00 3F       .word $3F00, $3F04, $3F08, $3F0C
        06:D6F2  04 3F     
        06:D6F4  08 3F     
        06:D6F6  0C 3F     
-  496  06:D6F8  10 3F       .word $3F10, $3F14, $3F18, $3F1C  
+  498  06:D6F8  10 3F       .word $3F10, $3F14, $3F18, $3F1C  
        06:D6FA  14 3F     
        06:D6FC  18 3F     
        06:D6FE  1C 3F     
-  497                       
-  498           0024      BLANK_TILE = $24
+  499                       
+  500           0024      BLANK_TILE = $24
 #[1]   Source/PictoPuzzler.asm
 #[2]   Source/Routines/Utils/MapperUtils.asm
   108                       .include "Source/Routines/Utils/MapperUtils.asm"
