@@ -14,12 +14,21 @@ time 			.rs 1
 scaledTime		.rs 1
 sleeping 		.rs 1
 mode_loadFlags  .rs 1
-;;trcb nxss
+;;trcb n.ss
+;;t = skip table read, use blank tile
+MODELOAD_DRAWBLANK = %10000000
 ;;r = read from save copy 
+MODELOAD_READSAVE = %01000000
 ;;c = write to save copy
-;;skip table read, use blank tile
+MODELOAD_WRITESAVE = %00100000
+MODELOAD_NOTWRITESAVE = %11011111
+;;b = write black to palettes
+MODELOAD_BLACKPAL = %00010000
+;;n = skip rendering re-activation on mode load
+MODELOAD_NORENDER = %00001000
 ;;ss = puzzle size
-;;n = don't auto allow nmi
+MODELOAD_PUZZLESIZE = %00000011
+
 game_mode  		.rs 1
 mode_state		.rs 1
 NMI_locks 		.rs 1
@@ -29,9 +38,9 @@ pointerB_address .rs 2
 table_address  	.rs 2
 objectTable_address .rs 2
 jump_address  	.rs 2
-ppu_startAddress .rs 2
 temp_addAddress .rs 2
-temp_offset .rs 2
+pointer_addOffset	.rs 2
+ppu_startAddress .rs 2
 
 ;game modes
 TITLE_IDX = $00

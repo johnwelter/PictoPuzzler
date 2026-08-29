@@ -9,6 +9,7 @@ PPU_PendingWrite	.rs 1
 PPU_StringIdx 		.rs 1
 PPU_String 			.rs 128
 
+
 PPU_STRINGMAX = $4F ;up to size of a full nametable, I think
 
 SPRITE_YPOS = $00
@@ -30,3 +31,6 @@ DRAW_VERTICAL = $80
 DRAW_HORIZONTAL = $00
 
 SPRITE_0_MASK = %01000000
+
+PPU_CTRL_FLAGS_NMI_ENABLE = %10000000
+PPU_MASK_FLAGS_RENDER_ENABLE = %00011000

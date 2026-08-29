@@ -3,7 +3,7 @@ ChangeGameMode:
   ;X - high nibble: palette start flag, low nibble: screen index
   STA game_mode
   STX mode_loadFlags
-  MACROSetFlags mode_loadFlags, $80
+  MACROSetFlags mode_loadFlags, MODELOAD_DRAWBLANK	;go ahead and set 
   LDA #$00
   STA mode_state
   JSR ClearPPUString
@@ -12,7 +12,7 @@ ChangeGameMode:
   
 LoadGameModeScreen:
 
-  MACROClearFlags PPU_CTRL, #%10000000	;; disable NMI
+  MACROClearFlags PPU_CTRL, #PPU_CTRL_FLAGS_NMI_ENABLE;; disable NMI
   LDA #$00
   STA PPU_MASK    ; disable rendering- reenable on NMI when not updating
 
@@ -20,14 +20,14 @@ LoadGameModeScreen:
   JSR LoadGameModeSprites
   
   LDA mode_loadFlags
-  AND #%00001000
+  AND #MODELOAD_NORENDER
   BNE .skipRenderDeactivate
 
-  MACROSetFlags PPU_Mask, #%00011000
+  MACROSetFlags PPU_Mask, #PPU_MASK_FLAGS_RENDER_ENABLE
 
 .skipRenderDeactivate:
 
-  MACROSetFlags PPU_CTRL, #%10000000   ;;enable NMI
+  MACROSetFlags PPU_CTRL, #PPU_CTRL_FLAGS_NMI_ENABLE  ;;enable NMI
   
   ;; load the CHR bank for this mode
   JSR ResetMapper
@@ -61,22 +61,22 @@ LoadGameModeBackground:
 	
   LDY GAMEMODE_WORDIDX
   LDA mode_loadFlags
-  AND #%01000000 ; copy from saved screen
+  AND #MODELOAD_READSAVE; copy from saved screen
   BEQ .loadTable
   MACROGetLabelPointer SaveScreen_Copy, table_address
-  MACROClearFlags mode_loadFlags, $80
+  MACROClearFlags mode_loadFlags, MODELOAD_DRAWBLANK
   
 .loadTable:
   LDA #$00
   JSR LoadFullBackgroundFromTable
 
-  MACROSetFlags mode_loadFlags, $80
+  MACROSetFlags mode_loadFlags, MODELOAD_DRAWBLANK
   
   LDA #$01
   JSR LoadFullBackgroundFromTable
 
   LDA mode_loadFlags
-  AND #%01000000
+  AND #MODELOAD_READSAVE
   BNE .finish
 
   LDX game_mode

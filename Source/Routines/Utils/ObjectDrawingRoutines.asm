@@ -21,6 +21,10 @@ ReZeroTable:
 	LDY #$00
 	RTS
 
+;;--------------------------;;
+ALLOW_SAVEOBJECT = temp1
+TILE_TO_DRAW = temp2
+
 DrawObject:
 
   ;; table_address should contain the pointer to the beginning of an Object
@@ -46,14 +50,14 @@ DrawObject:
   BNE .loadScreenB
   MACROGetLabelPointer Screen_Copy, pointer_address
   MACROGetLabelPointer SaveScreen_Copy, pointerB_address
-  LDA #%00100000
-  STA temp1
+  LDA #MODELOAD_WRITESAVE
+  STA ALLOW_SAVEOBJECT
   JMP .initOffsets
   
 .loadScreenB:
   MACROGetLabelPointer ScreenB_Copy, pointer_address
   LDA #$00
-  STA temp1
+  STA ALLOW_SAVEOBJECT
   
 .initOffsets:
 
@@ -75,7 +79,7 @@ DrawObjectJumpTable:
 	.word DrawWindow
 	.word DrawPuzzleWindow
 	.word DrawSeparator
-	
+
 DrawRaw:
 
 	LDA #$04
@@ -98,24 +102,30 @@ DrawRaw:
 .drawTile:
 	
 	LDA [table_address], y
-	STA temp4
+	STA TILE_TO_DRAW
 	JSR DrawObjectTile
 	JMP .loop
 	
 .finishObject:
 	
 	RTS
-	
+
+
+;;----------------;;
+WIN_WIDTH = temp3
+WIN_HEIGHT = temp4
+WIN_GRIDX = temp5
+WIN_GRIDY = temp6
 
 DrawWindow:
 
 	LDA [table_address], y
 	INY
-	STA temp5
-	INC temp5
+	STA WIN_WIDTH
+	INC WIN_WIDTH
 	LDA [table_address], y
-	STA temp6
-	INC temp6
+	STA WIN_HEIGHT
+	INC WIN_HEIGHT
 	;;trust the process!
 	
 
@@ -136,16 +146,16 @@ DrawPuzzleWindow:
 	AND #$03			;;get first two bits
 	TAX
 	LDA PuzzleSizes, x
-	STA temp5
-	INC temp5
-	STA temp6
-	INC temp6
+	STA WIN_WIDTH
+	INC WIN_WIDTH
+	STA WIN_HEIGHT
+	INC WIN_HEIGHT
 	
 	LDA #$00
 	STA tempx
 	STA tempy
-	STA temp7
-	STA temp8
+	STA WIN_GRIDX
+	STA WIN_GRIDY
 	MACROGetLabelPointer PuzzleWindowRows, table_address
 	JMP WindowsLoop
 	
@@ -160,7 +170,7 @@ WindowsLoop:
 	LDY #$00
 	BEQ .drawTile
 .checkXEnd:
-	CMP temp5
+	CMP WIN_WIDTH
 	BNE .getXFill
 	LDY #$02
 	BNE .drawTile
@@ -172,7 +182,7 @@ WindowsLoop:
 	BNE .storeTile
 	JSR GetCurrentPuzzleFill
 .storeTile
-	STA temp4
+	STA TILE_TO_DRAW
 
 	PLA
 	TAY
@@ -181,13 +191,13 @@ WindowsLoop:
 	INC tempx
 	JSR IncHoriFill
 	LDA tempx
-	CMP temp5
+	CMP WIN_WIDTH
 	BCC .loop
 	BEQ .loop
 
 	LDA #$00
 	STA tempx
-	STA temp7
+	STA WIN_GRIDX
 
 	JSR DropLine
 	LDY #$00
@@ -206,7 +216,7 @@ WindowsLoop:
 	INC tempy
 	JSR IncVertFill
 	LDA tempy
-	CMP temp6
+	CMP WIN_HEIGHT
 	BCC .loop
 	BEQ .incRow
 
@@ -214,31 +224,31 @@ WindowsLoop:
 
 IncVertFill:
 
-	INC temp8
-	LDA temp8
+	INC WIN_GRIDY
+	LDA WIN_GRIDY
 	CMP #$06
 	BNE .leave
 	LDA #$01
-	STA temp8
+	STA WIN_GRIDY
 	
 .leave:
 	RTS
 	
 IncHoriFill:
 
-	INC temp7
-	LDA temp7
+	INC WIN_GRIDX
+	LDA WIN_GRIDX
 	CMP #$06
 	BNE .leave
 	LDA #$01
-	STA temp7
+	STA WIN_GRIDX
 	
 .leave:
 	RTS
 
 GetCurrentPuzzleFill:
 
-	LDA temp8
+	LDA WIN_GRIDY
 	CMP #$05
 	BNE .noHLine
 	LDX #$02
@@ -247,7 +257,7 @@ GetCurrentPuzzleFill:
 	LDX #$00
 .checkVLine:	
 
-	LDA temp7
+	LDA WIN_GRIDX
 	CMP #$05
 	BNE .noVLine
 	INX
@@ -271,20 +281,23 @@ AddToTableAddress:
 	STA table_address+1
 	RTS
 	
+;;------------------------;;
+SEP_LENGTH = temp3
+
 DrawSeparator:
 
 	LDA ppu_startAddress
 	AND #$1F
-	STA temp4
+	STA SEP_LENGTH
 	
 	LDA #$1F
 	SEC
-	SBC temp4
+	SBC SEP_LENGTH
 	STA tempx
 	INC tempx
 	
 	LDA [table_address], y
-	STA temp4
+	STA TILE_TO_DRAW
 	
 	LDA #$05
 	JSR AddToTableAddress
@@ -305,14 +318,14 @@ DrawSeparator:
 	
 DrawObjectTile:
 
-	LDA temp4
+	LDA TILE_TO_DRAW
 	STA PPU_DATA
 	STA [pointer_address], y
 	LDA mode_loadFlags
-    AND #%00100000	;check save flag
-	AND temp1
+    AND #MODELOAD_WRITESAVE	;check save flag
+	AND ALLOW_SAVEOBJECT
 	BEQ .skipSave
-	LDA temp4
+	LDA TILE_TO_DRAW
 	STA [pointerB_address],y
 
 .skipSave:

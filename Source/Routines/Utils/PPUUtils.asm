@@ -8,7 +8,7 @@ LoadFullPaletteFromTable:
   STA Palette_Copy, x
   PHA 
   LDA mode_loadFlags
-  AND #$10
+  AND #MODELOAD_BLACKPAL
   BNE .setBlack
   PLA 
   JMP .setPPUData
@@ -25,6 +25,17 @@ LoadFullPaletteFromTable:
   BNE .loop  ; Branch to LoadPalettesLoop if compare was Not Equal to zero
   RTS
 
+;;-------------------------------------;;
+
+;;this gets called during mode load, which reserves temp1 for the word size mode index
+ALLOW_WRITESAVE = temp2
+TILE_TO_WRITE = temp3
+MAX_CHUNKS = $03
+LAST_CHUNK_LIMIT = $C0
+BLANK_TILE = $24
+COPY_ADDRESS = pointer_address
+SAVECOPY_ADDRESS = pointerB_address
+
 LoadFullBackgroundFromTable:
 
     ;;use A as an index for which nametable to write to
@@ -35,14 +46,14 @@ LoadFullBackgroundFromTable:
 	BNE .copyScreenB
 	MACROGetLabelPointer Screen_Copy, pointer_address
 	MACROGetLabelPointer SaveScreen_Copy, pointerB_address
-	LDA #%00100000
-	STA temp2
+	LDA #MODELOAD_WRITESAVE
+	STA ALLOW_WRITESAVE
 	JMP .setCounters
 	
 .copyScreenB:
 	MACROGetLabelPointer ScreenB_Copy, pointer_address
 	LDA #$00
-	STA temp2
+	STA ALLOW_WRITESAVE
 	
 	;;set pointer
 	;; set counters
@@ -57,48 +68,49 @@ LoadFullBackgroundFromTable:
 .innerloop:
 
 	LDA mode_loadFlags
-	AND #$80
+	AND #MODELOAD_DRAWBLANK		;check if we're drawing from a table, or making a blank screen
 	BEQ .fromTable
 	;;if we're not in the att table, write a tile
 	;;else, write 0
-	CPX #$03
-	BCC .doTile
-	CPY #$C0
+	CPX #MAX_CHUNKS				;check if we're at the last chunk
+	BCC .doTile				
+	CPY #LAST_CHUNK_LIMIT		;check if we've reached the end of the last chunk
 	BCC .doTile 
-	LDA #$00
-	STA temp10
+	LDA #$00					;if we're past the last chunk, write a default attribute of 0 to the table
+	STA TILE_TO_WRITE
 	JMP .writeToScreen
 .doTile:
-	LDA #$24
-	STA temp10
+	LDA #BLANK_TILE				;load a blank tile
+	STA TILE_TO_WRITE
 	JMP .writeToScreen
-.fromTable:
-	LDA [table_address], y
-	STA temp10
-.writeToScreen:
-	LDA temp10
-	STA PPU_DATA
-	STA [pointer_address],y
-    LDA mode_loadFlags
-    AND #%00100000	;check save flag
-	AND temp2
+.fromTable:					
+	LDA [table_address], y		; load a tile from the table
+	STA TILE_TO_WRITE
+.writeToScreen:					; write to the nametable
+	LDA TILE_TO_WRITE		
+	STA PPU_DATA				; write the tile to the PPU
+	STA [COPY_ADDRESS],y		; write to the copy in SRAM
+    LDA mode_loadFlags		
+    AND #MODELOAD_WRITESAVE		;check save flag
+	AND ALLOW_WRITESAVE
 	BEQ .skipSaveCopy
-    LDA temp10
-	STA [pointerB_address],y
+    LDA TILE_TO_WRITE
+	STA [SAVECOPY_ADDRESS],y	; write to the save copy in SRAM
 
 .skipSaveCopy:
 	INY
 	CPY #$00
 	BNE .innerloop
 
-	INC pointer_address+1
+	INC COPY_ADDRESS+1
 	INC table_address+1
-	INC pointerB_address+1
+	INC SAVECOPY_ADDRESS+1
 	
 	INX
 	CPX #$04
 	BNE .outerloop
 	RTS
+;;----------------------------------;;
 
 DATA_LEN = temp1
 WRITE_SETTINGS = temp2
@@ -281,46 +293,59 @@ WaitScanline:
 LeaveDetect:
   RTS
 
+;;--------------------------------;;
 	
+XOFFSET = temp1
+YOFFSET = temp2
+PPUPOS_HI = temp3
+
 StoreXYOffset:
 	;;A = Y offset, X = X offset
-	STX temp1
-	STA temp2
+	STX XOFFSET
+	STA YOFFSET
 	LDA #$00
-	STA temp3
+	STA PPUPOS_HI
 	
-	ASL temp2
-	ROL temp3
-	ASL temp2
-	ROL temp3
-	ASL temp2
-	ROL temp3
-	ASL temp2
-	ROL temp3
-	ASL temp2
-	ROL temp3
+	;;the goal here is to straddle the Y position across two bytes, to create a proper offset for the PPU
+	;;where we move 5 of the bits over 
+	ASL YOFFSET
+	ROL PPUPOS_HI
+	ASL YOFFSET
+	ROL PPUPOS_HI
+	ASL YOFFSET
+	ROL PPUPOS_HI
+	ASL YOFFSET
+	ROL PPUPOS_HI
+	ASL YOFFSET
+	ROL PPUPOS_HI
 	
 	;;add them together
-	LDA temp2
+	LDA YOFFSET
 	CLC
-	ADC temp1
-	STA temp_offset
-	LDA temp3
+	ADC XOFFSET
+	STA pointer_addOffset
+	TAX
+	LDA PPUPOS_HI
 	ADC #$00
-	STA temp_offset+1
+	STA pointer_addOffset+1
+	RTS
+
+;;----------------------------------;;
+
+PPU_CURRENTPOS = temp_addAddress
 
 GetAddressWithXYOffset:
 
 	;;A is hi, X is lo
-	STX temp_addAddress
-	STA temp_addAddress+1
+	STX PPU_CURRENTPOS
+	STA PPU_CURRENTPOS+1
 	
-	LDA temp_addAddress
+	LDA PPU_CURRENTPOS
 	CLC
-	ADC temp_offset
+	ADC pointer_addOffset
 	TAX
-	LDA temp_addAddress+1
-	ADC temp_offset+1
+	LDA PPU_CURRENTPOS+1
+	ADC pointer_addOffset+1
 	;;A is new hi, X is new lo
 	
 	RTS
@@ -400,7 +425,10 @@ InitPPUControl:
   ;;STA PPU_MASK
   STA PPU_Mask
   RTS
+
+;;------------------------;;
   
+STEP_RESULT = temp1
 FadeOutPalettes:
 
 ;;take the current values, and decrement the lower nibbles
@@ -418,7 +446,7 @@ FadeOutPalettes:
   MACROAddPPUStringEntryRawData #$3F, #$00, #DRAW_HORIZONTAL, #$20  
 
   LDA #$00
-  STA temp1
+  STA STEP_RESULT
   
 .loop:
 
@@ -429,7 +457,7 @@ FadeOutPalettes:
   BCC .setBlack
   
   LDA #$80
-  STA temp1
+  STA STEP_RESULT
   
   LDA [table_address], y
   SEC
@@ -453,7 +481,7 @@ FadeOutPalettes:
   CPY #$20
   BNE .loop
 
-  ASL temp1	;get carry out, if we have one
+  ASL STEP_RESULT	;get carry out, if we have one
 
   RTS
   
